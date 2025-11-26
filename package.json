@@ -19,10 +19,11 @@
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "babel-plugin-react-compiler": "1.0.0",
-    "jiti": "2.6.1",
     "eslint": "9.39.1",
     "eslint-config-next": "16.0.4",
+    "jiti": "2.6.1",
     "tailwindcss": "4.1.17",
     "typescript": "5.9.3"
-  }
+  },
+  "packageManager": "yarn@4.12.0"
 }
