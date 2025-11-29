@@ -1,5 +1,7 @@
 import { theme } from '@/theme';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
+import CssBaseline from '@mui/material/CssBaseline';
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { ThemeProvider } from '@mui/material/styles';
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
@@ -13,10 +15,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={roboto.variable}>
+    <html className={roboto.variable} lang="en" suppressHydrationWarning>
       <body className="antialiased">
+        <InitColorSchemeScript />
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
+            <CssBaseline />
             { children }
           </ThemeProvider>
         </AppRouterCacheProvider>
