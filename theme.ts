@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   colorSchemes: {
@@ -8,6 +8,6 @@ export const theme = createTheme({
   },
   cssVariables: true,
   typography: {
-    fontFamily: 'var(--font-roboto)'
-  }
+    fontFamily: "var(--font-roboto)",
+  },
 });

@@ -129,9 +129,7 @@
 
   /* Button */
   --color-Button-inheritContained: var(--mui-palette-Button-inheritContainedBg);
-  --color-Button-inheritContainedHover: var(
-    --mui-palette-Button-inheritContainedHoverBg
-  );
+  --color-Button-inheritContainedHover: var(--mui-palette-Button-inheritContainedHoverBg);
 
   /* Chip */
   --color-Chip-defaultBorder: var(--mui-palette-Chip-defaultBorder);

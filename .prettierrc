@@ -1,0 +1,7 @@
+{
+  "endOfLine": "auto",
+  "printWidth": 100,
+  "quoteProps": "consistent",
+  "tailwindStylesheet": "./app/globals.css",
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
