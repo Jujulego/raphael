@@ -5,7 +5,7 @@ import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 import { ThemeProvider } from "@mui/material/styles";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import "./globals.css";
+import "./theme.css";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {

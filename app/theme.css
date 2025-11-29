@@ -3,19 +3,7 @@
 
 @theme inline {
   /* Material UI typography */
-  --font-h1: var(--mui-font-h1);
-  --font-h2: var(--mui-font-h2);
-  --font-h3: var(--mui-font-h3);
-  --font-h4: var(--mui-font-h4);
-  --font-h5: var(--mui-font-h5);
-  --font-h6: var(--mui-font-h6);
-  --font-subtitle1: var(--mui-font-subtitle1);
-  --font-subtitle2: var(--mui-font-subtitle2);
-  --font-body1: var(--mui-font-body1);
-  --font-body2: var(--mui-font-body2);
-  --font-button: var(--mui-font-button);
-  --font-caption: var(--mui-font-caption);
-  --font-overline: var(--mui-font-overline);
+  --font-roboto: var(--font-roboto);
 
   --letter-spacing-h1: -0.01562em;
   --letter-spacing-h2: -0.00833em;
@@ -23,6 +11,20 @@
   --letter-spacing-h6: 0.0075em;
   --letter-spacing-body1: 0.00938em;
   --letter-spacing-body2: 0.01071em;
+
+  --typography-h1: var(--mui-font-h1);
+  --typography-h2: var(--mui-font-h2);
+  --typography-h3: var(--mui-font-h3);
+  --typography-h4: var(--mui-font-h4);
+  --typography-h5: var(--mui-font-h5);
+  --typography-h6: var(--mui-font-h6);
+  --typography-subtitle1: var(--mui-font-subtitle1);
+  --typography-subtitle2: var(--mui-font-subtitle2);
+  --typography-body1: var(--mui-font-body1);
+  --typography-body2: var(--mui-font-body2);
+  --typography-button: var(--mui-font-button);
+  --typography-caption: var(--mui-font-caption);
+  --typography-overline: var(--mui-font-overline);
 
   /* Material UI breakpoints */
   --breakpoint-sm: 37.5rem; /* 600px */
@@ -290,7 +292,7 @@
 
 /* Material UI typography utilities */
 @utility typography-* {
-  font: --value(--font-*);
+  font: --value(--typography-*);
 }
 
 /* Material UI overlay utilities */
