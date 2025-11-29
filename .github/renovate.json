@@ -8,6 +8,13 @@
       "addLabels": ["github-actions"]
     },
     {
+      "matchCategories": ["ci"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
       "matchCategories": ["js"],
       "addLabels": ["javascript"],
       "postUpdateOptions": ["yarnDedupeHighest"]
