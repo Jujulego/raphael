@@ -1,0 +1,83 @@
+name: Checks
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: 'Lint'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5.0.0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6.0.0
+        with:
+          node-version: 22.x
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Lint
+        continue-on-error: true
+        run: yarn lint -f @microsoft/sarif -o eslint-results.sarif
+
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v4.31.0
+        with:
+          sarif_file: eslint-results.sarif
+          wait-for-processing: true
+
+  codegen:
+    name: 'Codegen'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5.0.0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6.0.0
+        with:
+          node-version: 22.x
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Codegen
+        run: yarn codegen:check
+
+  prettier:
+    name: 'Prettier'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5.0.0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6.0.0
+        with:
+          node-version: 22.x
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Prettier
+        run: yarn format:check
