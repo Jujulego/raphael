@@ -1,0 +1,28 @@
+documents:
+  - 'app/**/*.tsx'
+  - 'lib/**/*.{ts,tsx}'
+
+schema:
+  - ${GITHUB_ENDPOINT:https://docs.github.com/public/fpt/schema.docs.graphql}:
+      headers:
+        Authorization: Bearer ${GITHUB_TOKEN}
+
+generates:
+  types/graphql.ts:
+    plugins: ['typescript', 'typescript-operations']
+    config:
+      immutableTypes: true
+      nonOptionalTypeName: true
+      skipTypeNameForRoot: true
+
+      avoidOptionals:
+        field: true
+        inputValue: false
+
+      defaultScalarType: unknown
+      scalars:
+        Date: string
+        DateTime: string
+        HTML: string
+        PreciseDateTime: string
+        URI: string

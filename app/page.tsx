@@ -1,9 +1,11 @@
 "use client";
 
+import type { TypedDocumentNode } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
 import gql from "graphql-tag";
+import type { UserQuery, UserQueryVariables } from "../types/graphql";
 
-const QUERY = gql`
+const QUERY: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
   query User {
     user(login: "Jujulego") {
       id

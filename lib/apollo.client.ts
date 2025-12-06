@@ -21,6 +21,7 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   });
 
   return new ApolloClient({
+    assumeImmutableResults: true,
     cache: new InMemoryCache(),
     link: authLink.concat(httpLink),
   });
