@@ -1,14 +1,14 @@
-import { HttpLink } from "@apollo/client";
+import { HttpLink } from '@apollo/client';
 import {
   ApolloClient,
   InMemoryCache,
   registerApolloClient,
-} from "@apollo/client-integration-nextjs";
-import { SetContextLink } from "@apollo/client/link/context";
+} from '@apollo/client-integration-nextjs';
+import { SetContextLink } from '@apollo/client/link/context';
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   const httpLink = new HttpLink({
-    uri: "https://api.github.com/graphql",
+    uri: 'https://api.github.com/graphql',
   });
 
   const authLink = new SetContextLink(({ headers }) => {

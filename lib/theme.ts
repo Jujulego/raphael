@@ -10,15 +10,15 @@ export const theme = createTheme({
         primary: {
           main: '#635bff',
           light: '#827bff',
-          dark: '#453fb2'
+          dark: '#453fb2',
         },
         secondary: {
           main: '#ff9100',
           light: '#ffb74d',
           dark: '#f57c00',
         },
-      }
-    }
+      },
+    },
   },
   typography: {
     fontFamily: 'var(--font-roboto)',

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import type { TypedDocumentNode } from "@apollo/client";
-import { useQuery } from "@apollo/client/react";
-import gql from "graphql-tag";
-import type { UserQuery, UserQueryVariables } from "../types/graphql";
+import type { UserQuery, UserQueryVariables } from '@/types/graphql';
+import type { TypedDocumentNode } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
+import gql from 'graphql-tag';
 
 const QUERY: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
   query User {

@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { HttpLink } from "@apollo/client";
+import { HttpLink } from '@apollo/client';
 import {
   ApolloClient,
   ApolloNextAppProvider,
   InMemoryCache,
-} from "@apollo/client-integration-nextjs";
-import { SetContextLink } from "@apollo/client/link/context";
-import type { ReactNode } from "react";
+} from '@apollo/client-integration-nextjs';
+import { SetContextLink } from '@apollo/client/link/context';
+import type { ReactNode } from 'react';
 
 export function ApolloProvider({ children }: ApolloProviderProps) {
   return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>;
@@ -20,14 +20,14 @@ export interface ApolloProviderProps {
 // Utils
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: "https://api.github.com/graphql",
+    uri: 'https://api.github.com/graphql',
   });
 
   const authLink = new SetContextLink(({ headers }) => {
     return {
       headers: {
         ...headers,
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     };
   });
