@@ -27,6 +27,7 @@ export default defineConfig([
       parser: graphql.parser,
     },
     plugins: {
+      // @ts-expect-error To be fixed by https://github.com/graphql-hive/graphql-eslint/issues/2936
       '@graphql-eslint': graphql,
     },
     rules: graphql.configs['flat/operations-recommended'].rules,
