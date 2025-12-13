@@ -1,5 +1,6 @@
 'use client';
 
+import { actGithubAppToken } from '@/lib/github.actions';
 import { HttpLink } from '@apollo/client';
 import {
   ApolloClient,
@@ -23,11 +24,11 @@ function makeClient() {
     uri: 'https://api.github.com/graphql',
   });
 
-  const authLink = new SetContextLink(({ headers }) => {
+  const authLink = new SetContextLink(async ({ headers }) => {
     return {
       headers: {
         ...headers,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${await actGithubAppToken()}`,
       },
     };
   });

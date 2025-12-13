@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 
 const QUERY: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
   query User {
-    user(login: "Jujulego") {
+    user(login: "jujulego") {
       id
       createdAt
       updatedAt
