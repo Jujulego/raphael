@@ -1,3 +1,4 @@
+import { githubAppToken } from '@/lib/github.auth';
 import { HttpLink } from '@apollo/client';
 import {
   ApolloClient,
@@ -11,11 +12,11 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
     uri: 'https://api.github.com/graphql',
   });
 
-  const authLink = new SetContextLink(({ headers }) => {
+  const authLink = new SetContextLink(async ({ headers }) => {
     return {
       headers: {
         ...headers,
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        Authorization: `Bearer ${await githubAppToken()}`,
       },
     };
   });
