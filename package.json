@@ -10,7 +10,7 @@
     "dev": "next dev",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
-    "lint": "dotenvx run -- eslint",
+    "lint": "dotenvx run --ignore=MISSING_ENV_FILE -- eslint",
     "start": "next start"
   },
   "dependencies": {
