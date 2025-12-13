@@ -58,6 +58,8 @@ jobs:
 
       - name: Codegen
         run: yarn codegen:check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   prettier:
     name: 'Prettier'

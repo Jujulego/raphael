@@ -37114,7 +37114,9 @@ export type WorkflowsParametersInput = {
   readonly workflows: ReadonlyArray<WorkflowFileReferenceInput>;
 };
 
-export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+export type UserQueryVariables = Exact<{
+  login: Scalars['String']['input'];
+}>;
 
 
 export type UserQuery = { readonly user: { readonly __typename?: 'User', readonly id: string, readonly createdAt: string, readonly updatedAt: string, readonly avatarUrl: string, readonly login: string, readonly name: string | null, readonly url: string, readonly repositories: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number, readonly totalDiskUsage: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly archivedAt: string | null, readonly createdAt: string, readonly description: string | null, readonly descriptionHTML: string, readonly diskUsage: number | null, readonly homepageUrl: string | null, readonly id: string, readonly isArchived: boolean, readonly isDisabled: boolean, readonly isTemplate: boolean, readonly mirrorUrl: string | null, readonly name: string, readonly nameWithOwner: string, readonly pushedAt: string | null, readonly shortDescriptionHTML: string, readonly sshUrl: unknown, readonly updatedAt: string, readonly url: string, readonly visibility: RepositoryVisibility, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number }, readonly pullRequests: { readonly __typename?: 'PullRequestConnection', readonly totalCount: number } } | null> | null } } | null };

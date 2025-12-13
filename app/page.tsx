@@ -6,8 +6,8 @@ import { useQuery } from '@apollo/client/react';
 import gql from 'graphql-tag';
 
 const QUERY: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
-  query User {
-    user(login: "jujulego") {
+  query User($login: String!) {
+    user(login: $login) {
       id
       createdAt
       updatedAt
@@ -51,7 +51,7 @@ const QUERY: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
 `;
 
 export default function Home() {
-  const { loading, error, data } = useQuery(QUERY);
+  const { loading, error, data } = useQuery(QUERY, { variables: { login: 'jujulego' } });
 
   return (
     <pre>
