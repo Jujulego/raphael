@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "codegen": "graphql-codegen -c graphql.config.yml",
+    "codegen": "graphql-codegen -c graphql.config.yml -r dotenv/config",
     "codegen:check": "yarn codegen --check",
     "codegen:watch": "yarn codegen --watch",
     "dev": "next dev",
@@ -40,6 +40,7 @@
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "babel-plugin-react-compiler": "1.0.0",
+    "dotenv": "17.2.3",
     "eslint": "9.39.2",
     "eslint-config-next": "16.0.10",
     "eslint-config-prettier": "10.1.8",
