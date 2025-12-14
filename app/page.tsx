@@ -1,61 +1,30 @@
-'use client';
-
+import { getClient } from '@/lib/apollo.client';
+import RepositoryTable from '@/lib/components/RepositoryTable';
+import { REPOSITORY_TABLE } from '@/lib/components/RepositoryTable.query';
 import type { UserQuery, UserQueryVariables } from '@/types/graphql';
 import type { TypedDocumentNode } from '@apollo/client';
-import { useQuery } from '@apollo/client/react';
 import gql from 'graphql-tag';
+import { Suspense } from 'react';
 
-const QUERY: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
+const Query: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
   query User($login: String!) {
     user(login: $login) {
       id
-      createdAt
-      updatedAt
-      avatarUrl
-      login
-      name
-      url
       repositories(last: 10) {
-        totalCount
-        totalDiskUsage
-        nodes {
-          archivedAt
-          createdAt
-          description
-          descriptionHTML
-          diskUsage
-          homepageUrl
-          id
-          isArchived
-          isDisabled
-          isTemplate
-          mirrorUrl
-          name
-          nameWithOwner
-          pushedAt
-          shortDescriptionHTML
-          sshUrl
-          updatedAt
-          url
-          visibility
-          issues(states: [OPEN]) {
-            totalCount
-          }
-          pullRequests(states: [OPEN]) {
-            totalCount
-          }
-        }
+        ...RepositoryTable
       }
     }
   }
+
+  ${REPOSITORY_TABLE}
 `;
 
-export default function Home() {
-  const { loading, error, data } = useQuery(QUERY, { variables: { login: 'jujulego' } });
+export default async function Home() {
+  const { data } = await getClient().query({ query: Query, variables: { login: 'jujulego' } });
 
   return (
-    <pre>
-      <code>{JSON.stringify({ loading, error, data }, null, 2)}</code>
-    </pre>
+    <Suspense fallback={<p>Loading...</p>}>
+      {data?.user && <RepositoryTable data={data.user.repositories} />}
+    </Suspense>
   );
 }

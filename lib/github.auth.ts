@@ -1,4 +1,4 @@
-import { createAppAuth } from '@octokit/auth-app';
+import { createAppAuth, type InstallationAccessTokenAuthentication } from '@octokit/auth-app';
 
 const appAuth = createAppAuth({
   appId: process.env.GITHUB_APP_ID!,
@@ -8,7 +8,6 @@ const appAuth = createAppAuth({
   privateKey: process.env.GITHUB_PRIVATE_KEY!,
 });
 
-export async function githubAppToken() {
-  const { token } = await appAuth({ type: 'installation' });
-  return token;
+export async function githubAppToken(): Promise<InstallationAccessTokenAuthentication> {
+  return await appAuth({ type: 'installation' });
 }

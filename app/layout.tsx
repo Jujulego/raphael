@@ -1,4 +1,3 @@
-import { ApolloProvider } from '@/lib/ApolloProvider';
 import { theme } from '@/lib/theme';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -6,8 +5,8 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { ThemeProvider } from '@mui/material/styles';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
-import './theme.css';
 import type { ReactNode } from 'react';
+import './theme.css';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,7 +21,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <ApolloProvider>{children}</ApolloProvider>
+            {children}
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
