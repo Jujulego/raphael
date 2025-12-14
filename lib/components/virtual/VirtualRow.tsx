@@ -9,6 +9,7 @@ export interface VirtualRowProps extends TableRowProps {
 export default function VirtualRow({ rowIndex, sx, ...rest }: VirtualRowProps) {
   return (
     <TableRow
+      aria-rowindex={rowIndex !== undefined ? rowIndex + 1 : undefined}
       {...rest}
       sx={mergeSx(sx, {
         display: 'grid',

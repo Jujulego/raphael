@@ -6,9 +6,10 @@ import RepositoryRow from './RepositoryRow';
 import RepositoryRowSkeleton from './RepositoryRowSkeleton';
 
 // Component
-export default function RepositoryTable({ data }: RepositoryTableProps) {
+export default function RepositoryTable({ className, data }: RepositoryTableProps) {
   return (
     <VirtualTable
+      className={className}
       data={data}
       columnLayout="2fr 1fr 1fr"
       loadedCount={data.nodes?.length}
@@ -19,6 +20,7 @@ export default function RepositoryTable({ data }: RepositoryTableProps) {
 }
 
 export interface RepositoryTableProps {
+  readonly className?: string;
   readonly data: RepositoryTableFragment;
 }
 

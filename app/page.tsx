@@ -24,7 +24,7 @@ export default async function Home() {
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      {data?.user && <RepositoryTable data={data.user.repositories} />}
+      {data?.user && <RepositoryTable className="h-screen" data={data.user.repositories} />}
     </Suspense>
   );
 }

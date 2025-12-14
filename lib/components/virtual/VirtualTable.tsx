@@ -95,6 +95,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
   return (
     <Table
       ref={tableRef}
+      aria-rowcount={rowCount}
       {...tableProps}
       onScroll={handleScroll}
       sx={mergeSx(sx, {
