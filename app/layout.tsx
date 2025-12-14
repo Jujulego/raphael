@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import type { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/next';
 import './theme.css';
 
 export const metadata: Metadata = {
@@ -17,7 +18,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html className={roboto.variable} lang="en" suppressHydrationWarning>
       <body className="antialiased">
+        <Analytics />
         <InitColorSchemeScript />
+
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
