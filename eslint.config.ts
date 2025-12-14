@@ -16,7 +16,7 @@ export default defineConfig([
       'no-restricted-imports': [
         'error',
         {
-          patterns: [{ regex: '^@mui/[^/]+$' }],
+          patterns: [{ regex: '^@mui/(material|icons)+$' }],
         },
       ],
     },
