@@ -1,10 +1,10 @@
 import { getClient } from '@/lib/apollo.client';
-import RepositoryTable from '@/lib/components/RepositoryTable';
-import { REPOSITORY_TABLE } from '@/lib/components/RepositoryTable.query';
+import RepositoryTable from '@/lib/components/repositories/RepositoryTable';
 import type { UserQuery, UserQueryVariables } from '@/types/graphql';
 import type { TypedDocumentNode } from '@apollo/client';
 import gql from 'graphql-tag';
 import { Suspense } from 'react';
+import { RepositoryTableFgm } from '../lib/components/repositories/RepositoryTable.gql';
 
 const Query: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
   query User($login: String!) {
@@ -16,7 +16,7 @@ const Query: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
     }
   }
 
-  ${REPOSITORY_TABLE}
+  ${RepositoryTableFgm}
 `;
 
 export default async function Home() {
