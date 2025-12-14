@@ -22,7 +22,7 @@
     "@mui/material": "7.3.6",
     "@mui/material-nextjs": "7.3.6",
     "@octokit/auth-app": "8.1.2",
-    "@vercel/analytics": "^1.6.1",
+    "@vercel/analytics": "1.6.1",
     "graphql": "16.12.0",
     "next": "16.0.10",
     "react": "19.2.3",

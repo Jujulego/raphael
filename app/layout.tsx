@@ -18,14 +18,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html className={roboto.variable} lang="en" suppressHydrationWarning>
       <body className="antialiased">
+        <Analytics />
         <InitColorSchemeScript />
+
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
             {children}
           </ThemeProvider>
         </AppRouterCacheProvider>
-        <Analytics />
       </body>
     </html>
   );
