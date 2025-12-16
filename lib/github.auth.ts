@@ -8,6 +8,13 @@ const appAuth = createAppAuth({
   privateKey: process.env.GITHUB_PRIVATE_KEY!,
 });
 
-export async function githubAppToken(): Promise<InstallationAccessTokenAuthentication> {
-  return await appAuth({ type: 'installation' });
+export async function githubReadonlyToken(): Promise<InstallationAccessTokenAuthentication> {
+  return await appAuth({
+    type: 'installation',
+    permissions: {
+      issues: 'read',
+      metadata: 'read',
+      pull_requests: 'read',
+    },
+  });
 }

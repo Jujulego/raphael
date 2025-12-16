@@ -9,7 +9,7 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { ApolloProvider } from '../lib/ApolloProvider';
-import { githubAppToken } from '../lib/github.auth';
+import { githubReadonlyToken } from '../lib/github.auth';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const { token } = await githubAppToken();
+  const { token } = await githubReadonlyToken();
   return (
     <html className={roboto.variable} lang="en" suppressHydrationWarning>
       <body className="antialiased">
