@@ -5,10 +5,19 @@ import { RepositoryRowFgm } from './RepositoryRow';
 
 export const RepositoryTableFgm: TypedDocumentNode<RepositoryTableFragment> = gql`
   fragment RepositoryTable on RepositoryConnection {
-    totalCount
-    nodes {
-      ...RepositoryRow
+    edges {
+      cursor
+      node {
+        ...RepositoryRow
+      }
     }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
   }
 
   ${RepositoryRowFgm}

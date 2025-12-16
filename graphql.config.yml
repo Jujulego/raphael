@@ -3,7 +3,7 @@ documents:
   - 'lib/**/*.{ts,tsx}'
 
 schema:
-  - 'https://api.github.com/graphql':
+  - ${GITHUB_ENDPOINT:https://docs.github.com/public/fpt/schema.docs.graphql}:
       headers:
         Authorization: Bearer ${GITHUB_TOKEN}
 
