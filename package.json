@@ -24,7 +24,7 @@
     "@octokit/auth-app": "8.1.2",
     "@vercel/analytics": "1.6.1",
     "graphql": "16.12.0",
-    "next": "16.0.10",
+    "next": "16.1.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "rxjs": "7.8.2"
@@ -43,7 +43,7 @@
     "@types/react-dom": "19.2.3",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "9.39.2",
-    "eslint-config-next": "16.0.10",
+    "eslint-config-next": "16.1.0",
     "eslint-config-prettier": "10.1.8",
     "jiti": "2.6.1",
     "prettier": "3.7.4",
