@@ -8,17 +8,17 @@ import RepositoryRowSkeleton from './RepositoryRowSkeleton';
 
 // Component
 export default function RepositoryTable({ className, data, onLoadMore }: RepositoryTableProps) {
+  const loadedCount = data.edges?.length ?? 0;
+
   const handleIntervalChange = useCallback(
     ({ first, last }: RowInterval) => {
-      if (!data.edges) return;
       if (!onLoadMore) return;
 
-      if (last > data.edges.length) {
-        const edge = data.edges[data.edges.length - 1]!;
-        onLoadMore(edge.cursor, last - first);
+      if (last >= loadedCount) {
+        onLoadMore(data.pageInfo.endCursor, last - first);
       }
     },
-    [data.edges, onLoadMore],
+    [data.pageInfo.endCursor, loadedCount, onLoadMore],
   );
 
   return (
@@ -26,7 +26,7 @@ export default function RepositoryTable({ className, data, onLoadMore }: Reposit
       className={className}
       data={data}
       columnLayout="2fr 1fr 1fr"
-      loadedCount={data.edges?.length ?? 0}
+      loadedCount={loadedCount}
       rowCount={data.totalCount}
       row={repositoryRow}
       onIntervalChange={handleIntervalChange}
@@ -37,7 +37,7 @@ export default function RepositoryTable({ className, data, onLoadMore }: Reposit
 export interface RepositoryTableProps {
   readonly className?: string;
   readonly data: RepositoryTableFragment;
-  readonly onLoadMore?: (cursor: string, limit: number) => void;
+  readonly onLoadMore?: (cursor: string | null, limit: number) => void;
 }
 
 // Utils

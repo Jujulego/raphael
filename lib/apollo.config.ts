@@ -36,7 +36,17 @@ export function prepareClient(config: ApolloClientConfig) {
       typePolicies: {
         User: {
           fields: {
-            repositories: relayStylePagination(),
+            repositories: relayStylePagination([
+              'affiliations',
+              'hasIssuesEnabled',
+              'isArchived',
+              'isFork',
+              'isLocked',
+              'orderBy',
+              'ownerAffiliations',
+              'privacy',
+              'visibility',
+            ]),
           },
         },
       },
