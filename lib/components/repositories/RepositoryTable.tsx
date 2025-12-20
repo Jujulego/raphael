@@ -14,8 +14,8 @@ export default function RepositoryTable({ className, data, onLoadMore }: Reposit
     ({ first, last }: RowInterval) => {
       if (!onLoadMore) return;
 
-      if (last >= loadedCount) {
-        onLoadMore(data.pageInfo.endCursor, last - first);
+      if (last > loadedCount) {
+        onLoadMore(data.pageInfo.endCursor, last - Math.min(first, loadedCount));
       }
     },
     [data.pageInfo.endCursor, loadedCount, onLoadMore],

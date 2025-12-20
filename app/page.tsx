@@ -40,7 +40,7 @@ export default function Home() {
 }
 
 const Query: TypedDocumentNode<UserQuery, UserQueryVariables> = gql`
-  query User($login: String!, $cursor: String, $limit: Int = 20) {
+  query User($login: String!, $cursor: String, $limit: Int) {
     user(login: $login) {
       id
       repositories(after: $cursor, first: $limit) {
