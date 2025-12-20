@@ -1,4 +1,5 @@
 import { createAppAuth, type InstallationAccessTokenAuthentication } from '@octokit/auth-app';
+import 'server-only';
 
 const appAuth = createAppAuth({
   appId: process.env.GITHUB_APP_ID!,
