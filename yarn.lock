@@ -295,9 +295,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dotenvx/dotenvx@npm:1.51.2":
-  version: 1.51.2
-  resolution: "@dotenvx/dotenvx@npm:1.51.2"
+"@dotenvx/dotenvx@npm:1.51.4":
+  version: 1.51.4
+  resolution: "@dotenvx/dotenvx@npm:1.51.4"
   dependencies:
     commander: "npm:^11.1.0"
     dotenv: "npm:^17.2.1"
@@ -310,7 +310,7 @@ __metadata:
     which: "npm:^4.0.0"
   bin:
     dotenvx: src/cli/dotenvx.js
-  checksum: 10c0/cb20d4b33a1917266374389dc911fd531a7455a8ac84b978a02ef1b436a3c87f893c364ed520efd33c34e9ca8bb783458b784c4a960413e4d58c044e4d8ff0a2
+  checksum: 10c0/b89aa2c3aca5018755c86fa954c6224fa3eda15c0f312d5d5d4a511ec6a27c1563716de9b8669d8d98a05c216250409d52abf53720f860f4e96d905f2c095f75
   languageName: node
   linkType: hard
 
@@ -7363,7 +7363,7 @@ __metadata:
   dependencies:
     "@apollo/client": "npm:4.0.11"
     "@apollo/client-integration-nextjs": "npm:0.14.3"
-    "@dotenvx/dotenvx": "npm:1.51.2"
+    "@dotenvx/dotenvx": "npm:1.51.4"
     "@emotion/cache": "npm:11.14.0"
     "@emotion/react": "npm:11.14.0"
     "@emotion/styled": "npm:11.14.1"
