@@ -1,25 +1,13 @@
 'use client';
 
-import type { RepositoryTableFragment } from '@/types/graphql';
-import { useCallback } from 'react';
-import VirtualTable, { type RowFn, type RowInterval } from '../virtual/VirtualTable';
+import type { Repository } from '../../prisma/client';
+import VirtualTable, { type RowFn } from '../virtual/VirtualTable';
 import RepositoryRow from './RepositoryRow';
 import RepositoryRowSkeleton from './RepositoryRowSkeleton';
 
 // Component
-export default function RepositoryTable({ className, data, onLoadMore }: RepositoryTableProps) {
-  const loadedCount = data.edges?.length ?? 0;
-
-  const handleIntervalChange = useCallback(
-    ({ first, last }: RowInterval) => {
-      if (!onLoadMore) return;
-
-      if (last > loadedCount) {
-        onLoadMore(data.pageInfo.endCursor, last - Math.min(first, loadedCount));
-      }
-    },
-    [data.pageInfo.endCursor, loadedCount, onLoadMore],
-  );
+export default function RepositoryTable({ className, data, count }: RepositoryTableProps) {
+  const loadedCount = data.length;
 
   return (
     <VirtualTable
@@ -27,22 +15,21 @@ export default function RepositoryTable({ className, data, onLoadMore }: Reposit
       data={data}
       columnLayout="2fr 1fr 1fr"
       loadedCount={loadedCount}
-      rowCount={data.totalCount}
+      rowCount={count}
       row={repositoryRow}
-      onIntervalChange={handleIntervalChange}
     />
   );
 }
 
 export interface RepositoryTableProps {
   readonly className?: string;
-  readonly data: RepositoryTableFragment;
-  readonly onLoadMore?: (cursor: string | null, limit: number) => void;
+  readonly data: readonly Repository[];
+  readonly count: number;
 }
 
 // Utils
-const repositoryRow: RowFn<RepositoryTableFragment> = ({ data, index }) => {
-  const item = data.edges?.[index]?.node;
+const repositoryRow: RowFn<readonly Repository[]> = ({ data, index }) => {
+  const item = data[index];
 
   if (item) {
     return <RepositoryRow key={item.id} data={item} index={index} />;

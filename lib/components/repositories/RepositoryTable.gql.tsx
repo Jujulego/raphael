@@ -1,7 +1,7 @@
 import type { RepositoryTableFragment } from '@/types/graphql';
 import type { TypedDocumentNode } from '@apollo/client';
 import gql from 'graphql-tag';
-import { RepositoryRowFgm } from './RepositoryRow';
+import { RepositoryRowFgm } from './GqlRepositoryRow';
 
 export const RepositoryTableFgm: TypedDocumentNode<RepositoryTableFragment> = gql`
   fragment RepositoryTable on RepositoryConnection {
