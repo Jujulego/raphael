@@ -10,10 +10,10 @@ export const RepositoryItem: TypedDocumentNode<RepositoryItemFragment> = gql`
       id
       login
     }
-    issues {
+    issues(states: [OPEN]) {
       totalCount
     }
-    pullRequests {
+    pullRequests(states: [OPEN]) {
       totalCount
     }
   }
