@@ -36153,13 +36153,23 @@ export type WorkflowsParametersInput = {
 
 export type _Entity = Issue;
 
-export type LoadUserRepositoriesQueryVariables = Exact<{
+export type RepositoryItemFragment = { readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly owner:
+    | { readonly __typename?: 'Organization', readonly id: string, readonly login: string }
+    | { readonly __typename?: 'User', readonly id: string, readonly login: string }
+  , readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number }, readonly pullRequests: { readonly __typename?: 'PullRequestConnection', readonly totalCount: number } };
+
+export type RepositoryPageFragment = { readonly __typename?: 'RepositoryConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'RepositoryEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly owner:
+        | { readonly __typename?: 'Organization', readonly id: string, readonly login: string }
+        | { readonly __typename?: 'User', readonly id: string, readonly login: string }
+      , readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number }, readonly pullRequests: { readonly __typename?: 'PullRequestConnection', readonly totalCount: number } } | null } | null> | null, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string | null, readonly endCursor: string | null } };
+
+export type FindUserRepositoriesQueryVariables = Exact<{
   login: Scalars['String']['input'];
   cursor?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type LoadUserRepositoriesQuery = { readonly user: { readonly __typename?: 'User', readonly id: string, readonly repositories: { readonly __typename?: 'RepositoryConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly owner:
-          | { readonly __typename?: 'Organization', readonly id: string, readonly login: string }
-          | { readonly __typename?: 'User', readonly id: string, readonly login: string }
-        , readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number }, readonly pullRequests: { readonly __typename?: 'PullRequestConnection', readonly totalCount: number } } | null> | null, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor: string | null } } } | null };
+export type FindUserRepositoriesQuery = { readonly user: { readonly __typename?: 'User', readonly id: string, readonly repositories: { readonly __typename?: 'RepositoryConnection', readonly edges: ReadonlyArray<{ readonly __typename?: 'RepositoryEdge', readonly cursor: string, readonly node: { readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly owner:
+            | { readonly __typename?: 'Organization', readonly id: string, readonly login: string }
+            | { readonly __typename?: 'User', readonly id: string, readonly login: string }
+          , readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number }, readonly pullRequests: { readonly __typename?: 'PullRequestConnection', readonly totalCount: number } } | null } | null> | null, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly hasPreviousPage: boolean, readonly startCursor: string | null, readonly endCursor: string | null } } } | null };
