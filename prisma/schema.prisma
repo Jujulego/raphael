@@ -6,3 +6,13 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Repository {
+  id               String @id
+  owner            String
+  name             String
+  issueCount       Int
+  pullRequestCount Int
+
+  @@unique(name: "github_ref", [owner, name])
+}
