@@ -1,11 +1,11 @@
 import prisma from '@/lib/prisma.client';
 import { loadUserRepositories } from '@/lib/repositories/repositories.gql';
-import { updateTag } from 'next/dist/server/web/spec-extension/revalidate';
+import { revalidateTag, updateTag } from 'next/dist/server/web/spec-extension/revalidate';
 
 export async function GET(req: Request) {
   const token = req.headers.get('Authorization');
 
-  if (token !== process.env.CRON_SECRET) {
+  if (token !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response('Unauthorized', { status: 401 });
   }
 
@@ -39,7 +39,7 @@ export async function GET(req: Request) {
     });
   }
 
-  updateTag('repositories');
+  revalidateTag('repositories', 'max');
 
   return new Response();
 }
