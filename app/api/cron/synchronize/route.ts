@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma.client';
 import { loadUserRepositories } from '@/lib/repositories/repositories.gql';
+import { updateTag } from 'next/dist/server/web/spec-extension/revalidate';
 
 export async function GET(req: Request) {
   const token = req.headers.get('Authorization');
@@ -37,6 +38,8 @@ export async function GET(req: Request) {
       },
     });
   }
+
+  updateTag('repositories');
 
   return new Response();
 }
