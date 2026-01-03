@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "jill run 'build:prisma && build:next'",
-    "build:prisma": "yarn prisma generate",
+    "build": "jill run 'prisma:generate && prisma:deploy && build:next'",
     "build:next": "next build",
     "codegen": "dotenvx run --ignore=MISSING_ENV_FILE -- graphql-codegen -c graphql.config.yml",
     "codegen:check": "yarn codegen --check",
@@ -14,6 +13,8 @@
     "format:write": "prettier --write .",
     "lint": "dotenvx run --ignore=MISSING_ENV_FILE -- eslint",
     "prisma": "dotenvx run --ignore=MISSING_ENV_FILE -- prisma",
+    "prisma:deploy": "yarn prisma migrate deploy",
+    "prisma:generate": "yarn prisma generate",
     "start": "next start"
   },
   "dependencies": {
