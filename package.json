@@ -28,6 +28,7 @@
     "@octokit/auth-app": "8.1.2",
     "@prisma/adapter-pg": "7.2.0",
     "@prisma/client": "7.2.0",
+    "@sentry/nextjs": "10.32.1",
     "@vercel/analytics": "1.6.1",
     "graphql": "16.12.0",
     "kyrielle": "2.8.3",

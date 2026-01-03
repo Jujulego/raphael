@@ -1,13 +1,10 @@
-import { theme } from '@/lib/theme';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
-import CssBaseline from '@mui/material/CssBaseline';
-import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
-import { ThemeProvider } from '@mui/material/styles';
+import { roboto } from '@/lib/fonts';
+import MuiProvider from '@/lib/MuiProvider';
 import { Analytics } from '@vercel/analytics/next';
-import './theme.css';
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
 import type { ReactNode } from 'react';
+
+import './theme.css';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,15 +16,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html className={roboto.variable} lang="en" suppressHydrationWarning>
       <body className="antialiased">
         <Analytics />
-        <InitColorSchemeScript />
 
-        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-
-            {children}
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <MuiProvider>{children}</MuiProvider>
       </body>
     </html>
   );
@@ -36,11 +26,3 @@ export default function RootLayout({ children }: RootLayoutProps) {
 export interface RootLayoutProps {
   readonly children: ReactNode;
 }
-
-// Utils
-const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto',
-});
