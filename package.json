@@ -44,7 +44,7 @@
     "@graphql-codegen/typescript": "5.0.7",
     "@graphql-codegen/typescript-operations": "5.0.7",
     "@graphql-eslint/eslint-plugin": "4.4.0",
-    "@jujulego/jill": "3.0.6",
+    "@jujulego/jill": "3.0.7",
     "@microsoft/eslint-formatter-sarif": "3.1.0",
     "@parcel/watcher": "2.5.1",
     "@tailwindcss/postcss": "4.1.18",
