@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma.client';
 import { userRepositories } from '@/lib/repositories/UserRepositories';
-import { withMonitor } from '@sentry/core';
+import { flush, withMonitor } from '@sentry/core';
 import { logger } from '@sentry/nextjs';
 import { revalidateTag } from 'next/cache';
 
@@ -15,9 +15,11 @@ export async function GET(req: Request) {
     'synchronize',
     async () => {
       const promises: Promise<unknown>[] = [];
+      const ids = new Set<string>();
 
       for await (const repository of userRepositories({ login: 'jujulego' })) {
         logger.info(`Upserting repository ${repository.id}`);
+        ids.add(repository.id);
 
         promises.push(
           prisma.repository.upsert({
@@ -43,6 +45,15 @@ export async function GET(req: Request) {
 
       await Promise.all(promises);
 
+      // Remove old ones
+      await prisma.repository.deleteMany({
+        where: {
+          NOT: {
+            id: { in: Array.from(ids) },
+          },
+        },
+      });
+
       revalidateTag('repositories', 'max');
     },
     {
@@ -54,6 +65,8 @@ export async function GET(req: Request) {
       maxRuntime: 15,
     },
   );
+
+  await flush();
 
   return new Response();
 }

@@ -14,7 +14,8 @@ export function prepareClient(config: ApolloClientConfig) {
     return {
       headers: {
         ...headers,
-        Authorization: `Bearer ${await config.token()}`,
+        'Authorization': `Bearer ${await config.token()}`,
+        'X-Github-Next-Global-ID': '1',
       },
     };
   });
