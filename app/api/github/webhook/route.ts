@@ -6,13 +6,14 @@ const webhooks = new Webhooks({
 });
 
 export async function POST(req: Request) {
-  const requestId = req.headers.get('X-GitHub-Delivery');
+  const eventId = req.headers.get('X-GitHub-Delivery');
   const eventName = req.headers.get('X-GitHub-Event');
   const signature = req.headers.get('X-Hub-Signature-256');
 
-  const payload = await req.json();
+  const payload = await req.text();
 
-  if (!requestId) return new Response('Missing request id', { status: 400 });
+  // Check headers
+  if (!eventId) return new Response('Missing event id', { status: 400 });
   if (!eventName) return new Response('Missing event name', { status: 400 });
   if (!signature) return new Response('Missing signature', { status: 400 });
 
@@ -20,22 +21,23 @@ export async function POST(req: Request) {
   const isValid = await webhooks.verify(payload, signature);
 
   if (!isValid) {
-    console.log('Refusing webhook: invalid signature');
-    return new Response('', { status: 401 });
+    return new Response('Invalid signature', { status: 401 });
   }
 
+  // Handle event
   await startSpan(
     {
       op: 'github.event',
       name: eventName,
-      attributes: { 'event.id': requestId, 'event.name': eventName, 'event.payload': payload },
+      attributes: { 'event.id': eventId, 'event.name': eventName, 'event.payload': payload },
     },
-    () =>
-      webhooks.receive({
-        id: requestId,
+    async () => {
+      await webhooks.receive({
+        id: eventId,
         name: eventName,
-        payload,
-      } as EmitterWebhookEvent),
+        payload: JSON.parse(payload),
+      } as EmitterWebhookEvent);
+    },
   );
 
   return new Response();
