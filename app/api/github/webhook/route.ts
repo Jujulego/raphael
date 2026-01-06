@@ -6,9 +6,9 @@ const webhooks = new Webhooks({
 });
 
 export async function POST(req: Request) {
-  const requestId = req.headers.get('x-request-id');
-  const eventName = req.headers.get('x-github-event');
-  const signature = req.headers.get('x-hub-signature-256');
+  const requestId = req.headers.get('X-GitHub-Delivery');
+  const eventName = req.headers.get('X-GitHub-Event');
+  const signature = req.headers.get('X-Hub-Signature-256');
 
   const payload = await req.json();
 
