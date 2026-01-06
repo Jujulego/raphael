@@ -1,5 +1,6 @@
 import { type EmitterWebhookEvent, Webhooks } from '@octokit/webhooks';
 import { startSpan } from '@sentry/nextjs';
+import { timingSafeEqual } from 'node:crypto';
 
 const webhooks = new Webhooks({
   secret: process.env.GITHUB_WEBHOOK_SECRET!,
@@ -10,7 +11,7 @@ export async function POST(req: Request) {
   const eventName = req.headers.get('X-GitHub-Event');
   const signature = req.headers.get('X-Hub-Signature-256');
 
-  const payload = await req.text();
+  const payload = await req.json();
 
   // Check headers
   if (!eventId) return new Response('Missing event id', { status: 400 });
@@ -18,9 +19,10 @@ export async function POST(req: Request) {
   if (!signature) return new Response('Missing signature', { status: 400 });
 
   // Check signature
-  const isValid = await webhooks.verify(payload, signature);
+  const expected = Buffer.from(await webhooks.sign(payload));
+  const actual = Buffer.from(signature.split('=')[1]);
 
-  if (!isValid) {
+  if (!timingSafeEqual(expected, actual)) {
     return new Response('Invalid signature', { status: 401 });
   }
 
@@ -35,7 +37,7 @@ export async function POST(req: Request) {
       await webhooks.receive({
         id: eventId,
         name: eventName,
-        payload: JSON.parse(payload),
+        payload: payload,
       } as EmitterWebhookEvent);
     },
   );
