@@ -1,7 +1,6 @@
 import prisma from '@/lib/prisma.client';
 import { userRepositories } from '@/lib/repositories/UserRepositories';
-import { flush, withMonitor } from '@sentry/core';
-import { logger } from '@sentry/nextjs';
+import { flush, logger, withMonitor } from '@sentry/nextjs';
 import { revalidateTag } from 'next/cache';
 
 export async function GET(req: Request) {
