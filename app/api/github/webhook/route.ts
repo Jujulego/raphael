@@ -5,7 +5,7 @@ const webhooks = new Webhooks({
   secret: process.env.GITHUB_WEBHOOK_SECRET!,
 });
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   const requestId = req.headers.get('x-request-id');
   const eventName = req.headers.get('x-github-event');
   const signature = req.headers.get('x-hub-signature-256');
