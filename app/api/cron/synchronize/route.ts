@@ -2,8 +2,11 @@ import prisma from '@/lib/prisma.client';
 import { userRepositories } from '@/lib/repositories/UserRepositories';
 import { flush, logger, withMonitor } from '@sentry/nextjs';
 import { revalidateTag } from 'next/cache';
+import { after } from 'next/server';
 
 export async function GET(req: Request) {
+  after(() => flush());
+
   const token = req.headers.get('Authorization');
 
   if (token !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -64,8 +67,6 @@ export async function GET(req: Request) {
       maxRuntime: 15,
     },
   );
-
-  await flush();
 
   return new Response();
 }

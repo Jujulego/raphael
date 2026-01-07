@@ -1,5 +1,6 @@
 import { type EmitterWebhookEvent, Webhooks } from '@octokit/webhooks';
-import { startSpan } from '@sentry/nextjs';
+import { flush, startSpan } from '@sentry/nextjs';
+import { after } from 'next/server';
 import { timingSafeEqual } from 'node:crypto';
 
 const webhooks = new Webhooks({
@@ -7,6 +8,8 @@ const webhooks = new Webhooks({
 });
 
 export async function POST(req: Request) {
+  after(() => flush());
+
   const eventId = req.headers.get('X-GitHub-Delivery');
   const eventName = req.headers.get('X-GitHub-Event');
   const signature = req.headers.get('X-Hub-Signature-256');
