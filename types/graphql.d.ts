@@ -36151,7 +36151,7 @@ export type WorkflowsParametersInput = {
   readonly workflows: ReadonlyArray<WorkflowFileReferenceInput>;
 };
 
-export type _Entity = Issue;
+export type _Entity = Issue | Repository;
 
 export type RepositoryItemFragment = { readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly owner:
     | { readonly __typename?: 'Organization', readonly id: string, readonly login: string }
