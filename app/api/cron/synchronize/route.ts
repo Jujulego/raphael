@@ -1,6 +1,10 @@
+import { app } from '@/lib/github/octokit.app';
 import prisma from '@/lib/prisma.client';
-import { userRepositories } from '@/lib/repositories/UserRepositories';
-import { flush, logger, withMonitor } from '@sentry/nextjs';
+import type { RepoOpenPullCountQuery } from '@/lib/types/graphql';
+import { Prisma } from '@prisma/client/extension';
+import { flush, withMonitor } from '@sentry/nextjs';
+import { print } from 'graphql';
+import gql from 'graphql-tag';
 import { revalidateTag } from 'next/cache';
 import { after } from 'next/server';
 
@@ -16,47 +20,31 @@ export async function GET(req: Request) {
   await withMonitor(
     'synchronize',
     async () => {
-      const promises: Promise<unknown>[] = [];
-      // const ids = new Set<string>();
+      const operations: Prisma.PrismaPromise<unknown>[] = [];
 
-      for await (const repository of userRepositories({ login: 'jujulego' })) {
-        logger.info(`Upserting repository ${repository.id}`);
-        // ids.add(repository.id);
+      for await (const { octokit, repository } of app.eachRepository.iterator()) {
+        const result = await octokit.graphql<RepoOpenPullCountQuery>(print(RepoOpenPullCount), {
+          owner: repository.owner.login,
+          name: repository.name,
+        });
 
-        promises.push(
-          prisma.repository.upsert({
+        operations.push(
+          prisma.repository.update({
             where: {
               fullName: {
                 owner: repository.owner.login,
                 name: repository.name,
               },
             },
-            update: {
-              name: repository.name,
-              owner: repository.owner.login,
-              issueCount: repository.issues.totalCount,
-              pullRequestCount: repository.pullRequests.totalCount,
-            },
-            create: {
-              name: repository.name,
-              owner: repository.owner.login,
-              issueCount: repository.issues.totalCount,
-              pullRequestCount: repository.pullRequests.totalCount,
+            data: {
+              issueCount: repository.open_issues_count,
+              pullRequestCount: result.repository!.pullRequests.totalCount,
             },
           }),
         );
       }
 
-      await Promise.all(promises);
-
-      // Remove old ones
-      // await prisma.repository.deleteMany({
-      //   where: {
-      //     NOT: {
-      //       id: { in: Array.from(ids) },
-      //     },
-      //   },
-      // });
+      await prisma.$transaction(operations);
 
       revalidateTag('repositories', 'max');
     },
@@ -72,3 +60,14 @@ export async function GET(req: Request) {
 
   return new Response();
 }
+
+const RepoOpenPullCount = gql`
+  query RepoOpenPullCount($owner: String!, $name: String!) {
+    repository(owner: $owner, name: $name) {
+      id
+      pullRequests(first: 0, states: [OPEN]) {
+        totalCount
+      }
+    }
+  }
+`;

@@ -1,4 +1,4 @@
-import { webhooks } from '@/lib/github/webhooks';
+import { webhooks } from '@/lib/github/octokit.webhooks';
 import { type EmitterWebhookEvent } from '@octokit/webhooks';
 import { flush, startSpan } from '@sentry/nextjs';
 import { after } from 'next/server';

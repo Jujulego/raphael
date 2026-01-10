@@ -1,5 +1,5 @@
 documents:
-  - 'app/**/*.tsx'
+  - 'app/**/*.{ts,tsx}'
   - 'lib/**/*.{ts,tsx}'
 
 schema:
