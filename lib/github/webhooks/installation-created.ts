@@ -37,7 +37,7 @@ export async function installationCreatedHook({
         repository: {
           connectOrCreate: {
             where: {
-              owner_name: {
+              fullName: {
                 owner,
                 name,
               },

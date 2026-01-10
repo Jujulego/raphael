@@ -26,7 +26,7 @@ export async function GET(req: Request) {
         promises.push(
           prisma.repository.upsert({
             where: {
-              owner_name: {
+              fullName: {
                 owner: repository.owner.login,
                 name: repository.name,
               },

@@ -28,14 +28,14 @@ model Repository {
 
   installations RepositoriesOnInstallations[]
 
-  @@id([owner, name])
+  @@id([owner, name], name: "fullName")
 }
 
 model RepositoriesOnInstallations {
-  installation   Installation @relation(fields: [installationId], references: [id])
+  installation   Installation @relation(fields: [installationId], references: [id], onDelete: Cascade)
   installationId Int
 
-  repository      Repository @relation(fields: [repositoryOwner, repositoryName], references: [owner, name])
+  repository      Repository @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], onDelete: Cascade)
   repositoryOwner String
   repositoryName  String
 
