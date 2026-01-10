@@ -8,11 +8,10 @@ datasource db {
 }
 
 model Repository {
-  id               String @id
   owner            String
   name             String
-  issueCount       Int
-  pullRequestCount Int
+  issueCount       Int    @default(0)
+  pullRequestCount Int    @default(0)
 
-  @@unique(name: "github_ref", [owner, name])
+  @@id([owner, name])
 }

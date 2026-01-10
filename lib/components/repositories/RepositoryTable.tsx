@@ -32,7 +32,8 @@ const repositoryRow: RowFn<readonly Repository[]> = ({ data, index }) => {
   const item = data[index];
 
   if (item) {
-    return <RepositoryRow key={item.id} data={item} index={index} />;
+    const key = `${item.owner}/${item.name}`;
+    return <RepositoryRow key={key} data={item} index={index} />;
   }
 
   return <RepositoryRowSkeleton key={index} index={index} />;

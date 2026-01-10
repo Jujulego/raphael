@@ -1,4 +1,4 @@
-import { githubReadonlyToken } from '@/lib/github.auth';
+import { githubReadonlyToken } from '@/lib/github/github.auth';
 import { registerApolloClient } from '@apollo/client-integration-nextjs';
 import { prepareClient } from './apollo.config';
 

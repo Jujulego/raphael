@@ -1,6 +1,6 @@
 'use client';
 
-import { actGithubReadonlyToken } from '@/lib/github.actions';
+import { actGithubReadonlyToken } from '@/lib/github/github.actions';
 import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs';
 import type { InstallationAccessTokenAuthentication } from '@octokit/auth-app';
 import { type ReactNode, useCallback } from 'react';

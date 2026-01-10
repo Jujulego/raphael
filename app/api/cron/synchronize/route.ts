@@ -17,16 +17,19 @@ export async function GET(req: Request) {
     'synchronize',
     async () => {
       const promises: Promise<unknown>[] = [];
-      const ids = new Set<string>();
+      // const ids = new Set<string>();
 
       for await (const repository of userRepositories({ login: 'jujulego' })) {
         logger.info(`Upserting repository ${repository.id}`);
-        ids.add(repository.id);
+        // ids.add(repository.id);
 
         promises.push(
           prisma.repository.upsert({
             where: {
-              id: repository.id,
+              owner_name: {
+                owner: repository.owner.login,
+                name: repository.name,
+              },
             },
             update: {
               name: repository.name,
@@ -35,7 +38,6 @@ export async function GET(req: Request) {
               pullRequestCount: repository.pullRequests.totalCount,
             },
             create: {
-              id: repository.id,
               name: repository.name,
               owner: repository.owner.login,
               issueCount: repository.issues.totalCount,
@@ -48,13 +50,13 @@ export async function GET(req: Request) {
       await Promise.all(promises);
 
       // Remove old ones
-      await prisma.repository.deleteMany({
-        where: {
-          NOT: {
-            id: { in: Array.from(ids) },
-          },
-        },
-      });
+      // await prisma.repository.deleteMany({
+      //   where: {
+      //     NOT: {
+      //       id: { in: Array.from(ids) },
+      //     },
+      //   },
+      // });
 
       revalidateTag('repositories', 'max');
     },
