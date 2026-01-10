@@ -1,4 +1,4 @@
-import type { RepositoryPageFragment } from '@/types/graphql';
+import type { RepositoryPageFragment } from '@/lib/types/graphql';
 import type { TypedDocumentNode } from '@apollo/client';
 import gql from 'graphql-tag';
 import { RepositoryItem } from './RepositoryItem';

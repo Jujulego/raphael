@@ -3,12 +3,12 @@ documents:
   - 'lib/**/*.{ts,tsx}'
 
 schema:
-  - ${GITHUB_ENDPOINT:https://docs.github.com/public/fpt/schema.docs.graphql}:
+  - 'https://api.github.com/graphql':
       headers:
-        Authorization: Bearer ${GITHUB_TOKEN}
+        Authorization: Bearer ${GITHUB_SCHEMA_TOKEN}
 
 generates:
-  types/graphql.d.ts:
+  lib/types/graphql.d.ts:
     plugins: ['typescript', 'typescript-operations']
     config:
       immutableTypes: true

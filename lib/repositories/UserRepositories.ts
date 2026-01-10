@@ -3,7 +3,7 @@ import type {
   FindUserRepositoriesQueryVariables,
   RepositoryItemFragment,
   RepositoryPageFragment,
-} from '@/types/graphql';
+} from '@/lib/types/graphql';
 import type { TypedDocumentNode } from '@apollo/client';
 import gql from 'graphql-tag';
 import { getClient } from '../apollo.client';

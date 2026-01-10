@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "jill run 'prisma:generate && prisma:deploy && build:next'",
+    "build": "jill run '(prisma:generate // prisma:deploy // codegen) && build:next'",
     "build:next": "next build",
     "codegen": "dotenvx run --ignore=MISSING_ENV_FILE -- graphql-codegen -c graphql.config.yml",
     "codegen:check": "yarn codegen --check",
