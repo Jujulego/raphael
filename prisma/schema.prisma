@@ -7,11 +7,37 @@ datasource db {
   provider = "postgresql"
 }
 
+enum InstallationTargetType {
+  User
+}
+
+model Installation {
+  id           Int                    @id
+  target_id    Int
+  target_type  InstallationTargetType
+  target_login String
+
+  repositories RepositoriesOnInstallations[]
+}
+
 model Repository {
   owner            String
   name             String
   issueCount       Int    @default(0)
   pullRequestCount Int    @default(0)
 
+  installations RepositoriesOnInstallations[]
+
   @@id([owner, name])
+}
+
+model RepositoriesOnInstallations {
+  installation   Installation @relation(fields: [installationId], references: [id])
+  installationId Int
+
+  repository      Repository @relation(fields: [repositoryOwner, repositoryName], references: [owner, name])
+  repositoryOwner String
+  repositoryName  String
+
+  @@id([installationId, repositoryOwner, repositoryName])
 }

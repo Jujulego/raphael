@@ -1,10 +1,7 @@
-import { type EmitterWebhookEvent, Webhooks } from '@octokit/webhooks';
+import { webhooks } from '@/lib/github/webhooks';
+import { type EmitterWebhookEvent } from '@octokit/webhooks';
 import { flush, startSpan } from '@sentry/nextjs';
 import { after } from 'next/server';
-
-const webhooks = new Webhooks({
-  secret: process.env.GITHUB_WEBHOOK_SECRET!,
-});
 
 export async function POST(req: Request) {
   after(() => flush());
