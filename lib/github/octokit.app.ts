@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { App } from '@octokit/app';
 
 export const app = new App({

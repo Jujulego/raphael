@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { Webhooks } from '@octokit/webhooks';
 import { installationCreatedHook } from './webhooks/installation-created';
 
