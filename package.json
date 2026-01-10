@@ -5,14 +5,14 @@
   "scripts": {
     "build": "jill run '(prisma:generate // prisma:deploy // codegen) && build:next'",
     "build:next": "next build",
-    "codegen": "dotenvx run --ignore=MISSING_ENV_FILE -- graphql-codegen -c graphql.config.yml",
+    "codegen": "graphql-codegen -r dotenv/config -c graphql.config.yml",
     "codegen:check": "yarn codegen --check",
     "codegen:watch": "yarn codegen --watch",
     "dev": "next dev",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "eslint",
-    "prisma": "dotenvx run --ignore=MISSING_ENV_FILE -- prisma",
+    "prisma": "prisma",
     "prisma:deploy": "yarn prisma migrate deploy",
     "prisma:generate": "yarn prisma generate",
     "start": "next start"
@@ -40,7 +40,6 @@
     "rxjs": "7.8.2"
   },
   "devDependencies": {
-    "@dotenvx/dotenvx": "1.51.4",
     "@graphql-codegen/cli": "6.1.0",
     "@graphql-codegen/typescript": "5.0.7",
     "@graphql-codegen/typescript-operations": "5.0.7",
