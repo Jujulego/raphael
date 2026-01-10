@@ -11,7 +11,7 @@
     "dev": "next dev",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
-    "lint": "dotenvx run --ignore=MISSING_ENV_FILE -- eslint",
+    "lint": "eslint",
     "prisma": "dotenvx run --ignore=MISSING_ENV_FILE -- prisma",
     "prisma:deploy": "yarn prisma migrate deploy",
     "prisma:generate": "yarn prisma generate",
