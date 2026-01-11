@@ -10,3 +10,5 @@ export const app = new App({
     clientSecret: process.env.GITHUB_CLIENT_SECRET!,
   },
 });
+
+export type AppOctokit = (typeof app)['octokit'];
