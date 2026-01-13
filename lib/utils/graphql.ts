@@ -28,6 +28,7 @@ export function graphql(
       op: 'graphql',
       name: queryName,
       attributes: {
+        'graphql.name': queryName,
         'graphql.type': queryType,
         'graphql.variables': variables && JSON.stringify(variables),
       },
