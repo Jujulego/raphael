@@ -19,12 +19,14 @@ export async function refreshRepository(octokit: Octokit, owner: string, name: s
     update: {
       issueCount: data.repository!.issues.totalCount,
       pullRequestCount: data.repository!.pullRequests.totalCount,
+      pushedAt: data.repository!.pushedAt!,
     },
     create: {
       owner,
       name,
       issueCount: data.repository!.issues.totalCount,
       pullRequestCount: data.repository!.pullRequests.totalCount,
+      pushedAt: data.repository!.pushedAt!,
     },
   });
 
@@ -39,6 +41,7 @@ const RefreshRepository: TypedDocumentNode<
   query RefreshRepository($owner: String!, $name: String!) {
     repository(owner: $owner, name: $name) {
       id
+      pushedAt
       issues(first: 0, states: [OPEN]) {
         totalCount
       }
