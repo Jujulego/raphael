@@ -1,9 +1,11 @@
-import 'server-only';
-import { installationDeletedHook } from '@/lib/github/webhooks/installation.deleted';
-import { installationRepositoriesHook } from '@/lib/github/webhooks/installation-repositories.added';
-
 import { Webhooks } from '@octokit/webhooks';
+import { installationRepositoriesHook } from './webhooks/installation-repositories';
 import { installationCreatedHook } from './webhooks/installation.created';
+import { installationDeletedHook } from './webhooks/installation.deleted';
+import { pullRequestClosedHook } from './webhooks/pull-request.closed';
+import { pullRequestOpenedHook } from './webhooks/pull-request.opened';
+
+import 'server-only';
 
 export const webhooks = new Webhooks({
   secret: process.env.GITHUB_WEBHOOK_SECRET!,
@@ -12,3 +14,6 @@ export const webhooks = new Webhooks({
 webhooks.on('installation.created', installationCreatedHook);
 webhooks.on('installation.deleted', installationDeletedHook);
 webhooks.on('installation_repositories', installationRepositoriesHook);
+webhooks.on('pull_request.closed', pullRequestClosedHook);
+webhooks.on('pull_request.opened', pullRequestOpenedHook);
+webhooks.on('pull_request.reopened', pullRequestOpenedHook);
