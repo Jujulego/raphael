@@ -17,6 +17,7 @@ webhooks.on('installation.created', installationCreatedHook);
 webhooks.on('installation.deleted', installationDeletedHook);
 webhooks.on('installation_repositories', installationRepositoriesHook);
 webhooks.on('issues.closed', issuesClosedHook);
+webhooks.on('issues.deleted', issuesClosedHook);
 webhooks.on('issues.opened', issuesOpenedHook);
 webhooks.on('issues.reopened', issuesOpenedHook);
 webhooks.on('pull_request.closed', pullRequestClosedHook);
