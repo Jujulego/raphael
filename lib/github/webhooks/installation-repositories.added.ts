@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma.client';
 import type {
-  RepositoriesOnInstallationsCreateWithoutInstallationInput,
+  RepositoriesOnInstallationsUpsertWithWhereUniqueWithoutInstallationInput,
   RepositoriesOnInstallationsWhereUniqueInput,
 } from '@/lib/prisma/models/RepositoriesOnInstallations';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
@@ -8,14 +8,13 @@ import type { EmitterWebhookEvent } from '@octokit/webhooks';
 export async function installationRepositoriesHook({
   payload,
 }: EmitterWebhookEvent<'installation_repositories'>) {
-  const added: RepositoriesOnInstallationsCreateWithoutInstallationInput[] = [];
+  const added: RepositoriesOnInstallationsUpsertWithWhereUniqueWithoutInstallationInput[] = [];
   const removed: RepositoriesOnInstallationsWhereUniqueInput[] = [];
 
   // Added repositories
   for (const repository of payload.repositories_added) {
     const [owner, name] = repository.full_name.split('/');
-
-    added.push({
+    const data = {
       repository: {
         connectOrCreate: {
           where: {
@@ -30,6 +29,18 @@ export async function installationRepositoriesHook({
           },
         },
       },
+    };
+
+    added.push({
+      where: {
+        installationId_repositoryOwner_repositoryName: {
+          installationId: payload.installation.id,
+          repositoryOwner: owner,
+          repositoryName: name,
+        },
+      },
+      update: data,
+      create: data,
     });
   }
 
@@ -55,7 +66,7 @@ export async function installationRepositoriesHook({
     },
     data: {
       repositories: {
-        create: added,
+        upsert: added,
         delete: removed,
       },
     },
