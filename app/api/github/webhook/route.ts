@@ -30,7 +30,7 @@ export async function POST(req: Request) {
   await startSpan(
     {
       op: 'github.event',
-      name: eventName,
+      name: parsed.action ? `${eventName}.${parsed.action}` : eventName,
       attributes: { 'event.id': eventId, 'event.name': eventName, 'event.action': parsed.action },
     },
     async () => {
