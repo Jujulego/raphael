@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Repository" ALTER COLUMN "pushedAt" DROP NOT NULL,
+ALTER COLUMN "pushedAt" DROP DEFAULT;

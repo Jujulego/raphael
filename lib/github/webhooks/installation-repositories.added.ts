@@ -1,6 +1,9 @@
+import { app } from '@/lib/github/octokit.app';
+import { getRepository } from '@/lib/github/repositories/get-repository';
+import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
 import prisma from '@/lib/prisma.client';
 import type {
-  RepositoriesOnInstallationsUpsertWithWhereUniqueWithoutInstallationInput,
+  RepositoriesOnInstallationsUpsertWithWhereUniqueWithoutInstallationInput as RepositoriesOnInstallationsUpsert,
   RepositoriesOnInstallationsWhereUniqueInput,
 } from '@/lib/prisma/models/RepositoriesOnInstallations';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
@@ -8,43 +11,68 @@ import type { EmitterWebhookEvent } from '@octokit/webhooks';
 export async function installationRepositoriesHook({
   payload,
 }: EmitterWebhookEvent<'installation_repositories'>) {
-  const added: RepositoriesOnInstallationsUpsertWithWhereUniqueWithoutInstallationInput[] = [];
-  const removed: RepositoriesOnInstallationsWhereUniqueInput[] = [];
+  const octokit = await app.getInstallationOctokit(payload.installation.id);
 
   // Added repositories
+  const added: Promise<RepositoriesOnInstallationsUpsert>[] = [];
+
   for (const repository of payload.repositories_added) {
-    const [owner, name] = repository.full_name.split('/');
-    const data = {
-      repository: {
-        connectOrCreate: {
+    const { owner, name } = splitRepositoryFullName(repository.full_name);
+
+    added.push(
+      (async () => {
+        const data = await getRepository(octokit, owner, name);
+
+        return {
           where: {
-            fullName: {
-              owner,
-              name,
+            installationId_repositoryOwner_repositoryName: {
+              installationId: payload.installation.id,
+              repositoryOwner: owner,
+              repositoryName: name,
+            },
+          },
+          update: {
+            repository: {
+              update: {
+                where: {
+                  owner,
+                  name,
+                },
+                data: {
+                  pushedAt: data?.pushedAt,
+                  issueCount: data?.issueCount ?? 0,
+                  pullRequestCount: data?.pullRequestCount ?? 0,
+                },
+              },
             },
           },
           create: {
-            owner,
-            name,
+            repository: {
+              connectOrCreate: {
+                where: {
+                  fullName: {
+                    owner,
+                    name,
+                  },
+                },
+                create: {
+                  owner,
+                  name,
+                  pushedAt: data?.pushedAt,
+                  issueCount: data?.issueCount,
+                  pullRequestCount: data?.pullRequestCount,
+                },
+              },
+            },
           },
-        },
-      },
-    };
-
-    added.push({
-      where: {
-        installationId_repositoryOwner_repositoryName: {
-          installationId: payload.installation.id,
-          repositoryOwner: owner,
-          repositoryName: name,
-        },
-      },
-      update: data,
-      create: data,
-    });
+        };
+      })(),
+    );
   }
 
   // Removed repositories
+  const removed: RepositoriesOnInstallationsWhereUniqueInput[] = [];
+
   for (const repository of payload.repositories_removed) {
     if (!repository.full_name) continue;
 
@@ -66,7 +94,7 @@ export async function installationRepositoriesHook({
     },
     data: {
       repositories: {
-        upsert: added,
+        upsert: await Promise.all(added),
         delete: removed,
       },
     },

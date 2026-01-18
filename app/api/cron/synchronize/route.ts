@@ -20,19 +20,24 @@ export const GET = cron(
       const owner = repository.owner.login;
       const name = repository.name;
       const issueCount = repository.open_issues_count;
-      const pushedAt = dayjs(repository.pushed_at!);
+      const pushedAt = repository.pushed_at ? dayjs(repository.pushed_at).toISOString() : null;
 
       const prom = startSpan({ name: `synchronize repository ${owner}/${name}` }, async () => {
         const actual = await prisma.repository.findUnique({
+          select: {
+            pushedAt: true,
+            pullRequestCount: true,
+          },
           where: {
             fullName: { owner, name },
           },
         });
 
         // Load pull request count
+        const actualPushedAt = actual?.pushedAt ? dayjs(actual?.pushedAt).toISOString() : null;
         let pullRequestCount = actual?.pullRequestCount ?? 0;
 
-        if (!actual || !pushedAt.isSame(actual.pushedAt)) {
+        if (actualPushedAt !== pushedAt) {
           const data = await graphql(octokit, SynchronizeRepository, { owner, name });
           pullRequestCount = data.repository?.pullRequests?.totalCount ?? 0;
         }
@@ -46,7 +51,7 @@ export const GET = cron(
             data: {
               issueCount,
               pullRequestCount,
-              pushedAt: pushedAt.toDate(),
+              pushedAt,
             },
           });
         } else {
@@ -56,7 +61,7 @@ export const GET = cron(
               name,
               issueCount,
               pullRequestCount,
-              pushedAt: pushedAt.toDate(),
+              pushedAt,
             },
           });
         }
