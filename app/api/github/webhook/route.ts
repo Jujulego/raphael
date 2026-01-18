@@ -25,17 +25,19 @@ export async function POST(req: Request) {
   }
 
   // Handle event
+  const parsed = JSON.parse(payload);
+
   await startSpan(
     {
       op: 'github.event',
       name: eventName,
-      attributes: { 'event.id': eventId, 'event.name': eventName, 'event.payload': payload },
+      attributes: { 'event.id': eventId, 'event.name': eventName, 'event.action': parsed.action },
     },
     async () => {
       await webhooks.receive({
         id: eventId,
         name: eventName,
-        payload: JSON.parse(payload),
+        payload: parsed,
       } as EmitterWebhookEvent);
     },
   );
