@@ -7,6 +7,7 @@ import type {
   RepositoriesOnInstallationsWhereUniqueInput,
 } from '@/lib/prisma/models/RepositoriesOnInstallations';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
+import { revalidateTag } from 'next/cache';
 
 export async function installationRepositoriesHook({
   payload,
@@ -99,4 +100,6 @@ export async function installationRepositoriesHook({
       },
     },
   });
+
+  revalidateTag('repositories', 'max');
 }

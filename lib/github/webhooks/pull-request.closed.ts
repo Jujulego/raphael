@@ -1,6 +1,7 @@
 import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
 import prisma from '@/lib/prisma.client';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
+import { revalidateTag } from 'next/cache';
 
 export async function pullRequestClosedHook({
   payload,
@@ -18,4 +19,6 @@ export async function pullRequestClosedHook({
       pullRequestCount: { decrement: 1 },
     },
   });
+
+  revalidateTag('repositories', 'max');
 }

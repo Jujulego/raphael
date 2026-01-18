@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma.client';
 import type { InstallationCreateInput } from '@/lib/prisma/models/Installation';
 import type { RepositoriesOnInstallationsCreateWithoutInstallationInput } from '@/lib/prisma/models/RepositoriesOnInstallations';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
+import { revalidateTag } from 'next/cache';
 
 export async function installationCreatedHook({
   payload,
@@ -52,4 +53,6 @@ export async function installationCreatedHook({
   }
 
   await prisma.installation.create({ data });
+
+  revalidateTag('repositories', 'max');
 }
