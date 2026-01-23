@@ -23,48 +23,27 @@ export const GET = cron(
       const pushedAt = repository.pushed_at ? dayjs(repository.pushed_at).toISOString() : null;
 
       const prom = startSpan({ name: `synchronize repository ${owner}/${name}` }, async () => {
-        const actual = await prisma.repository.findUnique({
-          select: {
-            pushedAt: true,
-            pullRequestCount: true,
-          },
+        const data = await graphql(octokit, SynchronizeRepository, { owner, name });
+        const pullRequestCount = data.repository?.pullRequests?.totalCount ?? 0;
+
+        // Update database
+        await prisma.repository.upsert({
           where: {
             fullName: { owner, name },
           },
+          update: {
+            issueCount,
+            pullRequestCount,
+            pushedAt,
+          },
+          create: {
+            owner,
+            name,
+            issueCount,
+            pullRequestCount,
+            pushedAt,
+          },
         });
-
-        // Load pull request count
-        const actualPushedAt = actual?.pushedAt ? dayjs(actual?.pushedAt).toISOString() : null;
-        let pullRequestCount = actual?.pullRequestCount ?? 0;
-
-        if (actualPushedAt !== pushedAt) {
-          const data = await graphql(octokit, SynchronizeRepository, { owner, name });
-          pullRequestCount = data.repository?.pullRequests?.totalCount ?? 0;
-        }
-
-        // Update database
-        if (actual) {
-          await prisma.repository.update({
-            where: {
-              fullName: { owner, name },
-            },
-            data: {
-              issueCount,
-              pullRequestCount,
-              pushedAt,
-            },
-          });
-        } else {
-          await prisma.repository.create({
-            data: {
-              owner,
-              name,
-              issueCount,
-              pullRequestCount,
-              pushedAt,
-            },
-          });
-        }
       });
 
       promises.push(prom.catch(() => {}));
