@@ -1,5 +1,7 @@
 'use client';
 
+import VirtualCell from '@/lib/components/virtual/VirtualCell';
+import VirtualRow from '@/lib/components/virtual/VirtualRow';
 import type { Repository } from '../../prisma/client';
 import VirtualTable, { type RowFn } from '../virtual/VirtualTable';
 import RepositoryRow from './RepositoryRow';
@@ -17,6 +19,19 @@ export default function RepositoryTable({ className, data, count }: RepositoryTa
       loadedCount={loadedCount}
       rowCount={count}
       row={repositoryRow}
+      head={
+        <VirtualRow aria-rowindex={1}>
+          <VirtualCell scope="col" size="small">
+            Name
+          </VirtualCell>
+          <VirtualCell scope="col" size="small">
+            Issues
+          </VirtualCell>
+          <VirtualCell scope="col" size="small">
+            Pull requests
+          </VirtualCell>
+        </VirtualRow>
+      }
     />
   );
 }
