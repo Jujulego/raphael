@@ -2,7 +2,6 @@ import Skeleton from '@mui/material/Skeleton';
 import VirtualCell from '../virtual/VirtualCell';
 import VirtualRow from '../virtual/VirtualRow';
 
-// Component
 export default function RepositoryRowSkeleton({ index }: RepositoryRowSkeletonProps) {
   return (
     <VirtualRow rowIndex={index}>

@@ -4,7 +4,7 @@ import VirtualRow from '@/lib/virtual/VirtualRow';
 import VirtualTableSkeleton from '@/lib/virtual/VirtualTableSkeleton';
 
 // Component
-export function RepositoryTableSkeleton() {
+export default function RepositoryTableSkeleton() {
   return (
     <VirtualTableSkeleton
       columnLayout="2fr 1fr 1fr"

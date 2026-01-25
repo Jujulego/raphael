@@ -2,7 +2,6 @@ import type { Repository } from '../prisma/client';
 import VirtualCell from '../virtual/VirtualCell';
 import VirtualRow from '../virtual/VirtualRow';
 
-// Component
 export default function RepositoryRow({ data, index }: RepositoryRowProps) {
   return (
     <VirtualRow rowIndex={index}>

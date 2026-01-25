@@ -1,6 +1,6 @@
 import Link from '@/lib/mui/Link';
-import { AllRepositoriesTable } from '@/lib/repositories/AllRepositoriesTable';
-import { RepositoryTableSkeleton } from '@/lib/repositories/RepositoryTableSkeleton';
+import AllRepositoriesTable from '@/lib/repositories/AllRepositoriesTable';
+import RepositoryTableSkeleton from '@/lib/repositories/RepositoryTableSkeleton';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';

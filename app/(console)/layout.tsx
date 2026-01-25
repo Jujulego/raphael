@@ -1,4 +1,4 @@
-import { DrawerLink } from '@/lib/mui/DrawerLink';
+import DrawerLink from '@/lib/mui/DrawerLink';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import AppBar from '@mui/material/AppBar';
 import Drawer from '@mui/material/Drawer';

@@ -1,8 +1,8 @@
-import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import prisma from '@/lib/prisma.client';
+import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import { cacheTag } from 'next/cache';
 
-export async function AllRepositoriesTable({ className }: AllRepositoriesTableProps) {
+export default async function AllRepositoriesTable({ className }: AllRepositoriesTableProps) {
   'use cache';
 
   cacheTag('repositories');

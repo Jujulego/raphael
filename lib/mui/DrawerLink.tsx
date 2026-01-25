@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { MouseEventHandler, ReactNode } from 'react';
 
-export function DrawerLink({ href, icon, primary, exactMatch, onClick }: DrawerLinkProps) {
+export default function DrawerLink({ href, icon, primary, exactMatch, onClick }: DrawerLinkProps) {
   const pathname = usePathname();
   const selected = exactMatch ? pathname === href : pathname.startsWith(href);
 

@@ -7,7 +7,6 @@ import VirtualTable, { type RowFn } from '../virtual/VirtualTable';
 import RepositoryRow from './RepositoryRow';
 import RepositoryRowSkeleton from './RepositoryRowSkeleton';
 
-// Component
 export default function RepositoryTable({ className, data, count }: RepositoryTableProps) {
   const loadedCount = data.length;
 
