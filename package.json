@@ -47,7 +47,7 @@
     "@graphql-eslint/eslint-plugin": "4.4.0",
     "@jujulego/jill": "3.0.7",
     "@microsoft/eslint-formatter-sarif": "3.1.0",
-    "@parcel/watcher": "2.5.4",
+    "@parcel/watcher": "2.5.6",
     "@tailwindcss/postcss": "4.1.18",
     "@types/node": "24.10.9",
     "@types/pg": "8.16.0",
