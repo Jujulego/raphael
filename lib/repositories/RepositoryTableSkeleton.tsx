@@ -1,7 +1,7 @@
-import RepositoryRowSkeleton from '@/lib/components/repositories/RepositoryRowSkeleton';
-import VirtualCell from '@/lib/components/virtual/VirtualCell';
-import VirtualRow from '@/lib/components/virtual/VirtualRow';
-import VirtualTableSkeleton from '@/lib/components/virtual/VirtualTableSkeleton';
+import RepositoryRowSkeleton from '@/lib/repositories/RepositoryRowSkeleton';
+import VirtualCell from '@/lib/virtual/VirtualCell';
+import VirtualRow from '@/lib/virtual/VirtualRow';
+import VirtualTableSkeleton from '@/lib/virtual/VirtualTableSkeleton';
 
 // Component
 export function RepositoryTableSkeleton() {

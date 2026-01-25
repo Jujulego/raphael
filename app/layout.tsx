@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html className={roboto.variable} lang="en" suppressHydrationWarning>
-      <body className="flex h-screen flex-col antialiased">
+      <body className="antialiased">
         <Analytics />
 
         <MuiProvider>{children}</MuiProvider>

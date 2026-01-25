@@ -20,7 +20,20 @@ export const theme = createTheme({
       },
     },
   },
+  components: {
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          minWidth: 40,
+        },
+      },
+    },
+  },
   typography: {
     fontFamily: 'var(--font-roboto)',
+  },
+  zIndex: {
+    appBar: 1200,
+    drawer: 1100,
   },
 });

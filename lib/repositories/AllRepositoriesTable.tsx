@@ -1,4 +1,4 @@
-import RepositoryTable from '@/lib/components/repositories/RepositoryTable';
+import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import prisma from '@/lib/prisma.client';
 import { cacheTag } from 'next/cache';
 

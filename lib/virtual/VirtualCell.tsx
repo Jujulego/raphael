@@ -1,5 +1,5 @@
 import TableCell, { type TableCellProps } from '@mui/material/TableCell';
-import { mergeSx } from '../../utils/mui';
+import { mergeSx } from '../utils/mui';
 
 // Component
 export type VirtualCellProps = TableCellProps;

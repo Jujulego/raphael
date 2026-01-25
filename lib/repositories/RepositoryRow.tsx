@@ -1,4 +1,4 @@
-import type { Repository } from '../../prisma/client';
+import type { Repository } from '../prisma/client';
 import VirtualCell from '../virtual/VirtualCell';
 import VirtualRow from '../virtual/VirtualRow';
 

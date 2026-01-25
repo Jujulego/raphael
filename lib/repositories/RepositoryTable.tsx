@@ -1,8 +1,8 @@
 'use client';
 
-import VirtualCell from '@/lib/components/virtual/VirtualCell';
-import VirtualRow from '@/lib/components/virtual/VirtualRow';
-import type { Repository } from '../../prisma/client';
+import VirtualCell from '@/lib/virtual/VirtualCell';
+import VirtualRow from '@/lib/virtual/VirtualRow';
+import type { Repository } from '../prisma/client';
 import VirtualTable, { type RowFn } from '../virtual/VirtualTable';
 import RepositoryRow from './RepositoryRow';
 import RepositoryRowSkeleton from './RepositoryRowSkeleton';
