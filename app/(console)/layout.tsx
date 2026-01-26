@@ -5,15 +5,14 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
 import Toolbar from '@mui/material/Toolbar';
-import type { Metadata } from 'next';
+import { clsx } from 'clsx';
 import Link from 'next/link';
+
+import styles from './layout.module.css';
 
 export default function ConsoleLayout({ children }: LayoutProps<'/'>) {
   return (
-    <div
-      className="grid h-screen"
-      style={{ gridTemplateColumns: 'auto 1fr', gridTemplateRows: 'auto 1fr' }}
-    >
+    <div className={clsx(styles.grid, 'h-screen')}>
       <AppBar position="fixed" elevation={2}>
         <Toolbar>
           <Link href="/" className="typography-h6">
@@ -49,7 +48,3 @@ export default function ConsoleLayout({ children }: LayoutProps<'/'>) {
     </div>
   );
 }
-
-export const metadata: Metadata = {
-  title: 'Raphael',
-};
