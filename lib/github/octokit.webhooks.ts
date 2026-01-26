@@ -1,5 +1,4 @@
-import { issuesClosedHook } from '@/lib/github/webhooks/issues.closed';
-import { issuesOpenedHook } from '@/lib/github/webhooks/issues.opened';
+import { issuesHook } from '@/lib/github/webhooks/issues';
 import { Webhooks } from '@octokit/webhooks';
 import { installationRepositoriesHook } from './webhooks/installation-repositories';
 import { installationCreatedHook } from './webhooks/installation.created';
@@ -16,10 +15,7 @@ export const webhooks = new Webhooks({
 webhooks.on('installation.created', installationCreatedHook);
 webhooks.on('installation.deleted', installationDeletedHook);
 webhooks.on('installation_repositories', installationRepositoriesHook);
-webhooks.on('issues.closed', issuesClosedHook);
-webhooks.on('issues.deleted', issuesClosedHook);
-webhooks.on('issues.opened', issuesOpenedHook);
-webhooks.on('issues.reopened', issuesOpenedHook);
+webhooks.on('issues', issuesHook);
 webhooks.on('pull_request.closed', pullRequestClosedHook);
 webhooks.on('pull_request.opened', pullRequestOpenedHook);
 webhooks.on('pull_request.reopened', pullRequestOpenedHook);

@@ -1,12 +1,12 @@
 import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
 import prisma from '@/lib/prisma.client';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
+import dayjs from 'dayjs';
 import { revalidateTag } from 'next/cache';
 
-export async function issuesOpenedHook({
-  payload,
-}: EmitterWebhookEvent<'issues.opened' | 'issues.reopened'>) {
-  const { owner, name } = splitRepositoryFullName(payload.repository.full_name);
+export async function issuesHook({ payload: { repository } }: EmitterWebhookEvent<'issues'>) {
+  const { owner, name } = splitRepositoryFullName(repository.full_name);
+  const pushedAt = repository.pushed_at ? dayjs(repository.pushed_at).toISOString() : null;
 
   await prisma.repository.update({
     where: {
@@ -16,7 +16,8 @@ export async function issuesOpenedHook({
       },
     },
     data: {
-      issueCount: { increment: 1 },
+      issueCount: repository.open_issues_count,
+      pushedAt,
     },
   });
 
