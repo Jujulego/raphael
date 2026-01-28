@@ -23,27 +23,38 @@ export const GET = cron(
       const pushedAt = repository.pushed_at ? dayjs(repository.pushed_at).toISOString() : null;
 
       const prom = startSpan({ name: `synchronize repository ${owner}/${name}` }, async () => {
-        const data = await graphql(octokit, SynchronizeRepository, { owner, name });
-        const pullRequestCount = data.repository?.pullRequests?.totalCount ?? 0;
-
         // Update database
-        await prisma.repository.upsert({
+        const actual = await prisma.repository.upsert({
           where: {
             fullName: { owner, name },
           },
           update: {
             issueCount,
-            pullRequestCount,
-            pushedAt,
           },
           create: {
             owner,
             name,
             issueCount,
-            pullRequestCount,
-            pushedAt,
           },
         });
+
+        // Update pull request count
+        const actualPushedAt = actual.pushedAt ? dayjs(actual.pushedAt).toISOString() : null;
+
+        if (actualPushedAt !== pushedAt) {
+          const data = await graphql(octokit, SynchronizeRepository, { owner, name });
+          const pullRequestCount = data.repository?.pullRequests?.totalCount ?? 0;
+
+          await prisma.repository.update({
+            where: {
+              fullName: { owner, name },
+            },
+            data: {
+              pushedAt,
+              pullRequestCount,
+            },
+          });
+        }
       });
 
       promises.push(prom.catch(() => {}));
