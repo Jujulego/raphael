@@ -2,16 +2,11 @@ import prisma from '@/lib/prisma.client';
 import type { RepositoryOrderByWithRelationInput } from '@/lib/prisma/models/Repository';
 import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import { extractSearchParam, type RouteSearchParams } from '@/lib/utils/next';
-import { cacheTag } from 'next/cache';
 
 export default async function AllRepositoriesTable({
   className,
   searchParams,
 }: AllRepositoriesTableProps) {
-  'use cache';
-
-  cacheTag('repositories');
-
   const [data, count] = await prisma.$transaction([
     prisma.repository.findMany({ orderBy: await extractSort(searchParams) }),
     prisma.repository.count(),
