@@ -48,7 +48,7 @@
     "@jujulego/jill": "3.0.7",
     "@microsoft/eslint-formatter-sarif": "3.1.0",
     "@parcel/watcher": "2.5.6",
-    "@tailwindcss/postcss": "4.1.18",
+    "@tailwindcss/postcss": "4.2.0",
     "@types/node": "24.10.13",
     "@types/pg": "8.16.0",
     "@types/react": "19.2.14",
@@ -61,7 +61,7 @@
     "prettier": "3.8.1",
     "prettier-plugin-tailwindcss": "0.7.2",
     "prisma": "7.4.1",
-    "tailwindcss": "4.1.18",
+    "tailwindcss": "4.2.0",
     "tsx": "4.21.0",
     "typescript": "5.9.3"
   },
