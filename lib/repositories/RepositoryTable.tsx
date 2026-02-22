@@ -1,14 +1,17 @@
 'use client';
 
-import VirtualCell from '@/lib/virtual/VirtualCell';
+import type { Repository } from '@/lib/prisma/client';
+import { useSearchParam } from '@/lib/utils/useSearchParam';
 import VirtualRow from '@/lib/virtual/VirtualRow';
-import type { Repository } from '../prisma/client';
-import VirtualTable, { type RowFn } from '../virtual/VirtualTable';
+import VirtualSortableCell from '@/lib/virtual/VirtualSortableCell';
+import VirtualTable, { type RowFn } from '@/lib/virtual/VirtualTable';
 import RepositoryRow from './RepositoryRow';
 import RepositoryRowSkeleton from './RepositoryRowSkeleton';
 
 export default function RepositoryTable({ className, data, count }: RepositoryTableProps) {
   const loadedCount = data.length;
+
+  const [sort = '', setSort] = useSearchParam('sort');
 
   return (
     <VirtualTable
@@ -20,15 +23,33 @@ export default function RepositoryTable({ className, data, count }: RepositoryTa
       row={repositoryRow}
       head={
         <VirtualRow aria-rowindex={1}>
-          <VirtualCell scope="col" size="small">
+          <VirtualSortableCell
+            column="name"
+            scope="col"
+            size="small"
+            sort={sort}
+            onSortChange={setSort}
+          >
             Name
-          </VirtualCell>
-          <VirtualCell scope="col" size="small">
+          </VirtualSortableCell>
+          <VirtualSortableCell
+            column="issueCount"
+            scope="col"
+            size="small"
+            sort={sort}
+            onSortChange={setSort}
+          >
             Issues
-          </VirtualCell>
-          <VirtualCell scope="col" size="small">
+          </VirtualSortableCell>
+          <VirtualSortableCell
+            column="pullRequestCount"
+            scope="col"
+            size="small"
+            sort={sort}
+            onSortChange={setSort}
+          >
             Pull requests
-          </VirtualCell>
+          </VirtualSortableCell>
         </VirtualRow>
       }
     />

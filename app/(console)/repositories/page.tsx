@@ -6,7 +6,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Divider from '@mui/material/Divider';
 import { Suspense } from 'react';
 
-export default function RepositoriesPage() {
+export default function RepositoriesPage({ searchParams }: PageProps<'/repositories'>) {
   return (
     <>
       <Breadcrumbs className="mx-6 mt-4 mb-6">
@@ -23,7 +23,7 @@ export default function RepositoriesPage() {
       <Divider className="border-TableCell-border" />
 
       <Suspense fallback={<RepositoryTableSkeleton />}>
-        <AllRepositoriesTable className="h-full" />
+        <AllRepositoriesTable className="h-full" searchParams={searchParams} />
       </Suspense>
     </>
   );
