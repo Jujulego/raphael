@@ -1,11 +1,14 @@
-import type { Repository } from '../prisma/client';
-import VirtualCell from '../virtual/VirtualCell';
-import VirtualRow from '../virtual/VirtualRow';
+import Link from '@/lib/mui/Link';
+import type { Repository } from '@/lib/prisma/client';
+import VirtualCell from '@/lib/virtual/VirtualCell';
+import VirtualRow from '@/lib/virtual/VirtualRow';
 
 export default function RepositoryRow({ data, index }: RepositoryRowProps) {
   return (
     <VirtualRow rowIndex={index}>
-      <VirtualCell scope="row">{data.name}</VirtualCell>
+      <VirtualCell scope="row">
+        <Link href={`https://github.com/${data.owner}/${data.name}`}>{data.name}</Link>
+      </VirtualCell>
       <VirtualCell>{data.issueCount}</VirtualCell>
       <VirtualCell>{data.pullRequestCount}</VirtualCell>
     </VirtualRow>
