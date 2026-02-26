@@ -28,7 +28,7 @@
     "@octokit/webhooks": "14.2.0",
     "@prisma/adapter-pg": "7.4.1",
     "@prisma/client": "7.4.1",
-    "@sentry/nextjs": "10.38.0",
+    "@sentry/nextjs": "10.39.0",
     "@vercel/analytics": "1.6.1",
     "clsx": "2.1.1",
     "dayjs": "1.11.19",
