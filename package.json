@@ -29,7 +29,7 @@
     "@prisma/adapter-pg": "7.8.0",
     "@prisma/client": "7.8.0",
     "@sentry/nextjs": "10.39.0",
-    "@vercel/analytics": "1.6.1",
+    "@vercel/analytics": "2.0.1",
     "clsx": "2.1.1",
     "dayjs": "1.11.20",
     "graphql": "16.13.2",
