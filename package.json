@@ -35,7 +35,7 @@
     "graphql": "16.13.2",
     "kyrielle": "2.8.3",
     "next": "16.2.3",
-    "pg": "8.18.0",
+    "pg": "8.20.0",
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "rxjs": "7.8.2"
@@ -50,7 +50,7 @@
     "@parcel/watcher": "2.5.6",
     "@tailwindcss/postcss": "4.2.4",
     "@types/node": "24.12.2",
-    "@types/pg": "8.16.0",
+    "@types/pg": "8.20.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "babel-plugin-react-compiler": "1.0.0",
