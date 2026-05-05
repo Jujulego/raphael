@@ -9,6 +9,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 export default defineConfig([
   globalIgnores([
     '.next/**',
+    '.yarn/**',
     'build/**',
     'lib/prisma/**',
     'lib/types/graphql.d.ts',
