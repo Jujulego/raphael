@@ -31,7 +31,7 @@
     "@sentry/nextjs": "10.51.0",
     "@vercel/analytics": "2.0.1",
     "clsx": "2.1.1",
-    "dayjs": "1.11.20",
+    "dayjs": "1.11.21",
     "graphql": "16.13.2",
     "kyrielle": "2.8.3",
     "next": "16.2.6",
