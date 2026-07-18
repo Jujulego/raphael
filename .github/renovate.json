@@ -2,6 +2,7 @@
   "extends": ["config:recommended"],
   "baseBranchPatterns": ["main"],
   "labels": ["dependencies"],
+  "minimumReleaseAge": "7 days",
   "packageRules": [
     {
       "matchCategories": ["ci"],
