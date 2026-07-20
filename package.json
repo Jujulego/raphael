@@ -32,7 +32,7 @@
     "@vercel/analytics": "2.0.1",
     "clsx": "2.1.1",
     "dayjs": "1.11.21",
-    "graphql": "16.14.2",
+    "graphql": "17.0.2",
     "kyrielle": "2.8.3",
     "next": "16.2.10",
     "pg": "8.22.0",
