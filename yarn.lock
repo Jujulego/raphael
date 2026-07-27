@@ -964,13 +964,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-codegen/typescript-operations@npm:6.1.0, @graphql-codegen/typescript-operations@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "@graphql-codegen/typescript-operations@npm:6.1.0"
+"@graphql-codegen/typescript-operations@npm:6.1.1, @graphql-codegen/typescript-operations@npm:^6.1.0":
+  version: 6.1.1
+  resolution: "@graphql-codegen/typescript-operations@npm:6.1.1"
   dependencies:
     "@graphql-codegen/plugin-helpers": "npm:^7.1.0"
     "@graphql-codegen/schema-ast": "npm:^6.1.0"
-    "@graphql-codegen/visitor-plugin-common": "npm:^7.2.0"
+    "@graphql-codegen/visitor-plugin-common": "npm:^7.2.1"
     auto-bind: "npm:^5.0.0"
     tslib: "npm:^2.8.0"
   peerDependencies:
@@ -979,7 +979,7 @@ __metadata:
   peerDependenciesMeta:
     graphql-sock:
       optional: true
-  checksum: 10c0/aff2a1f0c6bc06dbf3b36a22df2b35b8afc919c75e527ef873fe67879facf2b1b3b9faf3e906debc8d2cb260b6d6718635759650d947e8de06a6df0445ed98f4
+  checksum: 10c0/60ce68240c1b50d28b25bcca95e432f4177321f09ebf41e6789fd898ab0395bcac7394222d752bce25e4f1f777a5d410165c9c7327da97f4b00a502bce68e51b
   languageName: node
   linkType: hard
 
@@ -998,9 +998,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-codegen/visitor-plugin-common@npm:^7.2.0":
-  version: 7.2.0
-  resolution: "@graphql-codegen/visitor-plugin-common@npm:7.2.0"
+"@graphql-codegen/visitor-plugin-common@npm:^7.2.0, @graphql-codegen/visitor-plugin-common@npm:^7.2.1":
+  version: 7.2.1
+  resolution: "@graphql-codegen/visitor-plugin-common@npm:7.2.1"
   dependencies:
     "@graphql-codegen/plugin-helpers": "npm:^7.1.0"
     "@graphql-tools/optimize": "npm:^2.0.0"
@@ -1014,7 +1014,7 @@ __metadata:
     tslib: "npm:^2.8.0"
   peerDependencies:
     graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 10c0/c49d85eabba6e3a61214723a3e25a4f15258e4773500a082574d455e3f4f0557e22a858f13f8ea04011d6b18eb5e9b6ef8d62aba37d440fb3118bccf074d08ca
+  checksum: 10c0/9d8385cb4077f81b62688277efa8d8ddb2e2afa86bd325612ec3ac82a683fb496f5c81fba5242f8a913dd78b54737019be1782c092d1dd84b65dc67b511fb544
   languageName: node
   linkType: hard
 
@@ -8772,7 +8772,7 @@ __metadata:
     "@emotion/styled": "npm:11.14.1"
     "@graphql-codegen/cli": "npm:7.2.0"
     "@graphql-codegen/typescript": "npm:6.1.0"
-    "@graphql-codegen/typescript-operations": "npm:6.1.0"
+    "@graphql-codegen/typescript-operations": "npm:6.1.1"
     "@graphql-eslint/eslint-plugin": "npm:4.4.0"
     "@jujulego/jill": "npm:3.0.10"
     "@microsoft/eslint-formatter-sarif": "npm:3.1.0"
