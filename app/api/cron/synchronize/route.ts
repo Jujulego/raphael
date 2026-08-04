@@ -38,12 +38,47 @@ export const GET = cron(
           },
         });
 
-        // Update pull request count
+        // Update pull request count and individual PR records
         const actualPushedAt = actual.pushedAt ? dayjs(actual.pushedAt).toISOString() : null;
 
         if (actualPushedAt !== pushedAt) {
           const data = await graphql(octokit, SynchronizeRepository, { owner, name });
           const pullRequestCount = data.repository?.pullRequests?.totalCount ?? 0;
+          const pullRequests = data.repository?.pullRequests?.nodes ?? [];
+
+          // Upsert individual PR records
+          for (const pr of pullRequests) {
+            if (!pr || !pr.author) {
+              continue;
+            }
+
+            await prisma.pullRequest.upsert({
+              where: {
+                fullNumber: {
+                  repositoryOwner: owner,
+                  repositoryName: name,
+                  number: pr.number,
+                },
+              },
+              update: {
+                title: pr.title,
+                state: pr.state,
+                author: pr.author.login,
+                updatedAt: dayjs(pr.updatedAt).toDate(),
+              },
+              create: {
+                repositoryOwner: owner,
+                repositoryName: name,
+                number: pr.number,
+                title: pr.title,
+                state: pr.state,
+                author: pr.author.login,
+                htmlUrl: pr.url,
+                createdAt: dayjs(pr.createdAt).toDate(),
+                updatedAt: dayjs(pr.updatedAt).toDate(),
+              },
+            });
+          }
 
           await prisma.repository.update({
             where: {
@@ -83,8 +118,20 @@ const SynchronizeRepository: TypedDocumentNode<
   query SynchronizeRepository($owner: String!, $name: String!) {
     repository(owner: $owner, name: $name) {
       id
-      pullRequests(first: 0, states: [OPEN]) {
+      pullRequests(first: 100, states: [OPEN]) {
         totalCount
+        nodes {
+          id
+          number
+          title
+          state
+          url
+          author {
+            login
+          }
+          createdAt
+          updatedAt
+        }
       }
     }
   }
