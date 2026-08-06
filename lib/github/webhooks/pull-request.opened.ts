@@ -10,47 +10,44 @@ export async function pullRequestOpenedHook({
   const { owner, name } = splitRepositoryFullName(repository.full_name);
   const pushedAt = repository.pushed_at ? dayjs(repository.pushed_at).toISOString() : null;
 
-  await Promise.all([
-    prisma.repository.update({
-      where: {
-        fullName: {
-          owner,
-          name,
+  await prisma.repository.update({
+    where: {
+      fullName: {
+        owner,
+        name,
+      },
+    },
+    data: {
+      issueCount: repository.open_issues_count,
+      pullRequestCount: { increment: 1 },
+      pushedAt,
+      pullRequests: {
+        upsert: {
+          where: {
+            fullNumber: {
+              repositoryOwner: owner,
+              repositoryName: name,
+              number: pull_request.number,
+            },
+          },
+          update: {
+            title: pull_request.title,
+            state: pull_request.state,
+            author: pull_request.user.login,
+            updatedAt: dayjs(pull_request.updated_at).toDate(),
+          },
+          create: {
+            number: pull_request.number,
+            title: pull_request.title,
+            state: pull_request.state,
+            author: pull_request.user.login,
+            createdAt: dayjs(pull_request.created_at).toDate(),
+            updatedAt: dayjs(pull_request.updated_at).toDate(),
+          },
         },
       },
-      data: {
-        issueCount: repository.open_issues_count,
-        pullRequestCount: { increment: 1 },
-        pushedAt,
-      },
-    }),
-    prisma.pullRequest.upsert({
-      where: {
-        fullNumber: {
-          repositoryOwner: owner,
-          repositoryName: name,
-          number: pull_request.number,
-        },
-      },
-      update: {
-        title: pull_request.title,
-        state: pull_request.state,
-        author: pull_request.user.login,
-        updatedAt: dayjs(pull_request.updated_at).toDate(),
-      },
-      create: {
-        repositoryOwner: owner,
-        repositoryName: name,
-        number: pull_request.number,
-        title: pull_request.title,
-        state: pull_request.state,
-        author: pull_request.user.login,
-        htmlUrl: pull_request.html_url,
-        createdAt: dayjs(pull_request.created_at).toDate(),
-        updatedAt: dayjs(pull_request.updated_at).toDate(),
-      },
-    }),
-  ]);
+    },
+  });
 
   revalidateTag('repositories', 'max');
 }

@@ -1,6 +1,7 @@
 import { app } from '@/lib/github/octokit.app';
 import { listPullRequests } from '@/lib/github/pull-requests/list-pull-requests';
 import prisma from '@/lib/prisma.client';
+import type { PullRequestUpsertWithWhereUniqueWithoutRepositoryInput as PullRequestUpsert } from '@/lib/prisma/models/PullRequest';
 import { cron } from '@/lib/utils/cron';
 import { paginator } from '@/lib/utils/paginate';
 import { startSpan } from '@sentry/nextjs';
@@ -37,6 +38,7 @@ export const GET = cron(
         const actualPushedAt = actual.pushedAt ? dayjs(actual.pushedAt).toISOString() : null;
 
         if (actualPushedAt !== pushedAt) {
+          const pullRequests: PullRequestUpsert[] = [];
           let pullRequestCount = 0;
 
           // Upsert individual PR records
@@ -45,7 +47,7 @@ export const GET = cron(
               pullRequestCount++;
             }
 
-            await prisma.pullRequest.upsert({
+            pullRequests.push({
               where: {
                 fullNumber: {
                   repositoryOwner: owner,
@@ -60,8 +62,6 @@ export const GET = cron(
                 updatedAt: dayjs(pr.updatedAt).toDate(),
               },
               create: {
-                repositoryOwner: owner,
-                repositoryName: name,
                 number: pr.number,
                 title: pr.title,
                 state: pr.state,
@@ -79,6 +79,9 @@ export const GET = cron(
             data: {
               pushedAt,
               pullRequestCount,
+              pullRequests: {
+                upsert: pullRequests,
+              },
             },
           });
         }
