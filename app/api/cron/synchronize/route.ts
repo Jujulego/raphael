@@ -1,15 +1,10 @@
 import { app } from '@/lib/github/octokit.app';
+import { listPullRequests } from '@/lib/github/pull-requests/list-pull-requests';
 import prisma from '@/lib/prisma.client';
-import type {
-  SynchronizeRepositoryQuery,
-  SynchronizeRepositoryQueryVariables,
-} from '@/lib/types/graphql';
 import { cron } from '@/lib/utils/cron';
-import { graphql } from '@/lib/utils/graphql';
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
+import { paginator } from '@/lib/utils/paginate';
 import { startSpan } from '@sentry/nextjs';
 import dayjs from 'dayjs';
-import gql from 'graphql-tag';
 import { revalidateTag } from 'next/cache';
 
 export const GET = cron(
@@ -42,14 +37,12 @@ export const GET = cron(
         const actualPushedAt = actual.pushedAt ? dayjs(actual.pushedAt).toISOString() : null;
 
         if (actualPushedAt !== pushedAt) {
-          const data = await graphql(octokit, SynchronizeRepository, { owner, name });
-          const pullRequestCount = data.repository?.pullRequests?.totalCount ?? 0;
-          const pullRequests = data.repository?.pullRequests?.nodes ?? [];
+          let pullRequestCount = 0;
 
           // Upsert individual PR records
-          for (const pr of pullRequests) {
-            if (!pr || !pr.author) {
-              continue;
+          for await (const pr of paginator(listPullRequests, octokit, { owner, repo: name })) {
+            if (pr.state === 'OPEN') {
+              pullRequestCount++;
             }
 
             await prisma.pullRequest.upsert({
@@ -63,7 +56,7 @@ export const GET = cron(
               update: {
                 title: pr.title,
                 state: pr.state,
-                author: pr.author.login,
+                author: pr.author,
                 updatedAt: dayjs(pr.updatedAt).toDate(),
               },
               create: {
@@ -72,8 +65,7 @@ export const GET = cron(
                 number: pr.number,
                 title: pr.title,
                 state: pr.state,
-                author: pr.author.login,
-                htmlUrl: pr.url,
+                author: pr.author,
                 createdAt: dayjs(pr.createdAt).toDate(),
                 updatedAt: dayjs(pr.updatedAt).toDate(),
               },
@@ -109,30 +101,3 @@ export const GET = cron(
     maxRuntime: 15,
   },
 );
-
-// Query
-const SynchronizeRepository: TypedDocumentNode<
-  SynchronizeRepositoryQuery,
-  SynchronizeRepositoryQueryVariables
-> = gql`
-  query SynchronizeRepository($owner: String!, $name: String!) {
-    repository(owner: $owner, name: $name) {
-      id
-      pullRequests(first: 100, states: [OPEN]) {
-        totalCount
-        nodes {
-          id
-          number
-          title
-          state
-          url
-          author {
-            login
-          }
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`;

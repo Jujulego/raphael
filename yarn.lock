@@ -7457,13 +7457,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kyrielle@npm:2.8.3":
-  version: 2.8.3
-  resolution: "kyrielle@npm:2.8.3"
+"kyrielle@npm:2.9.0":
+  version: 2.9.0
+  resolution: "kyrielle@npm:2.9.0"
   dependencies:
     "@repeaterjs/repeater": "npm:^3.0.5"
     "@swc/helpers": "npm:^0.5.3"
-  checksum: 10c0/4711c93d11db11dcca7018fbc58cdd58ef5d041b4ac3baae5a52cf4f7da5639cd8814bd98620ad2efe6ffda1305857a9fd4585b8dc545d384f6147777da7c38a
+  checksum: 10c0/0131a8777be2fb41449ae6664764162e5ea6a3d3ff7cf7bd48be1fd93202a409b3ea7b790cabeb1bfb0549196b56bffc2f4c96e2fac68f0679cf4d4b0f99e328
   languageName: node
   linkType: hard
 
@@ -8814,7 +8814,7 @@ __metadata:
     eslint-config-prettier: "npm:10.1.8"
     graphql: "npm:16.14.2"
     jiti: "npm:2.7.0"
-    kyrielle: "npm:2.8.3"
+    kyrielle: "npm:2.9.0"
     next: "npm:16.2.10"
     pg: "npm:8.22.0"
     prettier: "npm:3.9.5"

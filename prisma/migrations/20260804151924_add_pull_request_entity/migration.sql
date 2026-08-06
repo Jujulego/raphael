@@ -6,7 +6,6 @@ CREATE TABLE "PullRequest" (
     "title" TEXT NOT NULL,
     "state" TEXT NOT NULL,
     "author" TEXT NOT NULL,
-    "htmlUrl" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
