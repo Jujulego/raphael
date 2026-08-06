@@ -1,15 +1,11 @@
 import { app } from '@/lib/github/octokit.app';
+import { listPullRequests } from '@/lib/github/pull-requests/list-pull-requests';
 import prisma from '@/lib/prisma.client';
-import type {
-  SynchronizeRepositoryQuery,
-  SynchronizeRepositoryQueryVariables,
-} from '@/lib/types/graphql';
+import type { PullRequestUpsertWithWhereUniqueWithoutRepositoryInput as PullRequestUpsert } from '@/lib/prisma/models/PullRequest';
 import { cron } from '@/lib/utils/cron';
-import { graphql } from '@/lib/utils/graphql';
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
+import { paginator } from '@/lib/utils/paginate';
 import { startSpan } from '@sentry/nextjs';
 import dayjs from 'dayjs';
-import gql from 'graphql-tag';
 import { revalidateTag } from 'next/cache';
 
 export const GET = cron(
@@ -38,12 +34,43 @@ export const GET = cron(
           },
         });
 
-        // Update pull request count
+        // Update pull request count and individual PR records
         const actualPushedAt = actual.pushedAt ? dayjs(actual.pushedAt).toISOString() : null;
 
         if (actualPushedAt !== pushedAt) {
-          const data = await graphql(octokit, SynchronizeRepository, { owner, name });
-          const pullRequestCount = data.repository?.pullRequests?.totalCount ?? 0;
+          const pullRequests: PullRequestUpsert[] = [];
+          let pullRequestCount = 0;
+
+          // Upsert individual PR records
+          for await (const pr of paginator(listPullRequests, octokit, { owner, repo: name })) {
+            if (pr.state === 'OPEN') {
+              pullRequestCount++;
+            }
+
+            pullRequests.push({
+              where: {
+                fullNumber: {
+                  repositoryOwner: owner,
+                  repositoryName: name,
+                  number: pr.number,
+                },
+              },
+              update: {
+                title: pr.title,
+                state: pr.state,
+                author: pr.author,
+                updatedAt: dayjs(pr.updatedAt).toDate(),
+              },
+              create: {
+                number: pr.number,
+                title: pr.title,
+                state: pr.state,
+                author: pr.author,
+                createdAt: dayjs(pr.createdAt).toDate(),
+                updatedAt: dayjs(pr.updatedAt).toDate(),
+              },
+            });
+          }
 
           await prisma.repository.update({
             where: {
@@ -52,6 +79,9 @@ export const GET = cron(
             data: {
               pushedAt,
               pullRequestCount,
+              pullRequests: {
+                upsert: pullRequests,
+              },
             },
           });
         }
@@ -74,18 +104,3 @@ export const GET = cron(
     maxRuntime: 15,
   },
 );
-
-// Query
-const SynchronizeRepository: TypedDocumentNode<
-  SynchronizeRepositoryQuery,
-  SynchronizeRepositoryQueryVariables
-> = gql`
-  query SynchronizeRepository($owner: String!, $name: String!) {
-    repository(owner: $owner, name: $name) {
-      id
-      pullRequests(first: 0, states: [OPEN]) {
-        totalCount
-      }
-    }
-  }
-`;

@@ -21,8 +21,25 @@ model Repository {
   pushedAt         DateTime?
 
   installations RepositoriesOnInstallations[]
+  pullRequests  PullRequest[]
 
   @@id([owner, name], name: "fullName")
+}
+
+model PullRequest {
+  repositoryOwner String
+  repositoryName  String
+  number          Int
+  title           String
+  state           String // OPEN, CLOSED, MERGED
+  author          String
+  createdAt       DateTime
+  updatedAt       DateTime
+
+  repository Repository @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], onDelete: Cascade)
+
+  @@id([repositoryOwner, repositoryName, number], name: "fullNumber")
+  @@index([repositoryOwner, repositoryName, state])
 }
 
 model RepositoriesOnInstallations {

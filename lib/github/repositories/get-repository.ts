@@ -1,3 +1,4 @@
+import type { RepositoryData } from '@/lib/github/repositories/repository';
 import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
 import type { RepositoryQuery, RepositoryQueryVariables } from '@/lib/types/graphql';
 import { graphql } from '@/lib/utils/graphql';
@@ -22,15 +23,6 @@ export async function getRepository(
     issueCount: data.repository.issues.totalCount,
     pullRequestCount: data.repository.pullRequests.totalCount,
   };
-}
-
-// Types
-export interface RepositoryData {
-  readonly owner: string;
-  readonly name: string;
-  readonly pushedAt: string | null;
-  readonly issueCount: number;
-  readonly pullRequestCount: number;
 }
 
 // Query
