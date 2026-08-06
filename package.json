@@ -36,8 +36,8 @@
     "kyrielle": "2.8.3",
     "next": "16.2.12",
     "pg": "8.22.0",
-    "react": "19.2.7",
-    "react-dom": "19.2.7",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "rxjs": "7.8.2"
   },
   "devDependencies": {
