@@ -7,6 +7,12 @@ datasource db {
   provider = "postgresql"
 }
 
+enum PullRequestState {
+  OPEN
+  CLOSED
+  MERGED
+}
+
 model Installation {
   id Int @id
 
@@ -31,7 +37,7 @@ model PullRequest {
   repositoryName  String
   number          Int
   title           String
-  state           String // OPEN, CLOSED, MERGED
+  state           PullRequestState
   author          String
   createdAt       DateTime
   updatedAt       DateTime
