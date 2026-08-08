@@ -1,4 +1,5 @@
 import type { PullRequestData } from '@/lib/github/pull-requests/pull-request';
+import { mapToPullRequestState } from '@/lib/github/pull-requests/pull-request';
 import type { ListPullRequestsQuery, ListPullRequestsQueryVariables } from '@/lib/types/graphql';
 import { graphql } from '@/lib/utils/graphql';
 import { mapConnection, type Page } from '@/lib/utils/paginate';
@@ -26,7 +27,7 @@ export async function listPullRequests(
         repositoryName: query.repo,
         number: node.number,
         title: node.title,
-        state: node.state,
+        state: mapToPullRequestState(node.state),
         author: node.author!.login,
         createdAt: node.createdAt,
         updatedAt: node.updatedAt,

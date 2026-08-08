@@ -5,7 +5,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "PullRequestState" AS ENUM ('Open', 'Closed', 'Merged');
+CREATE TYPE "PullRequestState" AS ENUM ('OPEN', 'CLOSED', 'MERGED');
 
 -- AlterTable
-ALTER TABLE "PullRequest" ALTER COLUMN "state" TYPE "PullRequestState" USING concat(upper(substr("state", 1, 1)), lower(substr("state", 2)))::"PullRequestState";
+ALTER TABLE "PullRequest" ALTER COLUMN "state" TYPE "PullRequestState" USING upper("state")::"PullRequestState";

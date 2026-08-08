@@ -1,3 +1,4 @@
+import { mapToPullRequestState } from '@/lib/github/pull-requests/pull-request';
 import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
 import prisma from '@/lib/prisma.client';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
@@ -9,6 +10,7 @@ export async function pullRequestOpenedHook({
 }: EmitterWebhookEvent<'pull_request.opened' | 'pull_request.reopened'>) {
   const { owner, name } = splitRepositoryFullName(repository.full_name);
   const pushedAt = repository.pushed_at ? dayjs(repository.pushed_at).toISOString() : null;
+  const state = mapToPullRequestState(pull_request.state, pull_request.merged);
 
   await prisma.repository.update({
     where: {
@@ -32,14 +34,14 @@ export async function pullRequestOpenedHook({
           },
           update: {
             title: pull_request.title,
-            state: pull_request.state,
+            state,
             author: pull_request.user.login,
             updatedAt: dayjs(pull_request.updated_at).toDate(),
           },
           create: {
             number: pull_request.number,
             title: pull_request.title,
-            state: pull_request.state,
+            state,
             author: pull_request.user.login,
             createdAt: dayjs(pull_request.created_at).toDate(),
             updatedAt: dayjs(pull_request.updated_at).toDate(),

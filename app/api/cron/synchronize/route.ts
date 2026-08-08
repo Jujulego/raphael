@@ -1,5 +1,6 @@
 import { app } from '@/lib/github/octokit.app';
 import { listPullRequests } from '@/lib/github/pull-requests/list-pull-requests';
+import { PullRequestState } from '@/lib/github/pull-requests/pull-request';
 import prisma from '@/lib/prisma.client';
 import type { PullRequestUpsertWithWhereUniqueWithoutRepositoryInput as PullRequestUpsert } from '@/lib/prisma/models/PullRequest';
 import { cron } from '@/lib/utils/cron';
@@ -43,7 +44,7 @@ export const GET = cron(
 
           // Upsert individual PR records
           for await (const pr of paginator(listPullRequests, octokit, { owner, repo: name })) {
-            if (pr.state === 'OPEN') {
+            if (pr.state === PullRequestState.Open) {
               pullRequestCount++;
             }
 

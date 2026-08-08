@@ -8,9 +8,9 @@ datasource db {
 }
 
 enum PullRequestState {
-  Open
-  Closed
-  Merged
+  OPEN
+  CLOSED
+  MERGED
 }
 
 model Installation {
