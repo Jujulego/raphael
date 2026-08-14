@@ -21,7 +21,6 @@ export async function pullRequestClosedHook({
     },
     data: {
       issueCount: repository.open_issues_count,
-      pullRequestCount: { decrement: 1 },
       pushedAt,
       pullRequests: {
         upsert: {

@@ -7,10 +7,28 @@ export default async function AllRepositoriesTable({
   className,
   searchParams,
 }: AllRepositoriesTableProps) {
-  const [data, count] = await prisma.$transaction([
-    prisma.repository.findMany({ orderBy: await extractSort(searchParams) }),
+  const [rawData, count] = await prisma.$transaction([
+    prisma.repository.findMany({
+      orderBy: await extractSort(searchParams),
+      include: {
+        _count: {
+          select: {
+            pullRequests: {
+              where: {
+                state: 'OPEN',
+              },
+            },
+          },
+        },
+      },
+    }),
     prisma.repository.count(),
   ]);
+
+  const data = rawData.map((repository) => ({
+    ...repository,
+    pullRequestCount: repository._count.pullRequests,
+  }));
 
   return <RepositoryTable className={className} data={data} count={count} />;
 }
@@ -30,9 +48,17 @@ async function extractSort(
     const [column, order] = sort.split(':');
 
     if (['name', 'issueCount', 'pullRequestCount'].includes(column)) {
-      orderBy.unshift({
-        [column]: order === 'desc' ? 'desc' : 'asc',
-      });
+      orderBy.unshift(
+        column === 'pullRequestCount'
+          ? {
+              pullRequests: {
+                _count: order === 'desc' ? 'desc' : 'asc',
+              },
+            }
+          : {
+              [column]: order === 'desc' ? 'desc' : 'asc',
+            },
+      );
     }
   }
 
