@@ -40,7 +40,6 @@ export async function installationCreatedHook({
                   name,
                   pushedAt: data?.pushedAt,
                   issueCount: data?.issueCount,
-                  pullRequestCount: data?.pullRequestCount,
                 },
               },
             },

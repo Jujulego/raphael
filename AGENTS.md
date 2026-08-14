@@ -94,29 +94,22 @@ Webhook handlers process GitHub App events in real-time. They are located in `li
 
 ### Pull Request Events
 
-#### `pull_request.opened` / `pull_request.reopened`
+#### `pull_request.opened` / `pull_request.reopened` / `pull_request.closed`
 
-**Path:** `lib/github/webhooks/pull-request.opened.ts`
+**Path:** `lib/github/webhooks/pull-request.ts`
 
-**Triggered:** When a pull request is created or reopened
-
-**Responsibilities:**
-
-- Update pull request count for the repository
-- Maintain repository state based on PR activity
-
----
-
-#### `pull_request.closed`
-
-**Path:** `lib/github/webhooks/pull-request.closed.ts`
-
-**Triggered:** When a pull request is closed (merged or abandoned)
+**Triggered:** When a pull request is created, reopened, or closed
 
 **Responsibilities:**
 
-- Update pull request count for the repository
-- Process any associated state changes
+- Upsert the matching `PullRequest` row for the repository/PR number
+- Refresh repository metadata such as `issueCount` and `pushedAt`
+- Preserve the PR state (`OPEN`, `CLOSED`, `MERGED`) and last-updated timestamp
+- Revalidate the `repositories` cache after changes
+
+**Implementation note:** The repository no longer stores a denormalized `pullRequestCount` field. Open PR totals are derived from the `PullRequest` relation where `state = OPEN`.
+
+**Compatibility:** `lib/github/webhooks/pull-request.opened.ts` and `lib/github/webhooks/pull-request.closed.ts` are thin re-exports to the shared handler.
 
 ---
 
@@ -135,13 +128,14 @@ Webhook handlers process GitHub App events in real-time. They are located in `li
 - Iterate through all repositories accessible to the GitHub App across all installations
 - Fetch current repository state from GitHub
 - Upsert repository records in the database
-- Update pull request counts for repositories where the push timestamp changed
-- Maintain eventual consistency with GitHub's current state
+- Reconcile pull request rows for repositories whose `pushedAt` changed
+- Maintain eventual consistency with GitHub's current state without storing a redundant PR count column
 
 **Key Features:**
 
 - Uses `app.eachRepository.iterator()` to batch fetch repositories
-- Executes GraphQL query to fetch open PR count
+- Lists pull requests and upserts the individual `PullRequest` records from GitHub
+- Uses `pushedAt` as the change trigger for PR reconciliation
 - Span-based performance tracking via Sentry
 - Error handling with `.catch(() => {})` to prevent job failures
 - 15-minute maximum runtime enforcement
@@ -149,7 +143,7 @@ Webhook handlers process GitHub App events in real-time. They are located in `li
 
 **Cache Invalidation:** Revalidates `repositories` tag after all updates
 
-**GraphQL Query:** `SynchronizeRepository` - Fetches open PR count for a repository
+**GraphQL Query:** `Repository` / `SynchronizeRepository` - Fetches repo metadata and open PR totals for comparison, but the authoritative count is derived from the `PullRequest` relation.
 
 ---
 
@@ -190,17 +184,19 @@ Webhook handlers process GitHub App events in real-time. They are located in `li
 **Repository Query** (`lib/github/repositories/get-repository.ts`)
 
 - Fetches repository metadata
-- Returns: `nameWithOwner`, `pushedAt`, open issues count, open PR count
+- Returns: `nameWithOwner`, `pushedAt`, open issues count, and open PR count used for initial hydration or comparisons
+- The repository list itself derives the current open PR total from the `PullRequest` table rather than the repository row
 
 **Synchronize Repository Query** (`app/api/cron/synchronize/route.ts`)
 
-- Fetches open PR count for a specific repository
-- Lightweight query for state checking
+- Lists PRs for a repository when its `pushedAt` changes
+- Uses the live GitHub response to upsert the canonical PR records
 
 ### Prisma Models
 
 - `Installation` - GitHub App installation record
-- `Repository` - Repository metadata
+- `Repository` - Repository metadata without a persisted `pullRequestCount` field
+- `PullRequest` - Canonical pull request state, keyed by repository and PR number
 - `RepositoriesOnInstallations` - Junction table for Many-to-Many relationship
 
 ---

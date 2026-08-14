@@ -20,11 +20,10 @@ model Installation {
 }
 
 model Repository {
-  owner            String
-  name             String
-  issueCount       Int       @default(0)
-  pullRequestCount Int       @default(0)
-  pushedAt         DateTime?
+  owner      String
+  name       String
+  issueCount Int       @default(0)
+  pushedAt   DateTime?
 
   installations RepositoriesOnInstallations[]
   pullRequests  PullRequest[]

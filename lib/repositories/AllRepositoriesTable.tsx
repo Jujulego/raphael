@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma.client';
 import type { RepositoryOrderByWithRelationInput } from '@/lib/prisma/models/Repository';
+import { listRepositories } from '@/lib/repositories/repositories.db';
 import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import { extractSearchParam, type RouteSearchParams } from '@/lib/utils/next';
 
@@ -7,8 +8,10 @@ export default async function AllRepositoriesTable({
   className,
   searchParams,
 }: AllRepositoriesTableProps) {
-  const [data, count] = await prisma.$transaction([
-    prisma.repository.findMany({ orderBy: await extractSort(searchParams) }),
+  const [data, count] = await Promise.all([
+    listRepositories({
+      orderBy: await extractSort(searchParams),
+    }),
     prisma.repository.count(),
   ]);
 
@@ -29,7 +32,7 @@ async function extractSort(
   if (sort) {
     const [column, order] = sort.split(':');
 
-    if (['name', 'issueCount', 'pullRequestCount'].includes(column)) {
+    if (['name', 'issueCount'].includes(column)) {
       orderBy.unshift({
         [column]: order === 'desc' ? 'desc' : 'asc',
       });

@@ -3,8 +3,7 @@ import { Webhooks } from '@octokit/webhooks';
 import { installationRepositoriesHook } from './webhooks/installation-repositories';
 import { installationCreatedHook } from './webhooks/installation.created';
 import { installationDeletedHook } from './webhooks/installation.deleted';
-import { pullRequestClosedHook } from './webhooks/pull-request.closed';
-import { pullRequestOpenedHook } from './webhooks/pull-request.opened';
+import { pullRequestHook } from './webhooks/pull-request';
 
 import 'server-only';
 
@@ -16,6 +15,7 @@ webhooks.on('installation.created', installationCreatedHook);
 webhooks.on('installation.deleted', installationDeletedHook);
 webhooks.on('installation_repositories', installationRepositoriesHook);
 webhooks.on('issues', issuesHook);
-webhooks.on('pull_request.closed', pullRequestClosedHook);
-webhooks.on('pull_request.opened', pullRequestOpenedHook);
-webhooks.on('pull_request.reopened', pullRequestOpenedHook);
+webhooks.on('pull_request.closed', pullRequestHook);
+webhooks.on('pull_request.edited', pullRequestHook);
+webhooks.on('pull_request.opened', pullRequestHook);
+webhooks.on('pull_request.reopened', pullRequestHook);

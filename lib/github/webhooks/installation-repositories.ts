@@ -72,7 +72,6 @@ export async function installationRepositoriesHook({
             data: {
               pushedAt: data?.pushedAt,
               issueCount: data?.issueCount ?? 0,
-              pullRequestCount: data?.pullRequestCount ?? 0,
               pullRequests: {
                 upsert: pullRequests,
               },
@@ -94,7 +93,6 @@ export async function installationRepositoriesHook({
               name,
               pushedAt: data?.pushedAt,
               issueCount: data?.issueCount,
-              pullRequestCount: data?.pullRequestCount,
               pullRequests: {
                 create: pullRequests.map((o) => o.create),
               },
