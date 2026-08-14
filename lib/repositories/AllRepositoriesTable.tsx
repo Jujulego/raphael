@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma.client';
 import type { RepositoryOrderByWithRelationInput } from '@/lib/prisma/models/Repository';
+import { listRepositories } from '@/lib/repositories/repositories.db';
 import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import { extractSearchParam, type RouteSearchParams } from '@/lib/utils/next';
 
@@ -7,28 +8,12 @@ export default async function AllRepositoriesTable({
   className,
   searchParams,
 }: AllRepositoriesTableProps) {
-  const [rawData, count] = await prisma.$transaction([
-    prisma.repository.findMany({
+  const [data, count] = await Promise.all([
+    listRepositories({
       orderBy: await extractSort(searchParams),
-      include: {
-        _count: {
-          select: {
-            pullRequests: {
-              where: {
-                state: 'OPEN',
-              },
-            },
-          },
-        },
-      },
     }),
     prisma.repository.count(),
   ]);
-
-  const data = rawData.map((repository) => ({
-    ...repository,
-    pullRequestCount: repository._count.pullRequests,
-  }));
 
   return <RepositoryTable className={className} data={data} count={count} />;
 }
@@ -47,18 +32,10 @@ async function extractSort(
   if (sort) {
     const [column, order] = sort.split(':');
 
-    if (['name', 'issueCount', 'pullRequestCount'].includes(column)) {
-      orderBy.unshift(
-        column === 'pullRequestCount'
-          ? {
-              pullRequests: {
-                _count: order === 'desc' ? 'desc' : 'asc',
-              },
-            }
-          : {
-              [column]: order === 'desc' ? 'desc' : 'asc',
-            },
-      );
+    if (['name', 'issueCount'].includes(column)) {
+      orderBy.unshift({
+        [column]: order === 'desc' ? 'desc' : 'asc',
+      });
     }
   }
 

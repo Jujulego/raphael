@@ -1,5 +1,5 @@
+import type { RepositoryData } from '@/lib/github/repositories/repository';
 import Link from '@/lib/mui/Link';
-import type { Repository } from '@/lib/prisma/client';
 import VirtualCell from '@/lib/virtual/VirtualCell';
 import VirtualRow from '@/lib/virtual/VirtualRow';
 
@@ -16,6 +16,6 @@ export default function RepositoryRow({ data, index }: RepositoryRowProps) {
 }
 
 export interface RepositoryRowProps {
-  readonly data: Repository;
+  readonly data: RepositoryData;
   readonly index: number;
 }
