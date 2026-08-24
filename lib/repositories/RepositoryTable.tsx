@@ -1,8 +1,7 @@
 'use client';
 
-import type { RepositoryData } from '@/lib/github/repositories/repository';
+import type { RepositoryStats } from '@/lib/prisma/client';
 import { useSearchParam } from '@/lib/utils/useSearchParam';
-import VirtualCell from '@/lib/virtual/VirtualCell';
 import VirtualRow from '@/lib/virtual/VirtualRow';
 import VirtualSortableCell from '@/lib/virtual/VirtualSortableCell';
 import VirtualTable, { type RowFn } from '@/lib/virtual/VirtualTable';
@@ -42,9 +41,15 @@ export default function RepositoryTable({ className, data, count }: RepositoryTa
           >
             Issues
           </VirtualSortableCell>
-          <VirtualCell scope="col" size="small">
+          <VirtualSortableCell
+            column="openPullRequestCount"
+            scope="col"
+            size="small"
+            sort={sort}
+            onSortChange={setSort}
+          >
             Pull requests
-          </VirtualCell>
+          </VirtualSortableCell>
         </VirtualRow>
       }
     />
@@ -53,12 +58,12 @@ export default function RepositoryTable({ className, data, count }: RepositoryTa
 
 export interface RepositoryTableProps {
   readonly className?: string;
-  readonly data: readonly RepositoryData[];
+  readonly data: readonly RepositoryStats[];
   readonly count: number;
 }
 
 // Utils
-const repositoryRow: RowFn<readonly RepositoryData[]> = ({ data, index }) => {
+const repositoryRow: RowFn<readonly RepositoryStats[]> = ({ data, index }) => {
   const item = data[index];
 
   if (item) {

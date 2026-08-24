@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../lib/prisma"
+  provider        = "prisma-client"
+  output          = "../lib/prisma"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -29,6 +30,16 @@ model Repository {
   pullRequests  PullRequest[]
 
   @@id([owner, name], name: "fullName")
+}
+
+view RepositoryStats {
+  owner                String
+  name                 String
+  issueCount           Int
+  pushedAt             DateTime?
+  openPullRequestCount Int
+
+  @@unique([owner, name], name: "fullName")
 }
 
 model PullRequest {
