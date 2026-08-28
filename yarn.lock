@@ -2211,6 +2211,135 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@napi-rs/keyring-darwin-arm64@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-darwin-arm64@npm:1.3.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-darwin-x64@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-darwin-x64@npm:1.3.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-freebsd-x64@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-freebsd-x64@npm:1.3.0"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-linux-arm-gnueabihf@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-linux-arm-gnueabihf@npm:1.3.0"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-linux-arm64-gnu@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-linux-arm64-gnu@npm:1.3.0"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-linux-arm64-musl@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-linux-arm64-musl@npm:1.3.0"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-linux-riscv64-gnu@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-linux-riscv64-gnu@npm:1.3.0"
+  conditions: os=linux & cpu=riscv64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-linux-x64-gnu@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-linux-x64-gnu@npm:1.3.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-linux-x64-musl@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-linux-x64-musl@npm:1.3.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-win32-arm64-msvc@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-win32-arm64-msvc@npm:1.3.0"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-win32-ia32-msvc@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-win32-ia32-msvc@npm:1.3.0"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring-win32-x64-msvc@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring-win32-x64-msvc@npm:1.3.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/keyring@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@napi-rs/keyring@npm:1.3.0"
+  dependencies:
+    "@napi-rs/keyring-darwin-arm64": "npm:1.3.0"
+    "@napi-rs/keyring-darwin-x64": "npm:1.3.0"
+    "@napi-rs/keyring-freebsd-x64": "npm:1.3.0"
+    "@napi-rs/keyring-linux-arm-gnueabihf": "npm:1.3.0"
+    "@napi-rs/keyring-linux-arm64-gnu": "npm:1.3.0"
+    "@napi-rs/keyring-linux-arm64-musl": "npm:1.3.0"
+    "@napi-rs/keyring-linux-riscv64-gnu": "npm:1.3.0"
+    "@napi-rs/keyring-linux-x64-gnu": "npm:1.3.0"
+    "@napi-rs/keyring-linux-x64-musl": "npm:1.3.0"
+    "@napi-rs/keyring-win32-arm64-msvc": "npm:1.3.0"
+    "@napi-rs/keyring-win32-ia32-msvc": "npm:1.3.0"
+    "@napi-rs/keyring-win32-x64-msvc": "npm:1.3.0"
+  dependenciesMeta:
+    "@napi-rs/keyring-darwin-arm64":
+      optional: true
+    "@napi-rs/keyring-darwin-x64":
+      optional: true
+    "@napi-rs/keyring-freebsd-x64":
+      optional: true
+    "@napi-rs/keyring-linux-arm-gnueabihf":
+      optional: true
+    "@napi-rs/keyring-linux-arm64-gnu":
+      optional: true
+    "@napi-rs/keyring-linux-arm64-musl":
+      optional: true
+    "@napi-rs/keyring-linux-riscv64-gnu":
+      optional: true
+    "@napi-rs/keyring-linux-x64-gnu":
+      optional: true
+    "@napi-rs/keyring-linux-x64-musl":
+      optional: true
+    "@napi-rs/keyring-win32-arm64-msvc":
+      optional: true
+    "@napi-rs/keyring-win32-ia32-msvc":
+      optional: true
+    "@napi-rs/keyring-win32-x64-msvc":
+      optional: true
+  checksum: 10c0/1fdfcd04ab530e00354381a030a74f48a813fbcabcbbfb8ad5bcc49c2ff7990f76ebcdc2b3665aa1a1d12e32d9e14a420521540b037989d51037f9403d751c65
+  languageName: node
+  linkType: hard
+
 "@napi-rs/wasm-runtime@npm:^0.2.11":
   version: 0.2.12
   resolution: "@napi-rs/wasm-runtime@npm:0.2.12"
@@ -2231,6 +2360,41 @@ __metadata:
     "@emnapi/core": ^1.7.1
     "@emnapi/runtime": ^1.7.1
   checksum: 10c0/344518bf3ef65051dda4c00969f293aa4a21ab7dc7822b3f48519b17cd5eaa3f0bc34898d115d50ba59b1817a0cb905d46f7a7223c8249239cd14c28db388e10
+  languageName: node
+  linkType: hard
+
+"@neon/config@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@neon/config@npm:1.0.1"
+  dependencies:
+    "@neon/sdk": "npm:2.1.0"
+    jiti: "npm:^2.7.0"
+    zod: "npm:^4.4.3"
+  checksum: 10c0/c0a7b69e4a71aebec903d10b1cb45aff76698fdef3a8072bae9cb84d2e49b28527084f5a56e078bd74bff973249ab94f196516870c61c058a1aabba3d59d3517
+  languageName: node
+  linkType: hard
+
+"@neon/env@npm:1.1.1":
+  version: 1.1.1
+  resolution: "@neon/env@npm:1.1.1"
+  dependencies:
+    "@napi-rs/keyring": "npm:1.3.0"
+    "@neon/config": "npm:1.0.1"
+    yargs: "npm:^18.0.0"
+    zod: "npm:^4.4.3"
+  dependenciesMeta:
+    "@napi-rs/keyring":
+      optional: true
+  bin:
+    neon-env: dist/cli.js
+  checksum: 10c0/68db3bdfdf66b5fd09f6987c93ee52721e4097e39eb7d1e005c6ee3e33233a899f1fa02951fdb71e8b73c747853a1575328426b1c7249deb82d423d9aa1c0428
+  languageName: node
+  linkType: hard
+
+"@neon/sdk@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@neon/sdk@npm:2.1.0"
+  checksum: 10c0/1dfda25dbaa225d8082201882d71103428fcf9216600e526ba3b95d3d31e84a1f5049666a0ddd9c67d90a86626eb20bc1ba534edad07832af9ab14ae8272be86
   languageName: node
   linkType: hard
 
@@ -9186,6 +9350,8 @@ __metadata:
     "@mui/icons-material": "npm:9.2.0"
     "@mui/material": "npm:9.2.0"
     "@mui/material-nextjs": "npm:9.1.1"
+    "@neon/config": "npm:1.0.1"
+    "@neon/env": "npm:1.1.1"
     "@octokit/app": "npm:16.1.4"
     "@octokit/webhooks": "npm:14.2.0"
     "@parcel/watcher": "npm:2.6.0"
@@ -10938,5 +11104,12 @@ __metadata:
   version: 4.3.6
   resolution: "zod@npm:4.3.6"
   checksum: 10c0/860d25a81ab41d33aa25f8d0d07b091a04acb426e605f396227a796e9e800c44723ed96d0f53a512b57be3d1520f45bf69c0cb3b378a232a00787a2609625307
+  languageName: node
+  linkType: hard
+
+"zod@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "zod@npm:4.4.3"
+  checksum: 10c0/7ea31b558e88f9faf44f31dd185e2e1cbf51fed3081787fb96cc2534749b50c0acfc6da7f0922a7353ed092dd358c7d50c28ea96c94d04af64191bd33152eca3
   languageName: node
   linkType: hard
