@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma.client';
+import { prisma } from '@/lib/prisma.client';
 import type { RepositoryOrderByWithRelationInput } from '@/lib/prisma/models/Repository';
 import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import { extractSearchParam, type RouteSearchParams } from '@/lib/utils/next';

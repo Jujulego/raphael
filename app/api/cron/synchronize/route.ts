@@ -1,6 +1,6 @@
 import { app } from '@/lib/github/octokit.app';
 import { listPullRequests } from '@/lib/github/pull-requests/list-pull-requests';
-import prisma from '@/lib/prisma.client';
+import { prisma } from '@/lib/prisma.client';
 import type { PullRequestUpsertWithWhereUniqueWithoutRepositoryInput as PullRequestUpsert } from '@/lib/prisma/models/PullRequest';
 import { cron } from '@/lib/utils/cron';
 import { paginator } from '@/lib/utils/paginate';

@@ -2234,6 +2234,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@neondatabase/serverless@npm:>0.6.0 <2":
+  version: 1.1.0
+  resolution: "@neondatabase/serverless@npm:1.1.0"
+  checksum: 10c0/ba24391bd53f94b76a817c9bfd09f91259024119b51e64192f2f97f627253d4370699e051d73918352e71fb93ae4575177ca1f5b38f2c27fcf5dc1adda70c677
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:16.2.12":
   version: 16.2.12
   resolution: "@next/env@npm:16.2.12"
@@ -2821,15 +2828,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/adapter-pg@npm:7.9.1":
+"@prisma/adapter-neon@npm:7.9.1":
   version: 7.9.1
-  resolution: "@prisma/adapter-pg@npm:7.9.1"
+  resolution: "@prisma/adapter-neon@npm:7.9.1"
   dependencies:
+    "@neondatabase/serverless": "npm:>0.6.0 <2"
     "@prisma/driver-adapter-utils": "npm:7.9.1"
-    "@types/pg": "npm:^8.16.0"
-    pg: "npm:^8.16.3"
     postgres-array: "npm:3.0.4"
-  checksum: 10c0/97f5583a3c164fa869700ef2bdb44a86f08d07d0d3506fed8a8b8fef73111918678ab7f774cea1ef6640f6868408854a2acdf1627a3764bbc146aa40c3ec38cd
+  checksum: 10c0/f627f547d86075edca3de3d98c08e916ed4ac706305958ecff227d109524222e2ba7e9462d4e9108ae8251712129fd9d0e0c95232fb8b09bd6d7025d40c99cab
   languageName: node
   linkType: hard
 
@@ -4070,7 +4076,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/pg@npm:8.20.3, @types/pg@npm:^8.16.0":
+"@types/pg@npm:8.20.3":
   version: 8.20.3
   resolution: "@types/pg@npm:8.20.3"
   dependencies:
@@ -8856,7 +8862,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pg@npm:8.22.0, pg@npm:^8.16.3":
+"pg@npm:8.22.0":
   version: 8.22.0
   resolution: "pg@npm:8.22.0"
   dependencies:
@@ -9183,7 +9189,7 @@ __metadata:
     "@octokit/app": "npm:16.1.4"
     "@octokit/webhooks": "npm:14.2.0"
     "@parcel/watcher": "npm:2.6.0"
-    "@prisma/adapter-pg": "npm:7.9.1"
+    "@prisma/adapter-neon": "npm:7.9.1"
     "@prisma/client": "npm:7.9.1"
     "@sentry/nextjs": "npm:10.69.0"
     "@tailwindcss/postcss": "npm:4.3.3"
