@@ -13,8 +13,10 @@
     "format:write": "prettier --write .",
     "lint": "eslint",
     "prisma": "prisma",
+    "prisma:dev": "yarn prisma migrate dev",
     "prisma:deploy": "yarn prisma migrate deploy",
     "prisma:generate": "yarn prisma generate",
+    "prisma:seed": "yarn prisma db seed",
     "start": "next start"
   },
   "dependencies": {
@@ -26,7 +28,7 @@
     "@mui/material-nextjs": "9.3.0",
     "@octokit/app": "16.1.4",
     "@octokit/webhooks": "14.2.0",
-    "@prisma/adapter-pg": "7.9.1",
+    "@prisma/adapter-neon": "7.9.1",
     "@prisma/client": "7.9.1",
     "@sentry/nextjs": "10.70.0",
     "@vercel/analytics": "2.0.1",

@@ -1,5 +1,5 @@
 import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
-import prisma from '@/lib/prisma.client';
+import { prisma } from '@/lib/prisma.client';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
 import dayjs from 'dayjs';
 import { revalidateTag } from 'next/cache';

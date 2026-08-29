@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma.client';
+import { prisma } from '@/lib/prisma.client';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
 
 export async function installationDeletedHook({

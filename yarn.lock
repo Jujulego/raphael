@@ -221,7 +221,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.29.2, @babel/runtime@npm:^7.29.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.29.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
+  version: 7.29.2
+  resolution: "@babel/runtime@npm:7.29.2"
+  checksum: 10c0/30b80a0140d16467792e1bbeb06f655b0dab70407da38dfac7fedae9c859f9ae9d846ef14ad77bd3814c064295fe9b1bc551f1541ea14646ae9f22b71a8bc17a
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.29.7":
   version: 7.29.7
   resolution: "@babel/runtime@npm:7.29.7"
   checksum: 10c0/ca11572f7146b21e0bde6a9ed4bb6a89eafbee5f0944c7eb54d0d8a2dac962c33638a1d611e14faa71dfbb92b4b5f9236232208568a6b7d5c6f3f39ddb91771e
@@ -921,7 +928,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-codegen/plugin-helpers@npm:^7.1.0, @graphql-codegen/plugin-helpers@npm:^7.2.0":
+"@graphql-codegen/plugin-helpers@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "@graphql-codegen/plugin-helpers@npm:7.1.0"
+  dependencies:
+    "@graphql-tools/utils": "npm:^11.2.0"
+    change-case-all: "npm:^2.1.0"
+    common-tags: "npm:1.8.2"
+    import-from: "npm:4.0.0"
+    tslib: "npm:^2.8.0"
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 10c0/f8a4bdb94f23eddfad86fecfab40528a68aabb93228e2eece512152ea70fed55a3d3d636bb1e0e224ea2c4508445073ea1fedb989e94d42ccb084b071050f19b
+  languageName: node
+  linkType: hard
+
+"@graphql-codegen/plugin-helpers@npm:^7.2.0":
   version: 7.2.0
   resolution: "@graphql-codegen/plugin-helpers@npm:7.2.0"
   dependencies:
@@ -2234,6 +2256,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@neondatabase/serverless@npm:>0.6.0 <2":
+  version: 1.1.0
+  resolution: "@neondatabase/serverless@npm:1.1.0"
+  checksum: 10c0/ba24391bd53f94b76a817c9bfd09f91259024119b51e64192f2f97f627253d4370699e051d73918352e71fb93ae4575177ca1f5b38f2c27fcf5dc1adda70c677
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:16.2.12":
   version: 16.2.12
   resolution: "@next/env@npm:16.2.12"
@@ -2821,15 +2850,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/adapter-pg@npm:7.9.1":
+"@prisma/adapter-neon@npm:7.9.1":
   version: 7.9.1
-  resolution: "@prisma/adapter-pg@npm:7.9.1"
+  resolution: "@prisma/adapter-neon@npm:7.9.1"
   dependencies:
+    "@neondatabase/serverless": "npm:>0.6.0 <2"
     "@prisma/driver-adapter-utils": "npm:7.9.1"
-    "@types/pg": "npm:^8.16.0"
-    pg: "npm:^8.16.3"
     postgres-array: "npm:3.0.4"
-  checksum: 10c0/97f5583a3c164fa869700ef2bdb44a86f08d07d0d3506fed8a8b8fef73111918678ab7f774cea1ef6640f6868408854a2acdf1627a3764bbc146aa40c3ec38cd
+  checksum: 10c0/f627f547d86075edca3de3d98c08e916ed4ac706305958ecff227d109524222e2ba7e9462d4e9108ae8251712129fd9d0e0c95232fb8b09bd6d7025d40c99cab
   languageName: node
   linkType: hard
 
@@ -3537,6 +3565,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry/core@npm:10.69.0":
+  version: 10.69.0
+  resolution: "@sentry/core@npm:10.69.0"
+  dependencies:
+    "@sentry/conventions": "npm:^0.16.0"
+  checksum: 10c0/d6a00824a12d332063ed309c3fc263715ac1d20d253ddfce75d22b8b046da4eb2f99d843628bf365281ca625826bc6a9bdf5dec0ce24c9eb88712f7187858891
+  languageName: node
+  linkType: hard
+
 "@sentry/core@npm:10.70.0":
   version: 10.70.0
   resolution: "@sentry/core@npm:10.70.0"
@@ -3579,6 +3616,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry/node-core@npm:10.69.0":
+  version: 10.69.0
+  resolution: "@sentry/node-core@npm:10.69.0"
+  dependencies:
+    "@sentry/conventions": "npm:^0.16.0"
+    "@sentry/core": "npm:10.69.0"
+    "@sentry/opentelemetry": "npm:10.69.0"
+    import-in-the-middle: "npm:^3.0.0"
+  peerDependencies:
+    "@opentelemetry/api": ^1.9.0
+    "@opentelemetry/core": ^1.30.1 || ^2.1.0
+    "@opentelemetry/exporter-trace-otlp-http": ">=0.57.0 <1"
+    "@opentelemetry/instrumentation": ">=0.57.1 <1"
+    "@opentelemetry/sdk-trace-base": ^1.30.1 || ^2.1.0
+  peerDependenciesMeta:
+    "@opentelemetry/api":
+      optional: true
+    "@opentelemetry/core":
+      optional: true
+    "@opentelemetry/exporter-trace-otlp-http":
+      optional: true
+    "@opentelemetry/instrumentation":
+      optional: true
+    "@opentelemetry/sdk-trace-base":
+      optional: true
+  checksum: 10c0/881638d1e428c91d4fddca889488e1cd1e7df3dce0f6a57b59d108ae6c7372fc2f708e727a15f94285ceebcef7fbd994a39390926cac34f5be80bd095e55d035
+  languageName: node
+  linkType: hard
+
 "@sentry/node-core@npm:10.70.0":
   version: 10.70.0
   resolution: "@sentry/node-core@npm:10.70.0"
@@ -3608,7 +3674,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/node@npm:10.70.0, @sentry/node@npm:^10.0.0":
+"@sentry/node@npm:10.70.0":
   version: 10.70.0
   resolution: "@sentry/node@npm:10.70.0"
   dependencies:
@@ -3622,6 +3688,37 @@ __metadata:
     "@sentry/server-utils": "npm:10.70.0"
     import-in-the-middle: "npm:^3.0.0"
   checksum: 10c0/3cb3b3fcab412528b27045d87b8e42a9b1af4eb845ac515e3eda77cbcbf61e534c7589b54980d6076b4ed869ec536c477b66c74a563cc9409dbe83287cfcb8b0
+  languageName: node
+  linkType: hard
+
+"@sentry/node@npm:^10.0.0":
+  version: 10.69.0
+  resolution: "@sentry/node@npm:10.69.0"
+  dependencies:
+    "@opentelemetry/api": "npm:^1.9.1"
+    "@opentelemetry/instrumentation": "npm:^0.220.0"
+    "@opentelemetry/sdk-trace-base": "npm:^2.9.0"
+    "@sentry/conventions": "npm:^0.16.0"
+    "@sentry/core": "npm:10.69.0"
+    "@sentry/node-core": "npm:10.69.0"
+    "@sentry/opentelemetry": "npm:10.69.0"
+    "@sentry/server-utils": "npm:10.69.0"
+    import-in-the-middle: "npm:^3.0.0"
+  checksum: 10c0/b827bfb3a3b6f9a2bec4bf6def11e216cd9be6c07c2fd3715e75076e60b61578740a5f8201fdea878dae07999d4b957882f4cab853228bb7ec9daf896dcfc2d9
+  languageName: node
+  linkType: hard
+
+"@sentry/opentelemetry@npm:10.69.0":
+  version: 10.69.0
+  resolution: "@sentry/opentelemetry@npm:10.69.0"
+  dependencies:
+    "@sentry/conventions": "npm:^0.16.0"
+    "@sentry/core": "npm:10.69.0"
+  peerDependencies:
+    "@opentelemetry/api": ^1.9.0
+    "@opentelemetry/core": ^1.30.1 || ^2.1.0
+    "@opentelemetry/sdk-trace-base": ^1.30.1 || ^2.1.0
+  checksum: 10c0/2f00a45bdae1178ca0a377fd7a939c605bb601e603431d27f520eeca1c5deac4bf7fd653f4fb87c5fcad59addb4d2c816808dbbd7d442ed53fa7de6ccb5c473f
   languageName: node
   linkType: hard
 
@@ -3669,6 +3766,19 @@ __metadata:
     "@sentry/browser-utils": "npm:10.70.0"
     "@sentry/core": "npm:10.70.0"
   checksum: 10c0/9d00373df75095d9b25c421f68945dd4df182c1d0fad541fe43ee8cd6a3cde78174b82e404677cb839e14ddcb63f0c3ad4b38e99453f54238a7712fc4bf07cd1
+  languageName: node
+  linkType: hard
+
+"@sentry/server-utils@npm:10.69.0":
+  version: 10.69.0
+  resolution: "@sentry/server-utils@npm:10.69.0"
+  dependencies:
+    "@apm-js-collab/code-transformer-bundler-plugins": "npm:^0.7.3"
+    "@apm-js-collab/tracing-hooks": "npm:^0.13.0"
+    "@sentry/conventions": "npm:^0.16.0"
+    "@sentry/core": "npm:10.69.0"
+    meriyah: "npm:^6.1.4"
+  checksum: 10c0/18f07ae1c4857687e8a64556abade36e186f135ca4ec9dd21a7c8061f9b95f15f4fcb3f704edcb2c826c5019bae7034899c5589fe06f28fe002a2c92d7660314
   languageName: node
   linkType: hard
 
@@ -4070,7 +4180,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/pg@npm:8.23.1, @types/pg@npm:^8.16.0":
+"@types/pg@npm:8.23.1":
   version: 8.23.1
   resolution: "@types/pg@npm:8.23.1"
   dependencies:
@@ -8836,7 +8946,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pg-protocol@npm:*, pg-protocol@npm:^1.16.0":
+"pg-protocol@npm:*":
+  version: 1.15.0
+  resolution: "pg-protocol@npm:1.15.0"
+  checksum: 10c0/f1acad1e693d23ce70f8a5fec108cb960d6b8546b3a3fb2cf9113211069ef0f8890e2cc26b5f94e11bf81ff6d851b11c0643de12327cd07e0d1127ae1cb80791
+  languageName: node
+  linkType: hard
+
+"pg-protocol@npm:^1.16.0":
   version: 1.16.0
   resolution: "pg-protocol@npm:1.16.0"
   checksum: 10c0/8ea4a8f4970aa0ca1e5bf9a482da0a41a043d7470fbaf7592736971146b09a2a4003d953c0091b72fc30bf7a7994a0b7fdf897bf50cd219787bd22806b3ffb04
@@ -8856,7 +8973,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pg@npm:8.23.0, pg@npm:^8.16.3":
+"pg@npm:8.23.0":
   version: 8.23.0
   resolution: "pg@npm:8.23.0"
   dependencies:
@@ -9183,7 +9300,7 @@ __metadata:
     "@octokit/app": "npm:16.1.4"
     "@octokit/webhooks": "npm:14.2.0"
     "@parcel/watcher": "npm:2.6.0"
-    "@prisma/adapter-pg": "npm:7.9.1"
+    "@prisma/adapter-neon": "npm:7.9.1"
     "@prisma/client": "npm:7.9.1"
     "@sentry/nextjs": "npm:10.70.0"
     "@tailwindcss/postcss": "npm:4.3.3"
