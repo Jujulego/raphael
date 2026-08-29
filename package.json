@@ -26,8 +26,6 @@
     "@mui/icons-material": "9.2.0",
     "@mui/material": "9.2.0",
     "@mui/material-nextjs": "9.1.1",
-    "@neon/config": "1.0.1",
-    "@neon/env": "1.1.1",
     "@octokit/app": "16.1.4",
     "@octokit/webhooks": "14.2.0",
     "@prisma/adapter-neon": "7.9.1",
