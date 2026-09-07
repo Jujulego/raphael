@@ -34,5 +34,8 @@
       "automergeType": "pr",
       "platformAutomerge": true
     }
-  ]
+  ],
+  "toolSettings": {
+    "nodeMaxMemory": 2048
+  }
 }
