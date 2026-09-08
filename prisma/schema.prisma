@@ -81,7 +81,6 @@ model User {
   accounts      Account[]
 
   @@unique([email])
-  @@map("user")
 }
 
 model Session {
@@ -97,7 +96,6 @@ model Session {
 
   @@unique([token])
   @@index([userId])
-  @@map("session")
 }
 
 model Account {
@@ -117,9 +115,8 @@ model Account {
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 
-  @@unique([issuer, accountId], map: "account_issuer_accountId_uidx")
+  @@unique([issuer, accountId], map: "Account_issuer_accountId_uidx")
   @@index([userId])
-  @@map("account")
 }
 
 model Verification {
@@ -131,5 +128,4 @@ model Verification {
   updatedAt  DateTime @updatedAt
 
   @@index([identifier])
-  @@map("verification")
 }
