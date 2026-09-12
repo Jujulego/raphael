@@ -15,7 +15,10 @@ enum PullRequestState {
 }
 
 model Installation {
-  id Int @id
+  id            Int      @id
+  accountIssuer String?
+  accountId     String?
+  account       Account? @relation(fields: [accountId, accountIssuer], references: [accountId, issuer], onDelete: Cascade)
 
   repositories RepositoriesOnInstallations[]
 }
@@ -45,14 +48,13 @@ view RepositoryStats {
 model PullRequest {
   repositoryOwner String
   repositoryName  String
+  repository      Repository       @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], onDelete: Cascade)
   number          Int
   title           String
   state           PullRequestState
   author          String
   createdAt       DateTime
   updatedAt       DateTime
-
-  repository Repository @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], onDelete: Cascade)
 
   @@id([repositoryOwner, repositoryName, number], name: "fullNumber")
   @@index([repositoryOwner, repositoryName, state])
@@ -99,12 +101,12 @@ model Session {
 }
 
 model Account {
-  id                    String    @id
+  id                    String         @id
   issuer                String
   accountId             String
   providerId            String
   userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -112,8 +114,9 @@ model Account {
   refreshTokenExpiresAt DateTime?
   scope                 String?
   password              String?
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  installations         Installation[]
 
   @@unique([issuer, accountId], map: "Account_issuer_accountId_uidx")
   @@index([userId])

@@ -13,6 +13,16 @@ export async function installationCreatedHook({
   const octokit = await app.getInstallationOctokit(payload.installation.id);
   const data: InstallationCreateInput = {
     id: payload.installation.id,
+    account: payload.installation.account
+      ? {
+          connect: {
+            issuer_accountId: {
+              accountId: payload.installation.account?.id?.toString(),
+              issuer: 'local:oauth:github',
+            },
+          },
+        }
+      : undefined,
   };
 
   // Add repositories

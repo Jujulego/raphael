@@ -127,7 +127,7 @@ export async function installationRepositoriesHook({
     },
     data: {
       repositories: {
-        upsert: await Promise.all(added),
+        upsert: added,
         delete: removed,
       },
     },
