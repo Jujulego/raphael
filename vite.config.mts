@@ -20,6 +20,7 @@ export default defineConfig({
     reporters: ['default', 'junit'],
     coverage: {
       include: ['app/**/*.{ts,tsx}', 'lib/**/*.{ts,tsx}'],
+      exclude: ['lib/prisma/**', 'lib/types/graphql.d.ts'],
       reporter: ['lcovonly'],
     },
     outputFile: {

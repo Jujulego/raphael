@@ -8,7 +8,7 @@ import { pullRequestHook } from './webhooks/pull-request';
 import 'server-only';
 
 export const webhooks = new Webhooks({
-  secret: process.env.GITHUB_WEBHOOK_SECRET!,
+  secret: process.env.GITHUB_WEBHOOK_SECRET ?? '',
 });
 
 webhooks.on('installation.created', installationCreatedHook);
