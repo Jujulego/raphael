@@ -12,14 +12,14 @@
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "eslint",
+    "prepare": "husky",
     "prisma": "prisma",
-    "prisma:dev": "yarn prisma migrate dev",
     "prisma:deploy": "yarn prisma migrate deploy",
+    "prisma:dev": "yarn prisma migrate dev",
     "prisma:generate": "yarn prisma generate",
     "prisma:seed": "yarn prisma db seed",
     "start": "next start",
-    "test": "vitest",
-    "prepare": "husky"
+    "test": "vitest"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "1.7.3",
