@@ -11,14 +11,18 @@
 !.yarn/versions
 
 # testing
-/coverage
+/coverage/
+/junit-report.xml
+
+# neon
+.neon
 
 # next.js
 /.next/
 /out/
 
-# production
-/build
+# vite
+/.vite/
 
 # misc
 .DS_Store
@@ -44,4 +48,3 @@ next-env.d.ts
 # generated
 /lib/prisma
 /lib/types/graphql.d.ts
-.neon

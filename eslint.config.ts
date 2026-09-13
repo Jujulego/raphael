@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 import graphql from '@graphql-eslint/eslint-plugin';
+import vitest from '@vitest/eslint-plugin';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier';
@@ -41,5 +42,15 @@ export default defineConfig([
       '@graphql-eslint': graphql,
     },
     rules: graphql.configs['flat/operations-recommended'].rules,
+  },
+  {
+    files: ['**/*.test.{js,jsx,ts,tsx}'],
+    plugins: {
+      vitest,
+    },
+    rules: {
+      ...vitest.configs.recommended.rules,
+      'vitest/prefer-called-exactly-once-with': 'off',
+    },
   },
 ]);

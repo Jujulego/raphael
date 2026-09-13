@@ -1,7 +1,7 @@
 import type { PullRequestData } from '@/lib/github/data/pull-request';
 
-import { ghStateToPullRequestState } from '@/lib/github/data/pull-request-state';
 import type { ListPullRequestsQuery, ListPullRequestsQueryVariables } from '@/lib/types/graphql';
+import { parseGithubPRState } from '@/lib/utils/github';
 import { graphql } from '@/lib/utils/graphql';
 import { mapConnection, type Page } from '@/lib/utils/paginate';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
@@ -28,7 +28,7 @@ export async function listPullRequests(
         repositoryName: query.repo,
         number: node.number,
         title: node.title,
-        state: ghStateToPullRequestState(node.state),
+        state: parseGithubPRState(node.state),
         author: node.author!.login,
         createdAt: node.createdAt,
         updatedAt: node.updatedAt,

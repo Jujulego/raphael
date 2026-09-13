@@ -3,6 +3,22 @@
   <component name="JsonSchemaMappingsProjectConfiguration">
     <state>
       <map>
+        <entry key="Codecov configuration files">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="Codecov configuration files" />
+              <option name="relativePathToSchema" value="https://www.schemastore.org/codecov.json" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value=".github/codecov.yml" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
         <entry key="Renovate">
           <value>
             <SchemaInfo>

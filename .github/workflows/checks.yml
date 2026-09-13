@@ -60,3 +60,41 @@ jobs:
 
       - name: Prettier
         run: yarn format:check
+
+  unit-tests:
+    name: 'Unit tests'
+    runs-on: 'ubuntu-latest'
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 24.x
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Run tests
+        run: yarn test --coverage
+
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          flags: unit
+          use_oidc: true
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          files: junit-report.xml
+          flags: unit
+          use_oidc: true

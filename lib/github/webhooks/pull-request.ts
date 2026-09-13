@@ -1,5 +1,4 @@
-import { ghStateToPullRequestState } from '@/lib/github/data/pull-request-state';
-import { splitRepositoryFullName } from '@/lib/utils/github';
+import { parseGithubPRState, splitRepositoryFullName } from '@/lib/utils/github';
 import { prisma } from '@/lib/prisma.client';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
 import dayjs from 'dayjs';
@@ -12,7 +11,7 @@ export async function pullRequestHook({
 >) {
   const { owner, name } = splitRepositoryFullName(repository.full_name);
   const pushedAt = repository.pushed_at ? dayjs(repository.pushed_at).toISOString() : null;
-  const state = ghStateToPullRequestState(pull_request.state, pull_request.merged);
+  const state = parseGithubPRState(pull_request.state, pull_request.merged);
 
   await Promise.all([
     await prisma.repository.update({
