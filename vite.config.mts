@@ -19,7 +19,7 @@ export default defineConfig({
     pool: 'vmThreads',
     reporters: ['default', 'junit'],
     coverage: {
-      reporter: ['cobertura', 'lcovonly'],
+      reporter: ['lcovonly'],
     },
     outputFile: {
       junit: 'junit-report.xml',

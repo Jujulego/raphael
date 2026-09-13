@@ -69,7 +69,6 @@ jobs:
     runs-on: 'ubuntu-latest'
 
     permissions:
-      code-quality: write
       contents: read
       id-token: write
 
@@ -108,14 +107,6 @@ jobs:
         with:
           flags: unit
           use_oidc: true
-
-      - name: Upload coverage to Github
-        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
-        uses: actions/upload-code-coverage@v1
-        with:
-          file: coverage/cobertura-coverage.xml
-          language: typescript
-          label: unit
 
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
