@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma.client';
 import type { RepositoryOrderByWithRelationInput } from '@/lib/prisma/models/Repository';
 import RepositoryTable from '@/lib/repositories/RepositoryTable';
-import { extractSearchParam, type RouteSearchParams } from '@/lib/utils/next';
+import { getSearchParam, type RouteSearchParams } from '@/lib/utils/next';
 
 export default async function AllRepositoriesTable({
   className,
@@ -26,7 +26,7 @@ async function extractSort(
   searchParams?: RouteSearchParams,
 ): Promise<RepositoryOrderByWithRelationInput[]> {
   const orderBy: RepositoryOrderByWithRelationInput[] = [{ pushedAt: 'desc' }];
-  const sort = await extractSearchParam(searchParams, 'sort');
+  const sort = await getSearchParam(searchParams, 'sort');
 
   if (sort) {
     const [column, order] = sort.split(':');
