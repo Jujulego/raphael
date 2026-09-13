@@ -1,4 +1,4 @@
-import { PullRequestState } from '@/lib/github/data/pull-request-state';
+import { PullRequestState } from '@/lib/prisma/enums';
 
 export function splitRepositoryFullName(fullName: string) {
   const [owner, name] = fullName.split('/');
@@ -7,14 +7,14 @@ export function splitRepositoryFullName(fullName: string) {
 
 export function parseGithubPRState(state: string, merged = false): PullRequestState {
   if (merged) {
-    return PullRequestState.Merged;
+    return PullRequestState.MERGED;
   }
 
   const stateMap: Record<string, PullRequestState> = {
-    open: PullRequestState.Open,
-    closed: PullRequestState.Closed,
-    merged: PullRequestState.Merged,
+    open: PullRequestState.OPEN,
+    closed: PullRequestState.CLOSED,
+    merged: PullRequestState.MERGED,
   };
 
-  return stateMap[state.toLowerCase()] ?? PullRequestState.Closed;
+  return stateMap[state.toLowerCase()] ?? PullRequestState.CLOSED;
 }

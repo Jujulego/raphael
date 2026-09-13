@@ -1,4 +1,4 @@
-import { PullRequestState } from '@/lib/github/data/pull-request-state';
+import { PullRequestState } from '@/lib/prisma/enums';
 
 export interface PullRequestData {
   readonly repositoryOwner: string;
