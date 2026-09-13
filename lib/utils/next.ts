@@ -1,6 +1,6 @@
 export type RouteSearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-export async function extractSearchParam(
+export async function getSearchParam(
   searchParams: RouteSearchParams | undefined,
   name: string,
 ): Promise<null | string> {

@@ -8,7 +8,6 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    reporters: ['default', 'junit'],
     exclude: [
       '**/.git/**',
       '**/.idea/**',
@@ -17,6 +16,8 @@ export default defineConfig({
       '**/dist/**',
       '**/node_modules/**',
     ],
+    pool: 'vmThreads',
+    reporters: ['default', 'junit'],
     coverage: {
       reporter: ['lcovonly'],
     },
