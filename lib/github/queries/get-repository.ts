@@ -1,5 +1,5 @@
-import type { RepositoryData } from '@/lib/github/repositories/repository';
-import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
+import type { RepositoryData } from '@/lib/github/data/repository';
+import { splitRepositoryFullName } from '@/lib/utils/github';
 import type { RepositoryQuery, RepositoryQueryVariables } from '@/lib/types/graphql';
 import { graphql } from '@/lib/utils/graphql';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';

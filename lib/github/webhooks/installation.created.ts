@@ -1,6 +1,6 @@
 import { app } from '@/lib/github/octokit.app';
-import { getRepository } from '@/lib/github/repositories/get-repository';
-import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
+import { getRepository } from '@/lib/github/queries/get-repository';
+import { splitRepositoryFullName } from '@/lib/utils/github';
 import { prisma } from '@/lib/prisma.client';
 import type { InstallationCreateInput } from '@/lib/prisma/models/Installation';
 import type { RepositoriesOnInstallationsCreateWithoutInstallationInput } from '@/lib/prisma/models/RepositoriesOnInstallations';

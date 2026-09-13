@@ -1,4 +1,4 @@
-import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
+import { splitRepositoryFullName } from '@/lib/utils/github';
 import { prisma } from '@/lib/prisma.client';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
 import dayjs from 'dayjs';

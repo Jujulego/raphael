@@ -1,15 +1,3 @@
-// Types
-export interface PullRequestData {
-  readonly repositoryOwner: string;
-  readonly repositoryName: string;
-  readonly number: number;
-  readonly title: string;
-  readonly state: PullRequestState;
-  readonly author: string;
-  readonly createdAt: string;
-  readonly updatedAt: string;
-}
-
 export enum PullRequestState {
   Open = 'OPEN',
   Closed = 'CLOSED',
@@ -17,7 +5,7 @@ export enum PullRequestState {
 }
 
 // Utils
-export function mapToPullRequestState(state: string, merged = false): PullRequestState {
+export function ghStateToPullRequestState(state: string, merged = false): PullRequestState {
   if (merged) {
     return PullRequestState.Merged;
   }

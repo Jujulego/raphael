@@ -181,7 +181,7 @@ Webhook handlers process GitHub App events in real-time. They are located in `li
 
 ### GraphQL Queries
 
-**Repository Query** (`lib/github/repositories/get-repository.ts`)
+**Repository Query** (`lib/github/queries/get-repository.ts`)
 
 - Fetches repository metadata
 - Returns: `nameWithOwner`, `pushedAt`, open issues count, and open PR count used for initial hydration or comparisons

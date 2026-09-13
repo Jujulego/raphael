@@ -1,7 +1,7 @@
 import { app } from '@/lib/github/octokit.app';
-import { listPullRequests } from '@/lib/github/pull-requests/list-pull-requests';
-import { getRepository } from '@/lib/github/repositories/get-repository';
-import { splitRepositoryFullName } from '@/lib/github/repositories/utils';
+import { listPullRequests } from '@/lib/github/queries/list-pull-requests';
+import { getRepository } from '@/lib/github/queries/get-repository';
+import { splitRepositoryFullName } from '@/lib/utils/github';
 import { prisma } from '@/lib/prisma.client';
 import type {
   RepositoriesOnInstallationsUpsertWithWhereUniqueWithoutInstallationInput as RepositoriesOnInstallationsUpsert,
