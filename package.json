@@ -18,7 +18,8 @@
     "prisma:generate": "yarn prisma generate",
     "prisma:seed": "yarn prisma db seed",
     "start": "next start",
-    "test": "vitest"
+    "test": "vitest",
+    "prepare": "husky"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "1.7.3",
@@ -46,6 +47,8 @@
     "rxjs": "7.8.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "21.2.2",
+    "@commitlint/config-conventional": "21.2.2",
     "@graphql-codegen/cli": "7.4.0",
     "@graphql-codegen/typescript": "6.1.0",
     "@graphql-codegen/typescript-operations": "6.1.6",
@@ -64,6 +67,7 @@
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.4",
     "eslint-config-prettier": "10.1.8",
+    "husky": "9.1.7",
     "jiti": "2.7.0",
     "jsdom": "30.0.1",
     "prettier": "3.9.6",
