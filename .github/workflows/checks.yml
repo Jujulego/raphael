@@ -85,8 +85,19 @@ jobs:
       - name: Install
         run: yarn install --immutable
 
+      - name: Create Neon branch
+        uses: neondatabase/create-branch-action@v6
+        id: create-branch
+        with:
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          branch_name: ${{ case(github.event_name == 'push', 'production', format('preview/{0}', github.head_ref)) }}
+          role: neondb_owner
+          api_key: ${{ secrets.NEON_API_KEY }}
+
       - name: Generate Prisma client
         run: yarn prisma generate
+        env:
+          DATABASE_URL_UNPOOLED: '${{ steps.create-branch.outputs.db_url }}'
 
       - name: Run tests
         run: yarn test --coverage
