@@ -19,6 +19,7 @@ export default defineConfig({
     pool: 'vmThreads',
     reporters: ['default', 'junit'],
     coverage: {
+      include: ['app/**/*.{ts,tsx}', 'lib/**/*.{ts,tsx}'],
       reporter: ['lcovonly'],
     },
     outputFile: {
