@@ -21,7 +21,6 @@ export async function getRepository(
     ...splitRepositoryFullName(data.repository.nameWithOwner),
     pushedAt: data.repository.pushedAt,
     issueCount: data.repository.issues.totalCount,
-    pullRequestCount: data.repository.pullRequests.totalCount,
   };
 }
 
@@ -33,9 +32,6 @@ const Repository: TypedDocumentNode<RepositoryQuery, RepositoryQueryVariables> =
       nameWithOwner
       pushedAt
       issues(states: [OPEN]) {
-        totalCount
-      }
-      pullRequests(states: [OPEN]) {
         totalCount
       }
     }

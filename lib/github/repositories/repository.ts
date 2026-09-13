@@ -4,5 +4,4 @@ export interface RepositoryData {
   readonly name: string;
   readonly pushedAt: string | null;
   readonly issueCount: number;
-  readonly pullRequestCount: number;
 }
