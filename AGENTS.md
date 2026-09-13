@@ -251,3 +251,11 @@ GITHUB_WEBHOOK_SECRET  # Webhook payload signature secret
 2. **Cron Scheduling:** Use Vercel Cron or equivalent to trigger `/api/cron/synchronize`
 3. **Permissions:** App requires `read:repository` and webhook access to configured events
 4. **Monitoring:** Check Sentry dashboard for event processing performance and errors
+
+---
+
+## Development workflow
+
+- Formatting: Prettier is used for code style. Run `yarn format:write` to format files. A Husky pre-commit hook runs Prettier automatically and stages formatted changes.
+- Commit messages: Conventional Commits are enforced via `commitlint` on `commit-msg`. Use the Conventional Commit format (e.g., `feat(paginate): add paginator tests`). To bypass hooks use `--no-verify`.
+- Tests: Unit tests use Vitest. Sentry's `startSpan` is mocked in tests with `vi.mock('@sentry/nextjs')` so tests can assert span metadata without importing Sentry runtime.
