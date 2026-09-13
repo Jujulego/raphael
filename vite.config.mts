@@ -8,6 +8,7 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    pool: 'vmThreads',
     reporters: ['default', 'junit'],
     exclude: [
       '**/.git/**',
