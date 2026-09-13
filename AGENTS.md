@@ -210,6 +210,10 @@ Webhook handlers process GitHub App events in real-time. They are located in `li
 - Event attributes: ID, name, action
 - Automatic error reporting on handler failures
 
+Testing note:
+
+- Unit tests mock Sentry's `startSpan` (e.g., `vi.mock('@sentry/nextjs')`) so tests don't import Sentry's runtime code and can assert span metadata and calls.
+
 ### Graceful Degradation
 
 - Cron job errors don't fail the entire batch (`.catch(() => {})`)
