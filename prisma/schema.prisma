@@ -66,8 +66,8 @@ model RepositoriesOnInstallations {
   installation   Installation @relation(fields: [installationId], references: [id], onDelete: Cascade)
   installationId Int
 
-  repository      Repository      @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], onDelete: Cascade)
-  repositoryStats RepositoryStats @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], map: "RepositoryStats_fkey")
+  repository      Repository       @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], onDelete: Cascade)
+  repositoryStats RepositoryStats? @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], map: "RepositoryStats_fkey")
   repositoryOwner String
   repositoryName  String
 
