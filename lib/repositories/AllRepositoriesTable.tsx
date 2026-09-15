@@ -1,17 +1,50 @@
+import { auth } from '@/lib/auth/server';
 import { prisma } from '@/lib/prisma.client';
 import type { RepositoryOrderByWithRelationInput } from '@/lib/prisma/models/Repository';
 import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import { getSearchParam, type RouteSearchParams } from '@/lib/utils/next';
+import { headers } from 'next/headers';
 
 export default async function AllRepositoriesTable({
   className,
   searchParams,
 }: AllRepositoriesTableProps) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    return null;
+  }
+
   const [data, count] = await Promise.all([
     prisma.repositoryStats.findMany({
       orderBy: await extractSort(searchParams),
+      where: {
+        installations: {
+          some: {
+            installation: {
+              account: {
+                userId: session.user.id,
+              },
+            },
+          },
+        },
+      },
     }),
-    prisma.repository.count(),
+    prisma.repository.count({
+      where: {
+        installations: {
+          some: {
+            installation: {
+              account: {
+                userId: session.user.id,
+              },
+            },
+          },
+        },
+      },
+    }),
   ]);
 
   return <RepositoryTable className={className} data={data} count={count} />;
