@@ -3,7 +3,7 @@ import type { PullRequestData } from '@/lib/github/data/pull-request';
 import type { ListPullRequestsQuery, ListPullRequestsQueryVariables } from '@/lib/types/graphql';
 import { parseGithubPRState } from '@/lib/utils/github';
 import { graphql } from '@/lib/utils/graphql';
-import { mapConnection, type Page } from '@/lib/utils/paginate';
+import { mapGqlConnection, type GqlPage } from '@/lib/utils/octokit-paginator';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { Octokit } from '@octokit/core';
 import gql from 'graphql-tag';
@@ -12,14 +12,14 @@ import { filter$, map$, step$ } from 'kyrielle';
 export async function listPullRequests(
   octokit: Octokit,
   query: ListPullRequestsQueryVariables,
-): Promise<Page<PullRequestData>> {
+): Promise<GqlPage<PullRequestData>> {
   const data = await graphql(octokit, ListPullRequests, query);
 
   if (!data.repository?.pullRequests) {
     return { nodes: [], endCursor: null, hasNextPage: false, totalCount: 0 };
   }
 
-  return mapConnection(
+  return mapGqlConnection(
     data.repository.pullRequests,
     step$(
       filter$((node) => !!node),
