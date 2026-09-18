@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma.client';
 import type { RepositoryOrderByWithRelationInput } from '@/lib/prisma/models/Repository';
 import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import { getSearchParam, type RouteSearchParams } from '@/lib/utils/next';
+import { loadPrismaPage } from '@/lib/utils/prisma';
 import { headers } from 'next/headers';
 
 export default async function AllRepositoriesTable({
@@ -17,35 +18,21 @@ export default async function AllRepositoriesTable({
     return null;
   }
 
-  const [data, count] = await Promise.all([
-    prisma.repositoryStats.findMany({
-      orderBy: await extractSort(searchParams),
-      where: {
-        installations: {
-          some: {
-            installation: {
-              account: {
-                userId: session.user.id,
-              },
+  const { items: data, count } = await loadPrismaPage(prisma.repositoryStats, {
+    take: 100,
+    where: {
+      installations: {
+        some: {
+          installation: {
+            account: {
+              userId: session.user.id,
             },
           },
         },
       },
-    }),
-    prisma.repository.count({
-      where: {
-        installations: {
-          some: {
-            installation: {
-              account: {
-                userId: session.user.id,
-              },
-            },
-          },
-        },
-      },
-    }),
-  ]);
+    },
+    orderBy: await extractSort(searchParams),
+  });
 
   return <RepositoryTable className={className} data={data} count={count} />;
 }
