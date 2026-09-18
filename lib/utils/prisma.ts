@@ -7,20 +7,26 @@ export interface PrismaPage<T> {
   readonly totalCount: number;
 }
 
-interface PrismaPaginateArgs {
+export interface PrismaPaginateArgs {
   readonly take: number;
   readonly skip?: number;
-  readonly where?: Readonly<Record<string, unknown>>;
+  readonly where?: Record<string, unknown>;
 }
 
-interface PrismaPaginateModel {
+type PaginateArgs<T> = Prisma.Args<T, 'findMany'> & {
+  readonly take: number;
+  readonly skip?: number;
+  readonly where?: unknown;
+};
+
+export interface PrismaPaginateModel {
   count(args: Pick<PrismaPaginateArgs, 'where'>): Promise<number>;
   findMany(args: PrismaPaginateArgs): Promise<unknown[]>;
 }
 
 export async function loadPage<T extends PrismaPaginateModel, A>(
   model: T,
-  args: Prisma.Exact<A, Prisma.Args<T, 'findMany'> & { take: number }>,
+  args: Prisma.Exact<A, PaginateArgs<T>>,
 ): Promise<PrismaPage<Prisma.Result<T, A, 'findMany'>>>;
 
 export async function loadPage(
