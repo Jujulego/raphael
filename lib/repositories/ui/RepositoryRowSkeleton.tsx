@@ -1,6 +1,6 @@
 import Skeleton from '@mui/material/Skeleton';
-import VirtualCell from '../virtual/VirtualCell';
-import VirtualRow from '../virtual/VirtualRow';
+import VirtualCell from '../../virtual/VirtualCell';
+import VirtualRow from '../../virtual/VirtualRow';
 
 export default function RepositoryRowSkeleton({ index }: RepositoryRowSkeletonProps) {
   return (

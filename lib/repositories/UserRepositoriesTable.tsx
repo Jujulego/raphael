@@ -4,7 +4,7 @@ import {
   countUserRepositories,
   findUserRepositoriesStats,
 } from '@/lib/repositories/data/user-repostitories';
-import RepositoryTable from '@/lib/repositories/RepositoryTable';
+import RepositoryTable from '@/lib/repositories/ui/RepositoryTable';
 import { getSearchParam, type RouteSearchParams } from '@/lib/utils/next';
 
 // Configuration
