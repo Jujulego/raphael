@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client/extension';
 
 export interface PrismaPage<T> {
-  readonly items: T;
+  readonly items: readonly T[];
   readonly isLast: boolean;
   readonly pageCount: number;
   readonly totalCount: number;
@@ -27,12 +27,12 @@ export interface PrismaPaginateModel {
 export async function loadPage<T extends PrismaPaginateModel, A>(
   model: T,
   args: Prisma.Exact<A, PaginateArgs<T>>,
-): Promise<PrismaPage<Prisma.Result<T, A, 'findMany'>>>;
+): Promise<PrismaPage<Prisma.Result<T, A, 'findMany'>[number]>>;
 
 export async function loadPage(
   model: PrismaPaginateModel,
   args: PrismaPaginateArgs,
-): Promise<PrismaPage<unknown[]>> {
+): Promise<PrismaPage<unknown>> {
   const { skip = 0, take } = args;
 
   const [items, totalCount] = await Promise.all([

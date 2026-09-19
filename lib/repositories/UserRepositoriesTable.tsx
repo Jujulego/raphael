@@ -1,25 +1,23 @@
-import { auth } from '@/lib/auth/server';
+import { currentSession } from '@/lib/auth/session';
 import { prisma } from '@/lib/prisma.client';
 import type { RepositoryOrderByWithRelationInput } from '@/lib/prisma/models/Repository';
 import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import { getSearchParam, type RouteSearchParams } from '@/lib/utils/next';
 import { loadPage } from '@/lib/utils/prisma';
-import { headers } from 'next/headers';
 
-export default async function AllRepositoriesTable({
+// Configuration
+const PAGE_SIZE = 20;
+
+// Component
+export default async function UserRepositoriesTable({
   className,
   searchParams,
 }: AllRepositoriesTableProps) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await currentSession();
 
-  if (!session) {
-    return null;
-  }
-
-  const { items: data, totalCount } = await loadPage(prisma.repositoryStats, {
-    take: 100,
+  const orderBy = await extractSort(searchParams);
+  const page = await loadPage(prisma.repositoryStats, {
+    take: PAGE_SIZE,
     where: {
       installations: {
         some: {
@@ -31,10 +29,40 @@ export default async function AllRepositoriesTable({
         },
       },
     },
-    orderBy: await extractSort(searchParams),
+    orderBy,
   });
 
-  return <RepositoryTable className={className} data={data} count={totalCount} />;
+  async function loadMore(skip: number) {
+    'use server';
+
+    const session = await currentSession();
+
+    return await prisma.repositoryStats.findMany({
+      take: PAGE_SIZE,
+      skip,
+      where: {
+        installations: {
+          some: {
+            installation: {
+              account: {
+                userId: session.user.id,
+              },
+            },
+          },
+        },
+      },
+      orderBy,
+    });
+  }
+
+  return (
+    <RepositoryTable
+      className={className}
+      page={page}
+      pageSize={PAGE_SIZE}
+      loadMoreAction={loadMore}
+    />
+  );
 }
 
 export interface AllRepositoriesTableProps {
