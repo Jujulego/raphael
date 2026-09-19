@@ -1,9 +1,11 @@
 import { currentSession } from '@/lib/auth/session';
-import { prisma } from '@/lib/prisma.client';
 import type { RepositoryOrderByWithRelationInput } from '@/lib/prisma/models/Repository';
+import {
+  countUserRepositories,
+  findUserRepositoriesStats,
+} from '@/lib/repositories/data/user-repostitories';
 import RepositoryTable from '@/lib/repositories/RepositoryTable';
 import { getSearchParam, type RouteSearchParams } from '@/lib/utils/next';
-import { loadPage } from '@/lib/utils/prisma';
 
 // Configuration
 const PAGE_SIZE = 20;
@@ -16,41 +18,22 @@ export default async function UserRepositoriesTable({
   const session = await currentSession();
 
   const orderBy = await extractSort(searchParams);
-  const page = await loadPage(prisma.repositoryStats, {
-    take: PAGE_SIZE,
-    where: {
-      installations: {
-        some: {
-          installation: {
-            account: {
-              userId: session.user.id,
-            },
-          },
-        },
-      },
-    },
-    orderBy,
-  });
+  const [firstPage, totalCount] = await Promise.all([
+    findUserRepositoriesStats(session.user.id, {
+      take: PAGE_SIZE,
+      orderBy,
+    }),
+    countUserRepositories(session.user.id),
+  ]);
 
   async function loadMore(skip: number) {
     'use server';
 
     const session = await currentSession();
 
-    return await prisma.repositoryStats.findMany({
+    return await findUserRepositoriesStats(session.user.id, {
       take: PAGE_SIZE,
       skip,
-      where: {
-        installations: {
-          some: {
-            installation: {
-              account: {
-                userId: session.user.id,
-              },
-            },
-          },
-        },
-      },
       orderBy,
     });
   }
@@ -58,8 +41,9 @@ export default async function UserRepositoriesTable({
   return (
     <RepositoryTable
       className={className}
-      page={page}
+      firstPage={firstPage}
       pageSize={PAGE_SIZE}
+      totalCount={totalCount}
       loadMoreAction={loadMore}
     />
   );

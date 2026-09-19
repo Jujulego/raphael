@@ -2,7 +2,6 @@
 
 import { usePaginatedData } from '@/lib/hooks/usePaginatedData';
 import type { RepositoryStats } from '@/lib/prisma/client';
-import type { PrismaPage } from '@/lib/utils/prisma';
 import { useSearchParam } from '@/lib/utils/useSearchParam';
 import VirtualRow from '@/lib/virtual/VirtualRow';
 import VirtualSortableCell from '@/lib/virtual/VirtualSortableCell';
@@ -10,15 +9,12 @@ import VirtualTable, { type RowFn } from '@/lib/virtual/VirtualTable';
 import RepositoryRow from './RepositoryRow';
 import RepositoryRowSkeleton from './RepositoryRowSkeleton';
 
-export default function RepositoryTable({
-  className,
-  page,
-  pageSize,
-  loadMoreAction,
-}: RepositoryTableProps) {
+export default function RepositoryTable(props: RepositoryTableProps) {
+  const { className, firstPage, pageSize, totalCount, loadMoreAction } = props;
+
   const [sort = '', setSort] = useSearchParam('sort');
   const { data, loadInterval } = usePaginatedData({
-    initial: page.items,
+    firstPage: firstPage,
     loadMore: loadMoreAction,
     pageSize,
   });
@@ -29,7 +25,7 @@ export default function RepositoryTable({
       data={data}
       columnLayout="2fr 1fr 1fr"
       loadedCount={pageSize}
-      rowCount={page.totalCount}
+      rowCount={totalCount}
       row={repositoryRow}
       onIntervalChange={loadInterval}
       head={
@@ -69,8 +65,9 @@ export default function RepositoryTable({
 
 export interface RepositoryTableProps {
   readonly className?: string;
-  readonly page: PrismaPage<RepositoryStats>;
+  readonly firstPage: RepositoryStats[];
   readonly pageSize: number;
+  readonly totalCount: number;
   readonly loadMoreAction: (skip: number) => Promise<RepositoryStats[]>;
 }
 

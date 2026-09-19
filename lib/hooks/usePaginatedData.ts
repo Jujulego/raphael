@@ -2,7 +2,7 @@ import type { RowInterval } from '@/lib/virtual/VirtualTable';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export interface PaginatedDataProps<T> {
-  readonly initial: readonly T[];
+  readonly firstPage: readonly T[];
   readonly loadMore: (skip: number) => Promise<readonly T[]>;
   readonly pageSize: number;
 }
@@ -13,17 +13,17 @@ export interface PaginatedDataState<T> {
 }
 
 export function usePaginatedData<T>(props: PaginatedDataProps<T>): PaginatedDataState<T> {
-  const { initial, loadMore, pageSize } = props;
+  const { firstPage, loadMore, pageSize } = props;
 
   const loadedPages = useRef(new Set<number>());
   const currentInterval = useRef<RowInterval | null>(null);
 
-  const [data, setData] = useState<readonly (T | null)[]>(initial);
-  const [lastInitial, setLastInitial] = useState(initial);
+  const [data, setData] = useState<readonly (T | null)[]>(firstPage);
+  const [oldFirstPage, setOldFirstPage] = useState(firstPage);
 
-  if (lastInitial !== initial) {
-    setLastInitial(initial);
-    setData(initial);
+  if (oldFirstPage !== firstPage) {
+    setOldFirstPage(firstPage);
+    setData(firstPage);
   }
 
   const loadInterval = useCallback(
@@ -61,14 +61,14 @@ export function usePaginatedData<T>(props: PaginatedDataProps<T>): PaginatedData
   useEffect(() => {
     loadedPages.current.clear();
 
-    for (let i = 0; i < initial.length; i += pageSize) {
+    for (let i = 0; i < firstPage.length; i += pageSize) {
       loadedPages.current.add(i);
     }
 
     if (currentInterval.current) {
       loadInterval(currentInterval.current);
     }
-  }, [initial, loadInterval, pageSize]);
+  }, [firstPage, loadInterval, pageSize]);
 
   return {
     data,
