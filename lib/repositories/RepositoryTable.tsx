@@ -1,5 +1,6 @@
 'use client';
 
+import { usePaginatedData } from '@/lib/hooks/usePaginatedData';
 import type { RepositoryStats } from '@/lib/prisma/client';
 import { useSearchParam } from '@/lib/utils/useSearchParam';
 import VirtualRow from '@/lib/virtual/VirtualRow';
@@ -8,19 +9,25 @@ import VirtualTable, { type RowFn } from '@/lib/virtual/VirtualTable';
 import RepositoryRow from './RepositoryRow';
 import RepositoryRowSkeleton from './RepositoryRowSkeleton';
 
-export default function RepositoryTable({ className, data, count }: RepositoryTableProps) {
-  const loadedCount = data.length;
+export default function RepositoryTable(props: RepositoryTableProps) {
+  const { className, firstPage, pageSize, totalCount, loadMoreAction } = props;
 
   const [sort = '', setSort] = useSearchParam('sort');
+  const { data, loadInterval } = usePaginatedData({
+    firstPage: firstPage,
+    loadMore: loadMoreAction,
+    pageSize,
+  });
 
   return (
     <VirtualTable
       className={className}
       data={data}
       columnLayout="2fr 1fr 1fr"
-      loadedCount={loadedCount}
-      rowCount={count}
+      loadedCount={pageSize}
+      rowCount={totalCount}
       row={repositoryRow}
+      onIntervalChange={loadInterval}
       head={
         <VirtualRow aria-rowindex={1}>
           <VirtualSortableCell
@@ -58,12 +65,14 @@ export default function RepositoryTable({ className, data, count }: RepositoryTa
 
 export interface RepositoryTableProps {
   readonly className?: string;
-  readonly data: readonly RepositoryStats[];
-  readonly count: number;
+  readonly firstPage: RepositoryStats[];
+  readonly pageSize: number;
+  readonly totalCount: number;
+  readonly loadMoreAction: (skip: number) => Promise<RepositoryStats[]>;
 }
 
 // Utils
-const repositoryRow: RowFn<readonly RepositoryStats[]> = ({ data, index }) => {
+const repositoryRow: RowFn<readonly (RepositoryStats | null)[]> = ({ data, index }) => {
   const item = data[index];
 
   if (item) {

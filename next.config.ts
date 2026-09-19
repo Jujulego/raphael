@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       hmrRefreshes: true,
     },
   },
+  experimental: {
+    authInterrupts: true,
+  },
 };
 
 export default withSentryConfig(nextConfig, {

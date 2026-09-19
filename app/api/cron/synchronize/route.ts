@@ -3,7 +3,7 @@ import { listPullRequests } from '@/lib/github/queries/list-pull-requests';
 import { prisma } from '@/lib/prisma.client';
 import type { PullRequestUpsertWithWhereUniqueWithoutRepositoryInput as PullRequestUpsert } from '@/lib/prisma/models/PullRequest';
 import { cron } from '@/lib/utils/cron';
-import { paginator } from '@/lib/utils/paginate';
+import { octokitPaginator } from '@/lib/utils/octokit-paginator';
 import { startSpan } from '@sentry/nextjs';
 import dayjs from 'dayjs';
 import { revalidateTag } from 'next/cache';
@@ -41,7 +41,10 @@ export const GET = cron(
           const pullRequests: PullRequestUpsert[] = [];
 
           // Upsert individual PR records
-          for await (const pr of paginator(listPullRequests, octokit, { owner, repo: name })) {
+          for await (const pr of octokitPaginator(octokit, listPullRequests, {
+            owner,
+            repo: name,
+          })) {
             pullRequests.push({
               where: {
                 fullNumber: {

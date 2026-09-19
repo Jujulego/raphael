@@ -8,7 +8,7 @@ import type {
   RepositoriesOnInstallationsWhereUniqueInput,
 } from '@/lib/prisma/models/RepositoriesOnInstallations';
 import type { PullRequestUpsertWithWhereUniqueWithoutRepositoryInput as PullRequestUpsert } from '@/lib/prisma/models/PullRequest';
-import { paginator } from '@/lib/utils/paginate';
+import { octokitPaginator } from '@/lib/utils/octokit-paginator';
 import type { EmitterWebhookEvent } from '@octokit/webhooks';
 import dayjs from 'dayjs';
 import { revalidateTag } from 'next/cache';
@@ -28,7 +28,7 @@ export async function installationRepositoriesHook({
     const pullRequests: PullRequestUpsert[] = [];
 
     // Upsert individual PR records
-    for await (const pr of paginator(listPullRequests, octokit, { owner, repo: name })) {
+    for await (const pr of octokitPaginator(octokit, listPullRequests, { owner, repo: name })) {
       pullRequests.push({
         where: {
           fullNumber: {

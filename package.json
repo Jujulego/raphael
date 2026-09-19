@@ -17,6 +17,7 @@
     "prisma:deploy": "yarn prisma migrate deploy",
     "prisma:dev": "yarn prisma migrate dev",
     "prisma:generate": "yarn prisma generate",
+    "prisma:generate-migration": "yarn prisma migrate dev --createOnly",
     "prisma:seed": "yarn prisma db seed",
     "start": "next start",
     "test": "vitest"

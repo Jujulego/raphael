@@ -1,5 +1,5 @@
 import Link from '@/lib/mui/Link';
-import AllRepositoriesTable from '@/lib/repositories/AllRepositoriesTable';
+import UserRepositoriesTable from '@/lib/repositories/UserRepositoriesTable';
 import RepositoryTableSkeleton from '@/lib/repositories/RepositoryTableSkeleton';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -23,7 +23,7 @@ export default function RepositoriesPage({ searchParams }: PageProps<'/repositor
       <Divider className="border-TableCell-border" />
 
       <Suspense fallback={<RepositoryTableSkeleton />}>
-        <AllRepositoriesTable className="h-full" searchParams={searchParams} />
+        <UserRepositoriesTable className="h-full" searchParams={searchParams} />
       </Suspense>
     </>
   );

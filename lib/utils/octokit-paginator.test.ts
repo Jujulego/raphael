@@ -2,12 +2,12 @@ import { describe, it, expect } from 'vitest';
 import type { Octokit } from '@octokit/core';
 import { map$ } from 'kyrielle';
 import type { PipeStep, SimpleIterator } from 'kyrielle';
-import type { GraphqlConnection, PageLoader, PageQuery, Page } from './paginate';
-import { mapConnection, paginator } from './paginate';
+import type { GqlConnection, GqlPageLoader, GqlPageQuery, GqlPage } from './octokit-paginator';
+import { mapGqlConnection, octokitPaginator } from './octokit-paginator';
 
-describe('mapConnection', () => {
+describe('mapGqlConnection', () => {
   it('maps null nodes to an empty array and preserves page info', () => {
-    const conn: GraphqlConnection<number> = {
+    const conn: GqlConnection<number> = {
       nodes: null,
       totalCount: 0,
       pageInfo: { endCursor: null, hasNextPage: false },
@@ -18,7 +18,7 @@ describe('mapConnection', () => {
       SimpleIterator<number>
     >;
 
-    const result = mapConnection(conn, mapper);
+    const result = mapGqlConnection(conn, mapper);
     expect(result.nodes).toEqual([]);
     expect(result.endCursor).toBeNull();
     expect(result.hasNextPage).toBe(false);
@@ -26,7 +26,7 @@ describe('mapConnection', () => {
   });
 
   it('applies the mapper to nodes and preserves metadata', () => {
-    const conn: GraphqlConnection<number> = {
+    const conn: GqlConnection<number> = {
       nodes: [1, 2, 3],
       totalCount: 3,
       pageInfo: { endCursor: 'end', hasNextPage: false },
@@ -37,7 +37,7 @@ describe('mapConnection', () => {
       SimpleIterator<number>
     >;
 
-    const result = mapConnection(conn, mapper);
+    const result = mapGqlConnection(conn, mapper);
     expect(result.nodes).toEqual([2, 4, 6]);
     expect(result.endCursor).toEqual('end');
     expect(result.hasNextPage).toBe(false);
@@ -45,9 +45,9 @@ describe('mapConnection', () => {
   });
 });
 
-describe('paginator', () => {
+describe('octokitPaginator', () => {
   it('yields items across multiple pages in order and passes after between calls', async () => {
-    const pages: Page<number>[] = [
+    const pages: GqlPage<number>[] = [
       { nodes: [1, 2], endCursor: 'c1', hasNextPage: true, totalCount: 4 },
       { nodes: [3, 4], endCursor: null, hasNextPage: false, totalCount: 4 },
     ];
@@ -55,7 +55,10 @@ describe('paginator', () => {
     const afters: Array<string | null> = [];
     let callIndex = 0;
 
-    const loader: PageLoader<PageQuery, number> = async (_octokit: Octokit, query: PageQuery) => {
+    const loader: GqlPageLoader<GqlPageQuery, number> = async (
+      _octokit: Octokit,
+      query: GqlPageQuery,
+    ) => {
       afters.push(query.after ?? null);
       // return next page in sequence
       return pages[callIndex++];
@@ -63,7 +66,7 @@ describe('paginator', () => {
 
     const collected: number[] = [];
     const octokit = {} as Octokit;
-    for await (const v of paginator(loader, octokit, { first: 2 })) {
+    for await (const v of octokitPaginator(octokit, loader, { first: 2 })) {
       collected.push(v);
     }
 
@@ -75,14 +78,17 @@ describe('paginator', () => {
   it('uses default first=100 when query.first is undefined', async () => {
     let capturedFirst: number | undefined = undefined;
 
-    const loader: PageLoader<PageQuery, number> = async (octokit: Octokit, query: PageQuery) => {
+    const loader: GqlPageLoader<GqlPageQuery, number> = async (
+      octokit: Octokit,
+      query: GqlPageQuery,
+    ) => {
       capturedFirst = query.first as number | undefined;
       return { nodes: [], endCursor: null, hasNextPage: false, totalCount: 0 };
     };
 
     const collected: number[] = [];
     const octokit = {} as Octokit;
-    for await (const v of paginator(loader, octokit, { after: null })) {
+    for await (const v of octokitPaginator(octokit, loader, { after: null })) {
       collected.push(v);
     }
 
@@ -91,13 +97,13 @@ describe('paginator', () => {
   });
 
   it('yields nothing for an empty page and stops when hasNextPage is false', async () => {
-    const loader: PageLoader<PageQuery, number> = async () => {
+    const loader: GqlPageLoader<GqlPageQuery, number> = async () => {
       return { nodes: [], endCursor: null, hasNextPage: false, totalCount: 0 };
     };
 
     const collected: number[] = [];
     const octokit = {} as Octokit;
-    for await (const v of paginator(loader, octokit, {})) {
+    for await (const v of octokitPaginator(octokit, loader, {})) {
       collected.push(v);
     }
 
