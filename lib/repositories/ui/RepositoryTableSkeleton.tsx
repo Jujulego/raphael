@@ -1,4 +1,4 @@
-import RepositoryRowSkeleton from '@/lib/repositories/RepositoryRowSkeleton';
+import RepositoryRowSkeleton from '@/lib/repositories/ui/RepositoryRowSkeleton';
 import VirtualCell from '@/lib/virtual/VirtualCell';
 import VirtualRow from '@/lib/virtual/VirtualRow';
 import VirtualTableSkeleton from '@/lib/virtual/VirtualTableSkeleton';

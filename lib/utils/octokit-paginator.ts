@@ -2,21 +2,24 @@ import type { Octokit } from '@octokit/core';
 import { collect$, pipe$, type PipeStep, type SimpleIterator } from 'kyrielle';
 
 // Types
-export interface PageQuery {
+export interface GqlPageQuery {
   readonly first?: number | null;
   readonly after?: string | null;
 }
 
-export interface Page<N> {
+export interface GqlPage<N> {
   readonly nodes: readonly N[];
   readonly endCursor: string | null;
   readonly hasNextPage: boolean;
   readonly totalCount: number;
 }
 
-export type PageLoader<Q extends PageQuery, T> = (octokit: Octokit, query: Q) => Promise<Page<T>>;
+export type GqlPageLoader<Q extends GqlPageQuery, T> = (
+  octokit: Octokit,
+  query: Q,
+) => Promise<GqlPage<T>>;
 
-export interface GraphqlConnection<N> {
+export interface GqlConnection<N> {
   readonly nodes: readonly N[] | null;
   readonly totalCount: number;
   readonly pageInfo: {
@@ -26,10 +29,10 @@ export interface GraphqlConnection<N> {
 }
 
 // Utils
-export function mapConnection<O, R>(
-  connection: GraphqlConnection<O>,
+export function mapGqlConnection<O, R>(
+  connection: GqlConnection<O>,
   mapper: PipeStep<readonly O[], SimpleIterator<R>>,
-): Page<R> {
+): GqlPage<R> {
   return {
     nodes: pipe$(connection.nodes ?? [], mapper, collect$()),
     endCursor: connection.pageInfo.endCursor,
@@ -38,9 +41,9 @@ export function mapConnection<O, R>(
   };
 }
 
-export async function* paginator<Q extends PageQuery, T>(
-  loader: PageLoader<Q, T>,
+export async function* octokitPaginator<Q extends GqlPageQuery, T>(
   octokit: Octokit,
+  loader: GqlPageLoader<Q, T>,
   query: Q,
 ): AsyncGenerator<T, void> {
   const first = query.first ?? 100;
