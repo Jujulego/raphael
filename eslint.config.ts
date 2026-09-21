@@ -12,6 +12,7 @@ export default defineConfig([
     '.next/**',
     '.yarn/**',
     'build/**',
+    'coverage/**',
     'lib/prisma/**',
     'lib/types/graphql.d.ts',
     'next-env.d.ts',
