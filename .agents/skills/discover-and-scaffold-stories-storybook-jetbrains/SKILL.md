@@ -30,16 +30,16 @@ re-run the command outside the sandbox (e.g. request sandbox-exempt execution fo
 
 ## Subcommands
 
- Subcommand                    | Answers                                                                                                                                                                                                                                                                        |
--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
- `component-props`             | The component's props with resolved types: kind (variant/boolean/string/number/color/date/function/array/node), optionality, defaults, JSDoc. Unsupported props (nested objects) are listed with a reason, never guessed.                                                      |
- `possible-stories`            | The non-combinatorial story plan: `Default` + one story per variant value + one per boolean (plus an explicit off story when a boolean defaults to `true`) + one story per other optional prop (color, function, string, …). One prop varies per story — never cross-products. |
- `missing-stories`             | The same plan diffed against the existing story file: which planned stories (including optional color/function/string/… stories) are covered and by which export, and which are still missing.                                                                                 |
- `create-story --story <Name>` | Writes one planned story — appends to the existing story file or scaffolds a fresh `.stories.tsx`. `--args '{"prop": value}'` overrides/adds arg values.                                                                                                                       |
- `create-story --props a,b`    | Writes every planned story whose varying prop is in the list (e.g. `--props size` → Small/Medium/Large). Cannot combine with `--story` or `--args`.                                                                                                                            |
- `create-missing-stories`      | Writes every missing planned story in one invocation (variants, booleans, and other optional props).                                                                                                                                                                           |
- `base-url`                    | The project's Storybook base URL, as the IDE has it right now. Takes no component file. Use it to build preview links — never assume an address or reuse one from an earlier session.                                                                                          |
- `help`                        | Prints usage.                                                                                                                                                                                                                                                                  |
+| Subcommand                    | Answers                                                                                                                                                                                                                                                                        |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `component-props`             | The component's props with resolved types: kind (variant/boolean/string/number/color/date/function/array/node), optionality, defaults, JSDoc. Unsupported props (nested objects) are listed with a reason, never guessed.                                                      |
+| `possible-stories`            | The non-combinatorial story plan: `Default` + one story per variant value + one per boolean (plus an explicit off story when a boolean defaults to `true`) + one story per other optional prop (color, function, string, …). One prop varies per story — never cross-products. |
+| `missing-stories`             | The same plan diffed against the existing story file: which planned stories (including optional color/function/string/… stories) are covered and by which export, and which are still missing.                                                                                 |
+| `create-story --story <Name>` | Writes one planned story — appends to the existing story file or scaffolds a fresh `.stories.tsx`. `--args '{"prop": value}'` overrides/adds arg values.                                                                                                                       |
+| `create-story --props a,b`    | Writes every planned story whose varying prop is in the list (e.g. `--props size` → Small/Medium/Large). Cannot combine with `--story` or `--args`.                                                                                                                            |
+| `create-missing-stories`      | Writes every missing planned story in one invocation (variants, booleans, and other optional props).                                                                                                                                                                           |
+| `base-url`                    | The project's Storybook base URL, as the IDE has it right now. Takes no component file. Use it to build preview links — never assume an address or reuse one from an earlier session.                                                                                          |
+| `help`                        | Prints usage.                                                                                                                                                                                                                                                                  |
 
 ## Options and contract
 
@@ -69,10 +69,12 @@ re-run the command outside the sandbox (e.g. request sandbox-exempt execution fo
    components only** below). Defer pages/screens until the user opts in.
 2. **Analyse** — `component-props <file> --json` to see what the component exposes and which props the planner can act on.
 3. **Audit** — `missing-stories <file> --json`. Read two flags before trusting the result:
-  - `"partial": true` means some existing exports could not be analyzed (spread args, function-based stories) — the missing list is
-    best-effort, so verify against the story file before batch-creating.
-  - a `"note"` about no story file being found means stories may live outside the sibling convention (`<Component>.stories.*` next to the
-    component) — the report is wrong for such projects; do not scaffold a duplicate.
+
+- `"partial": true` means some existing exports could not be analyzed (spread args, function-based stories) — the missing list is
+  best-effort, so verify against the story file before batch-creating.
+- a `"note"` about no story file being found means stories may live outside the sibling convention (`<Component>.stories.*` next to the
+  component) — the report is wrong for such projects; do not scaffold a duplicate.
+
 4. **Generate** — `create-missing-stories <file>` for the whole gap, or
    `create-story --story <Name>` for one (take names verbatim from the
    `missing-stories` output; `--args` values are plain JSON, not the rendered source expressions shown in the report).
