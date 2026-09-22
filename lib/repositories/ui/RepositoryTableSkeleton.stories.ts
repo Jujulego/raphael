@@ -8,6 +8,9 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
   },
+  args: {
+    className: 'overflow-auto max-h-screen',
+  },
 } satisfies Meta<typeof RepositoryTableSkeleton>;
 
 export default meta;

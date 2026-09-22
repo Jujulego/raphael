@@ -22,8 +22,8 @@ export default function RepositoriesPage({ searchParams }: PageProps<'/repositor
 
       <Divider className="border-TableCell-border" />
 
-      <Suspense fallback={<RepositoryTableSkeleton />}>
-        <UserRepositoriesTable className="h-full" searchParams={searchParams} />
+      <Suspense fallback={<RepositoryTableSkeleton rowCount={20} />}>
+        <UserRepositoriesTable searchParams={searchParams} />
       </Suspense>
     </>
   );

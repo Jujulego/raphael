@@ -6,10 +6,11 @@ import VirtualTableSkeleton from '@/lib/virtual/VirtualTableSkeleton';
 import { collect$, map$, pipe$ } from 'kyrielle';
 
 export default function RepositoryTableSkeleton(props: RepositoryTableSkeletonProps) {
-  const { rowCount = 3 } = props;
+  const { className, rowCount = 3 } = props;
 
   return (
     <VirtualTableSkeleton
+      className={className}
       columnLayout="2fr 1fr 1fr"
       head={
         <VirtualRow aria-rowindex={1}>
@@ -35,6 +36,7 @@ export default function RepositoryTableSkeleton(props: RepositoryTableSkeletonPr
 }
 
 export interface RepositoryTableSkeletonProps {
+  readonly className?: string;
   /** @default 3 */
   readonly rowCount?: number;
 }
