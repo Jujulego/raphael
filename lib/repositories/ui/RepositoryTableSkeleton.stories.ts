@@ -8,9 +8,6 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
   },
-  args: {
-    className: 'overflow-auto max-h-screen',
-  },
 } satisfies Meta<typeof RepositoryTableSkeleton>;
 
 export default meta;
@@ -18,3 +15,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const WithManyRows: Story = {
+  args: {
+    className: 'overflow-auto max-h-screen',
+    rowCount: 50,
+  },
+};
