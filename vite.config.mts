@@ -2,11 +2,11 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   cacheDir: '.vite',
-  plugins: [],
+  plugins: [react()],
   resolve: {
     tsconfigPaths: true,
   },
@@ -37,6 +37,7 @@ export default defineConfig({
             '**/dist/**',
             '**/node_modules/**',
           ],
+          setupFiles: './tests/setup.ts',
           pool: 'vmThreads',
         },
       },

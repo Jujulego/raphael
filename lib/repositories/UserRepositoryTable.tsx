@@ -11,7 +11,7 @@ import { getSearchParam, type RouteSearchParams } from '@/lib/utils/next';
 const PAGE_SIZE = 20;
 
 // Component
-export default async function UserRepositoriesTable({
+export default async function UserRepositoryTable({
   className,
   searchParams,
 }: AllRepositoriesTableProps) {

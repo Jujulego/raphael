@@ -1,4 +1,3 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
 import 'dotenv/config';
 
 import graphql from '@graphql-eslint/eslint-plugin';
@@ -7,6 +6,8 @@ import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier';
 import storybook from 'eslint-plugin-storybook';
+import jestDom from 'eslint-plugin-jest-dom';
+import testingLibrary from 'eslint-plugin-testing-library';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
@@ -55,6 +56,14 @@ export default defineConfig([
       ...vitest.configs.recommended.rules,
       'vitest/prefer-called-exactly-once-with': 'off',
     },
+  },
+  {
+    files: ['**/*.test.{js,jsx,ts,tsx}'],
+    ...jestDom.configs['flat/recommended'],
+  },
+  {
+    files: ['**/*.test.{js,jsx,ts,tsx}'],
+    ...testingLibrary.configs['flat/react'],
   },
   // @ts-expect-error Reported in https://github.com/storybookjs/storybook/issues/32405
   ...storybook.configs['flat/recommended'],
