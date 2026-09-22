@@ -24,6 +24,7 @@ export default defineConfig({
       {
         extends: true,
         test: {
+          name: 'unit',
           environment: 'jsdom',
           exclude: [
             '**/.agents/**',

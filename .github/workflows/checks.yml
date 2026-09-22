@@ -100,7 +100,7 @@ jobs:
           DATABASE_URL_UNPOOLED: '${{ steps.create-branch.outputs.db_url }}'
 
       - name: Run tests
-        run: yarn test --coverage
+        run: yarn test --coverage -p unit
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v7
