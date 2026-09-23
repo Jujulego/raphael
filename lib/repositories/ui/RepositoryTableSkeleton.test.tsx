@@ -30,4 +30,13 @@ describe('RepositoryTableSkeleton', () => {
     expect(table.tBodies).toHaveLength(1);
     expect(table.tBodies[0].rows).toHaveLength(3);
   });
+
+  it('renders with 20 rows', () => {
+    render(<RepositoryTableSkeleton rowCount={20} />);
+
+    const table = screen.getByRole('table') as HTMLTableElement;
+
+    expect(table.tBodies).toHaveLength(1);
+    expect(table.tBodies[0].rows).toHaveLength(20);
+  });
 });

@@ -99,6 +99,9 @@ jobs:
         env:
           DATABASE_URL_UNPOOLED: '${{ steps.create-branch.outputs.db_url }}'
 
+      - name: Install Playwright browsers
+        run: yarn playwright install chromium --with-deps
+
       - name: Run tests
         run: yarn test --coverage
 

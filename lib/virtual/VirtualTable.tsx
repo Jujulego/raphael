@@ -20,6 +20,7 @@ export interface VirtualTableProps<in out D = unknown> extends Omit<TableProps, 
   readonly loadedCount?: number;
   readonly row: RowFn<D>;
   readonly rowCount: number;
+  readonly rowModulo?: number;
   readonly rowOverScan?: number;
   readonly rowSize?: number;
 
@@ -35,6 +36,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
     onIntervalChange,
     row,
     rowCount,
+    rowModulo = 1,
     rowOverScan = 2,
     rowSize = DEFAULT_ROW_SIZE,
     sx,
@@ -80,7 +82,7 @@ export default function VirtualTable<D>(props: VirtualTableProps<D>) {
   }, [rowCount, rowSize]);
 
   // Compute rendered interval
-  const first = Math.max(0, firstIdx - rowOverScan);
+  const first = Math.max(0, adjustValue(firstIdx - rowOverScan, rowModulo));
   const last = Math.min(firstIdx + printedCount + rowOverScan, rowCount);
 
   useEffect(() => {
@@ -173,4 +175,12 @@ function printableRowCount(table: HTMLTableElement, rowCount: number, rowSize: n
   }
 
   return Math.max(0, Math.min(rowCount, Math.ceil(height / rowSize)));
+}
+
+function adjustValue(value: number, modulo: number): number {
+  if (modulo > 1) {
+    return value - (value % modulo);
+  }
+
+  return value;
 }

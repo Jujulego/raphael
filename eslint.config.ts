@@ -5,6 +5,7 @@ import vitest from '@vitest/eslint-plugin';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier';
+import storybook from 'eslint-plugin-storybook';
 import jestDom from 'eslint-plugin-jest-dom';
 import testingLibrary from 'eslint-plugin-testing-library';
 import { defineConfig, globalIgnores } from 'eslint/config';
@@ -64,4 +65,6 @@ export default defineConfig([
     files: ['**/*.test.{js,jsx,ts,tsx}'],
     ...testingLibrary.configs['flat/react'],
   },
+  // @ts-expect-error Reported in https://github.com/storybookjs/storybook/issues/32405
+  ...storybook.configs['flat/recommended'],
 ]);
