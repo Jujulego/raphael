@@ -26,6 +26,7 @@ export default function RepositoryTable(props: RepositoryTableProps) {
       columnLayout="2fr 1fr 1fr"
       loadedCount={pageSize}
       rowCount={totalCount}
+      rowModulo={3}
       row={repositoryRow}
       onIntervalChange={loadInterval}
       head={
