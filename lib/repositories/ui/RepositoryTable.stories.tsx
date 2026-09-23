@@ -1,4 +1,4 @@
-import { makeRepositories } from '@/stories/mocks/repositories';
+import { makeRepositories } from '@/tests/mocks/repositories';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { getRouter } from '@storybook/nextjs-vite/navigation.mock';
 import { expect, fn, mocked } from 'storybook/test';
@@ -13,8 +13,8 @@ const meta = {
   },
   args: {
     className: 'max-h-screen overflow-auto',
-    pageSize: 10,
     loadMoreAction: fn(() => Promise.resolve([])),
+    pageSize: 10,
   },
 } satisfies Meta<typeof RepositoryTable>;
 
