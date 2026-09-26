@@ -49,5 +49,7 @@ next-env.d.ts
 /lib/prisma
 /lib/types/graphql.d.ts
 
+# storybook
+/chromatic.log
 *storybook.log
 storybook-static
