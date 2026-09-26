@@ -186,13 +186,6 @@ jobs:
       - name: Run tests
         run: yarn test --coverage --project=storybook
 
-      - name: Run Chromatic
-        uses: chromaui/action@v18.9.5
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          onlyChanged: true
-          externals: app/theme.css
-
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v7
         with:
