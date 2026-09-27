@@ -5,7 +5,7 @@ import { nextCookies } from 'better-auth/next-js';
 
 export const auth = betterAuth({
   baseURL: {
-    allowedHosts: ['localhost:3000', 'raphael-*-jujulego.vercel.app', 'raphael-iota.vercel.app'],
+    allowedHosts: ['localhost:3000', 'raphael-*-jujulego.vercel.app', 'raphael.capellari.net'],
     protocol: process.env.NODE_ENV === 'development' ? 'http' : 'https',
   },
   database: prismaAdapter(prisma, {
