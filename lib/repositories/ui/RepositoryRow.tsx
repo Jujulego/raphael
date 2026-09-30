@@ -7,7 +7,7 @@ export default function RepositoryRow({ data, index }: RepositoryRowProps) {
   return (
     <VirtualRow rowIndex={index}>
       <VirtualCell scope="row">
-        <Link href={`https://github.com/${data.owner}/${data.name}`}>{data.name}</Link>
+        <Link href={`repositories/${data.owner}/${data.name}`}>{data.name}</Link>
       </VirtualCell>
       <VirtualCell>{data.issueCount}</VirtualCell>
       <VirtualCell>{data.openPullRequestCount}</VirtualCell>
