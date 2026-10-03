@@ -78,7 +78,7 @@ const repositoryRow: RowFn<readonly (RepositoryStats | null)[]> = ({ data, index
 
   if (item) {
     const key = `${item.owner}/${item.name}`;
-    return <RepositoryRow key={key} data={item} index={index} />;
+    return <RepositoryRow key={key} repository={item} index={index} />;
   }
 
   return <RepositoryRowSkeleton key={index} index={index} />;
