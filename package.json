@@ -32,6 +32,7 @@
     "@mui/icons-material": "9.4.0",
     "@mui/material": "9.4.0",
     "@mui/material-nextjs": "9.4.0",
+    "@mui/x-charts": "^9.14.0",
     "@octokit/app": "16.1.4",
     "@octokit/webhooks": "14.2.0",
     "@prisma/adapter-neon": "7.10.0",
