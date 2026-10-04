@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma.client';
+import { aggPullRequestActivity } from '@/lib/prisma/sql/aggPullRequestActivity';
 import ActivityGraph, {
   type ActivityData,
   type ActivityGraphProps,
@@ -20,20 +21,7 @@ export default async function RepositoryActivityGraph(props: RepositoryActivityG
         repositoryName: name,
       },
     }),
-    prisma.pullRequest.groupBy({
-      by: 'createdAt',
-      _count: true,
-      where: {
-        repositoryOwner: owner,
-        repositoryName: name,
-        createdAt: {
-          gte: lastMonth.toDate(),
-        },
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    }),
+    prisma.$queryRawTyped(aggPullRequestActivity(owner, name, lastMonth.toDate())),
   ]);
 
   let prCount = finalCount;
@@ -41,8 +29,8 @@ export default async function RepositoryActivityGraph(props: RepositoryActivityG
   const data: ActivityData[] = [{ date: today.toDate(), pullRequests: prCount }];
 
   for (const add of additions) {
-    prCount -= add._count;
-    data.push({ date: add.createdAt, pullRequests: prCount });
+    prCount -= add.added!;
+    data.push({ date: add.createdAt!, pullRequests: prCount });
   }
 
   return <ActivityGraph {...rest} data={data} />;
