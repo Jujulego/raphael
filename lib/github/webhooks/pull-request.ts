@@ -12,6 +12,7 @@ export async function pullRequestHook({
   const { owner, name } = splitRepositoryFullName(repository.full_name);
   const pushedAt = repository.pushed_at ? dayjs(repository.pushed_at).toISOString() : null;
   const state = parseGithubPRState(pull_request.state, pull_request.merged);
+  const closedAt = pull_request.closed_at ? dayjs(pull_request.closed_at).toDate() : null;
 
   await Promise.all([
     await prisma.repository.update({
@@ -39,6 +40,7 @@ export async function pullRequestHook({
         state,
         author: pull_request.user.login,
         updatedAt: dayjs(pull_request.updated_at).toDate(),
+        closedAt,
       },
       create: {
         repositoryOwner: owner,
@@ -49,6 +51,7 @@ export async function pullRequestHook({
         author: pull_request.user.login,
         createdAt: dayjs(pull_request.created_at).toDate(),
         updatedAt: dayjs(pull_request.updated_at).toDate(),
+        closedAt,
       },
     }),
   ]);

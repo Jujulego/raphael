@@ -57,6 +57,7 @@ model PullRequest {
   author          String
   createdAt       DateTime
   updatedAt       DateTime
+  closedAt        DateTime?
 
   @@id([repositoryOwner, repositoryName, number], name: "fullNumber")
   @@index([repositoryOwner, repositoryName, state])

@@ -9,4 +9,5 @@ export interface PullRequestData {
   readonly author: string;
   readonly createdAt: string;
   readonly updatedAt: string;
+  readonly closedAt: string | null;
 }

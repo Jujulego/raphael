@@ -32,6 +32,7 @@ export async function listPullRequests(
         author: node.author!.login,
         createdAt: node.createdAt,
         updatedAt: node.updatedAt,
+        closedAt: node.closedAt,
       })),
     ),
   );
@@ -56,6 +57,7 @@ const ListPullRequests: TypedDocumentNode<ListPullRequestsQuery, ListPullRequest
             }
             createdAt
             updatedAt
+            closedAt
           }
           pageInfo {
             hasNextPage
