@@ -1,6 +1,8 @@
 'use client';
 
 import { createTheme } from '@mui/material/styles';
+// noinspection ES6UnusedImports
+import {} from '@mui/x-charts/themeAugmentation';
 
 export const theme = createTheme({
   cssVariables: true,
