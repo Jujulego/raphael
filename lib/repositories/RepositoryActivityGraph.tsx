@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma.client';
+import { PullRequestState } from '@/lib/prisma/enums';
 import { aggPullRequestActivity } from '@/lib/prisma/sql/aggPullRequestActivity';
 import ActivityGraph, {
   type ActivityData,
@@ -19,6 +20,7 @@ export default async function RepositoryActivityGraph(props: RepositoryActivityG
       where: {
         repositoryOwner: owner,
         repositoryName: name,
+        state: PullRequestState.OPEN,
       },
     }),
     prisma.$queryRawTyped(aggPullRequestActivity(owner, name, lastMonth.toDate())),
@@ -29,9 +31,11 @@ export default async function RepositoryActivityGraph(props: RepositoryActivityG
   const data: ActivityData[] = [{ date: today.toDate(), pullRequests: prCount }];
 
   for (const add of additions) {
-    prCount -= add.added!;
-    data.push({ date: add.createdAt!, pullRequests: prCount });
+    prCount += (add.closed ?? 0) - (add.added ?? 0);
+    data.push({ date: add.date!, pullRequests: prCount });
   }
+
+  data.reverse();
 
   return <ActivityGraph {...rest} data={data} />;
 }

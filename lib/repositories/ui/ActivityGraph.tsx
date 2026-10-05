@@ -24,15 +24,29 @@ export default function ActivityGraph({ className, data }: ActivityGraphProps) {
       <LineChart
         className="grow"
         dataset={data}
-        series={[{ dataKey: 'pullRequests', label: 'Pull requests', showMark: true }]}
+        grid={{ horizontal: true }}
+        series={[{ dataKey: 'pullRequests', label: 'Pull requests', area: true, showMark: true }]}
+        slotProps={{
+          area: {
+            fillOpacity: 0.4,
+          },
+        }}
         xAxis={[
           {
             dataKey: 'date',
             label: 'Date',
+            scaleType: 'point',
             valueFormatter: (date: Date) => dayjs(date).format(dateFormat),
           },
         ]}
-        yAxis={[{ width: 100 }]}
+        yAxis={[
+          {
+            scaleType: 'linear',
+            tickMinStep: 1,
+            domainLimit: 'nice',
+            min: 0,
+          },
+        ]}
       />
     </Paper>
   );
