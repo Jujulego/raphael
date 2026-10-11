@@ -1,5 +1,6 @@
 'use client';
 
+import type { ActivityData } from '@/lib/repositories/data/activity-graph';
 import Paper from '@mui/material/Paper';
 import { LineChart } from '@mui/x-charts';
 import { clsx } from 'clsx';
@@ -68,8 +69,3 @@ export interface ActivityGraphProps {
   readonly className?: string;
   readonly data: readonly ActivityData[];
 }
-
-export type ActivityData = {
-  readonly date: Date;
-  readonly pullRequests: number;
-};

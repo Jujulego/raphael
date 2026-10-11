@@ -1,14 +1,12 @@
+import RepositoryBreadcrumb from '@/app/(console)/repositories/[owner]/[name]/RepositoryBreadcrumb';
 import Link from '@/lib/mui/Link';
 import { prisma } from '@/lib/prisma.client';
 import RepositoryActivityGraph from '@/lib/repositories/RepositoryActivityGraph';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Skeleton from '@mui/material/Skeleton';
 import { Suspense } from 'react';
 
-export default async function RepositoryPage({
-  params,
-}: PageProps<'/repositories/[owner]/[name]'>) {
-  const { owner, name } = await params;
-
+export default function RepositoryPage({ params }: PageProps<'/repositories/[owner]/[name]'>) {
   return (
     <>
       <Breadcrumbs className="mx-6 mt-4 mb-6">
@@ -18,12 +16,19 @@ export default async function RepositoryPage({
         <Link href="/repositories" color="inherit" underline="hover">
           Repositories
         </Link>
-        <p>{owner}</p>
-        <p className="text-text-primary">{name}</p>
+        <Suspense fallback={<Skeleton width={64} />}>
+          <RepositoryBreadcrumb content={params.then((p) => p.owner)} />
+        </Suspense>
+        <Suspense fallback={<Skeleton width={64} />}>
+          <RepositoryBreadcrumb
+            className="text-text-primary"
+            content={params.then((p) => p.name)}
+          />
+        </Suspense>
       </Breadcrumbs>
 
       <Suspense>
-        <RepositoryActivityGraph className="m-4 grow" owner={owner} name={name} />
+        <RepositoryActivityGraph className="m-4 grow" params={params} />
       </Suspense>
     </>
   );
