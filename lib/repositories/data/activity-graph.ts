@@ -1,10 +1,9 @@
-import 'server-only';
 import { prisma } from '@/lib/prisma.client';
 import { PullRequestState } from '@/lib/prisma/enums';
 import { aggPullRequestActivity } from '@/lib/prisma/sql/aggPullRequestActivity';
 import { cacheLife } from 'next/cache';
 
-export interface ActivityParams {
+export interface ActivityGraphParams {
   readonly repositoryOwner: string;
   readonly repositoryName: string;
   readonly startDate: Date;
@@ -16,7 +15,7 @@ export type ActivityData = {
   readonly pullRequests: number;
 };
 
-export async function getActivityGraphData(params: ActivityParams): Promise<ActivityData[]> {
+export async function getActivityGraphData(params: ActivityGraphParams): Promise<ActivityData[]> {
   'use cache';
 
   cacheLife('hours');
@@ -49,6 +48,8 @@ export async function getActivityGraphData(params: ActivityParams): Promise<Acti
     prCount += (add.closed ?? 0) - (add.added ?? 0);
     data.push({ date: add.date!, pullRequests: prCount });
   }
+
+  data.push({ date: params.startDate, pullRequests: prCount });
 
   data.reverse();
 
