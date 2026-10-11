@@ -6,14 +6,17 @@ import ActivityGraph, {
   type ActivityGraphProps,
 } from '@/lib/repositories/ui/ActivityGraph';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { connection } from 'next/server';
+
+dayjs.extend(utc);
 
 export default async function RepositoryActivityGraph(props: RepositoryActivityGraphProps) {
   const { owner, name, ...rest } = props;
   await connection();
 
-  const today = dayjs().startOf('day');
-  const lastMonth = dayjs().subtract(1, 'month').startOf('day');
+  const endDate = dayjs.utc().startOf('hour');
+  const startDate = endDate.subtract(3, 'month');
 
   const [finalCount, additions] = await Promise.all([
     prisma.pullRequest.count({
@@ -21,14 +24,18 @@ export default async function RepositoryActivityGraph(props: RepositoryActivityG
         repositoryOwner: owner,
         repositoryName: name,
         state: PullRequestState.OPEN,
+        createdAt: {
+          lte: endDate.toDate(),
+        },
       },
     }),
-    prisma.$queryRawTyped(aggPullRequestActivity(owner, name, lastMonth.toDate())),
+    prisma.$queryRawTyped(
+      aggPullRequestActivity(owner, name, startDate.toDate(), endDate.toDate()),
+    ),
   ]);
 
+  const data: ActivityData[] = [{ date: endDate.toDate(), pullRequests: finalCount }];
   let prCount = finalCount;
-
-  const data: ActivityData[] = [{ date: today.toDate(), pullRequests: prCount }];
 
   for (const add of additions) {
     prCount += (add.closed ?? 0) - (add.added ?? 0);

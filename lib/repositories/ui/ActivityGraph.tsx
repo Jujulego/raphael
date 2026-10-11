@@ -7,15 +7,11 @@ import dayjs from 'dayjs';
 import { useMemo } from 'react';
 
 export default function ActivityGraph({ className, data }: ActivityGraphProps) {
-  const dateFormat = useMemo(() => {
+  const includeYear = useMemo(() => {
     const first = data[0];
     const last = data[data.length - 1];
 
-    if (dayjs(first.date).year() !== dayjs(last.date).year()) {
-      return 'DD MMM YYYY';
-    } else {
-      return 'DD MMM';
-    }
+    return !dayjs(first.date).isSame(dayjs(last.date), 'year');
   }, [data]);
 
   return (
@@ -25,7 +21,15 @@ export default function ActivityGraph({ className, data }: ActivityGraphProps) {
         className="grow"
         dataset={data}
         grid={{ horizontal: true }}
-        series={[{ dataKey: 'pullRequests', label: 'Pull requests', area: true, showMark: true }]}
+        series={[
+          {
+            dataKey: 'pullRequests',
+            label: 'Pull requests',
+            area: true,
+            curve: 'stepAfter',
+            showMark: false,
+          },
+        ]}
         slotProps={{
           area: {
             fillOpacity: 0.4,
@@ -35,8 +39,16 @@ export default function ActivityGraph({ className, data }: ActivityGraphProps) {
           {
             dataKey: 'date',
             label: 'Date',
-            scaleType: 'point',
-            valueFormatter: (date: Date) => dayjs(date).format(dateFormat),
+            scaleType: 'time',
+            valueFormatter: (date: Date, ctx) => {
+              let format = ctx.location === 'tick' ? 'DD MMM' : 'DD MMMM hh[h]';
+
+              if (includeYear) {
+                format += 'YYYY';
+              }
+
+              return dayjs(date).format(format);
+            },
           },
         ]}
         yAxis={[
