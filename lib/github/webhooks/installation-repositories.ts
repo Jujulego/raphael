@@ -42,6 +42,7 @@ export async function installationRepositoriesHook({
           state: pr.state,
           author: pr.author,
           updatedAt: dayjs(pr.updatedAt).toDate(),
+          closedAt: pr.closedAt ? dayjs(pr.closedAt).toDate() : null,
         },
         create: {
           number: pr.number,
@@ -50,6 +51,7 @@ export async function installationRepositoriesHook({
           author: pr.author,
           createdAt: dayjs(pr.createdAt).toDate(),
           updatedAt: dayjs(pr.updatedAt).toDate(),
+          closedAt: pr.closedAt ? dayjs(pr.closedAt).toDate() : null,
         },
       });
     }

@@ -1,6 +1,7 @@
 documents:
   - 'app/**/*.{ts,tsx}'
   - 'lib/**/*.{ts,tsx}'
+  - '!lib/types/graphql.d.ts'
 
 schema:
   - 'https://api.github.com/graphql':
