@@ -51,7 +51,7 @@
     "rxjs": "7.8.2"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "5.4.0",
+    "@chromatic-com/storybook": "5.5.1",
     "@commitlint/cli": "21.2.3",
     "@commitlint/config-conventional": "21.2.3",
     "@graphql-codegen/cli": "7.4.6",
