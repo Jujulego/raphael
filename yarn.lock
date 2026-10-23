@@ -3851,14 +3851,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/adapter-neon@npm:7.10.0":
-  version: 7.10.0
-  resolution: "@prisma/adapter-neon@npm:7.10.0"
+"@prisma/adapter-neon@npm:7.10.1":
+  version: 7.10.1
+  resolution: "@prisma/adapter-neon@npm:7.10.1"
   dependencies:
     "@neondatabase/serverless": "npm:>0.6.0 <2"
-    "@prisma/driver-adapter-utils": "npm:7.10.0"
+    "@prisma/driver-adapter-utils": "npm:7.10.1"
     postgres-array: "npm:3.0.4"
-  checksum: 10c0/fb4d6387df12de4cc9705f3c9dd9e1ab5297f6f86e118d7b57d9eb6bf2c2ed680194d9f32ccfc7d2095062f9ae30ba3bbde2c6aee4b098331d171f9e06af1a8b
+  checksum: 10c0/5557a119869c416fdf455a439b0e7b9397b30aba228cf43489d84fe2fd1816581255296e683cb21ea0a30f9ea0d0f57b6901e056985da10242ec0467c9c8bfca
   languageName: node
   linkType: hard
 
@@ -3905,6 +3905,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/debug@npm:7.10.1":
+  version: 7.10.1
+  resolution: "@prisma/debug@npm:7.10.1"
+  checksum: 10c0/a220e5706241257375dc6d59df0863d7855caa09ef548af596436fcd620d37ac155b8443f9cf317947de950f4c34b1f748fa0567404977be84f4e575c1085b20
+  languageName: node
+  linkType: hard
+
 "@prisma/debug@npm:7.2.0":
   version: 7.2.0
   resolution: "@prisma/debug@npm:7.2.0"
@@ -3935,12 +3942,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/driver-adapter-utils@npm:7.10.0":
-  version: 7.10.0
-  resolution: "@prisma/driver-adapter-utils@npm:7.10.0"
+"@prisma/driver-adapter-utils@npm:7.10.1":
+  version: 7.10.1
+  resolution: "@prisma/driver-adapter-utils@npm:7.10.1"
   dependencies:
-    "@prisma/debug": "npm:7.10.0"
-  checksum: 10c0/f037e8ad4fea53eb63fa1655930c9846410a0549e10a37067821864a801225be49ae1ca2325021dc6eb44ac517d75684842f4095f56f74af6057753c1a5c92e0
+    "@prisma/debug": "npm:7.10.1"
+  checksum: 10c0/faba8c0d820a4a8702f52e3bd985a12463a8aebead5d4fb0480cf0f0d22e6dcd148712c7f4fc28969a56d2c27dba5129ac29225b09c88e3b61b5e3c8d5ce51c4
   languageName: node
   linkType: hard
 
@@ -12064,7 +12071,7 @@ __metadata:
     "@octokit/app": "npm:16.1.4"
     "@octokit/webhooks": "npm:14.2.0"
     "@parcel/watcher": "npm:2.6.0"
-    "@prisma/adapter-neon": "npm:7.10.0"
+    "@prisma/adapter-neon": "npm:7.10.1"
     "@prisma/client": "npm:7.10.0"
     "@sentry/nextjs": "npm:10.76.2"
     "@storybook/addon-a11y": "npm:10.6.2"
