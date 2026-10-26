@@ -36,7 +36,7 @@
     "@octokit/app": "16.1.4",
     "@octokit/webhooks": "14.2.0",
     "@prisma/adapter-neon": "7.10.0",
-    "@prisma/client": "7.10.0",
+    "@prisma/client": "7.10.1",
     "@sentry/nextjs": "10.76.2",
     "@vercel/analytics": "2.0.1",
     "better-auth": "1.7.7",
