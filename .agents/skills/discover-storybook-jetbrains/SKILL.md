@@ -1,5 +1,5 @@
 ---
-name: discover-and-scaffold-stories-storybook-jetbrains
+name: discover-storybook-jetbrains
 description: Analyse component props, audit story coverage, and generate missing Storybook stories with the storybook-connect CLI. Prefer reusable UI components (not pages/screens) unless the user asks otherwise. Use when checking which stories a component has or lacks, or when creating stories for components.
 metadata:
   source: storybookjs/mcp
@@ -12,19 +12,18 @@ The Storybook Connect plugin adds a `storybook-connect` command to the WebStorm 
 four questions about any component file — what props does it take, which stories could exist, which of those are missing, and can you write
 them — without needing Storybook to be running. One further subcommand, `base-url`, answers about the project instead of about a component.
 
+Run it through `webstorm-cli.mjs`, which sits in the directory of this skill file, from the project root.
+
 ```
-webstorm storybook-connect <subcommand> <component-file> --caller ai_agent [options]
-webstorm storybook-connect base-url --caller ai_agent [--project <root>] [--text]
+node <skill directory>/webstorm-cli.mjs storybook-connect <subcommand> <component-file> --caller ai_agent [options]
+node <skill directory>/webstorm-cli.mjs storybook-connect base-url --caller ai_agent [--project <root>] [--text]
 ```
 
-On Windows use `webstorm.bat` (from the WebStorm `bin` directory on `PATH`), not
-`webstorm64.exe` — the batch launcher prints CLI output to the terminal the same way `webstorm` does on macOS/Linux.
+When an IDE has the project open, it answers the command (fast, indexes warm). Otherwise the script starts an installed IDE that carries
+the plugin, which opens the project first (slower, up to a minute); Relative paths resolve against your shell in both cases. Exit code
+`127` means no IDE can answer: ask the user to install the plugin, or to open the project in an IDE that has it, then run the command again.
 
-When WebStorm is already running with the project open, the command is answered by the running IDE (fast, indexes warm) and relative paths
-resolve against your shell. With no IDE running, a cold start opens the project first (slower) and **requires absolute paths** (both the
-component file and `--project`).
-
-**Sandboxed shells:** the `webstorm` launcher must enumerate system processes to find the running IDE. In a sandboxed agent shell that
+**Sandboxed shells:** the IDE launcher must enumerate system processes to find the running IDE. In a sandboxed agent shell that
 blocks this, it dies before reaching the plugin with `Operation not permitted (sysctl failed)` and a JVM fatal-error dump. If you see that,
 re-run the command outside the sandbox (e.g. request sandbox-exempt execution for this command) — it needs no other privileges.
 
@@ -53,15 +52,12 @@ re-run the command outside the sandbox (e.g. request sandbox-exempt execution fo
 - **`--caller ai_agent` on every invocation.** It tells the plugin's usage statistics that an agent ran the command rather than a person
   typing in a terminal, which is the only way the two can be told apart. Add
   `--caller-surface` when you know the product you are — `jetbrains_ai_assistant`
-  or `codex` — and `other_agent` otherwise. Setting
-  `STORYBOOK_CONNECT_CALLER=ai_agent` in the environment does the same thing for every invocation. Neither value changes what the command
-  does.
+  or `codex` — and `other_agent` otherwise. Neither value changes what the command does.
 - Exit codes: `0` success · `2` domain failure (unknown story, write failed) ·
-  `3` project open failed · `64` usage error · `1` unexpected internal error.
+  `3` project open failed · `64` usage error · `1` unexpected internal error · `127` no IDE can answer (see above).
   `missing-stories` exits `0` even for partial coverage — check the payload.
-- **Windows:** use `webstorm.bat` (add WebStorm's `bin` to `PATH`) so the payload prints to the terminal like macOS/Linux. `webstorm64.exe`
-  only relays the exit code. Every command also writes its payload to
-  `%TEMP%\storybook-connect-cli-output.txt`.
+- Every command also writes its payload to `storybook-connect-cli-output.txt` in the system temporary directory. Read it when the
+  terminal shows no payload.
 
 ## Recommended workflow
 
@@ -80,7 +76,7 @@ re-run the command outside the sandbox (e.g. request sandbox-exempt execution fo
    `missing-stories` output; `--args` values are plain JSON, not the rendered source expressions shown in the report).
 5. **Enhance** — generated stories are deliberately minimal: `args` only, no
    `argTypes` (Storybook docgen infers controls), placeholder TODOs for color and date values, `fn()` for callbacks. Treat them as a
-   starting point and apply the **author-and-review-stories-storybook-jetbrains** skill: replace TODO placeholders with realistic
+   starting point and apply the **author-storybook-jetbrains** skill: replace TODO placeholders with realistic
    values, add `play` functions that interact and assert (especially for `fn()` callbacks), and cover behavior-changing states the
    type-driven plan cannot see (loading, error, permissions, async).
 6. **Offer pages/screens** — once component coverage work is done, ask whether the user also wants stories for pages/screens.
@@ -100,7 +96,7 @@ like:
 > pages/screens (or other top-level surfaces)?
 
 Only proceed with pages/screens if they confirm. When they do, still use this CLI for generation and the
-**author-and-review-stories-storybook-jetbrains** skill for quality.
+**author-storybook-jetbrains** skill for quality.
 
 ## What it will and won't do
 
@@ -113,5 +109,5 @@ Only proceed with pages/screens if they confirm. When they do, still use this CL
 - `--args` keys that aren't extracted props trigger a warning (typo, or an inherited prop that extraction filtered out) but are still
   applied.
 
-After creating or changing stories, follow the author-and-review-stories-storybook-jetbrains skill's guidance on verifying them in
+After creating or changing stories, follow the author-storybook-jetbrains skill's guidance on verifying them in
 Storybook and sharing story links.

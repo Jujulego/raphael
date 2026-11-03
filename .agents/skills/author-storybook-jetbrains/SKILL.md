@@ -1,5 +1,5 @@
 ---
-name: author-and-review-stories-storybook-jetbrains
+name: author-storybook-jetbrains
 description: Write, update, and test Storybook stories (.stories.tsx/.ts/.jsx/.js). Use when creating components, editing story files, or changing UI that needs story coverage.
 metadata:
   source: storybookjs/mcp
