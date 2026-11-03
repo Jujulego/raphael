@@ -11,9 +11,10 @@ export const config = {
      * - api/auth (auth routes)
      * - api/cron (cron jobs)
      * - api/github (GitHub webhooks)
+     * - monitoring (Sentry event tunnel)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    '/((?!_next/static|_next/image|api/auth|api/cron|api/github|auth|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/((?!_next/static|_next/image|api/auth|api/cron|api/github|auth|monitoring|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };
 

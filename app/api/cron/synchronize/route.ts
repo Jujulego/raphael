@@ -18,7 +18,12 @@ export const GET = cron(
       const issueCount = repository.open_issues_count;
       const pushedAt = repository.pushed_at ? dayjs(repository.pushed_at).toISOString() : null;
 
-      const prom = startSpan({ name: `synchronize repository ${owner}/${name}` }, async () => {
+      const spanOptions = {
+        name: 'synchronize repository',
+        attributes: { 'repository.owner': owner, 'repository.name': name },
+      };
+
+      const prom = startSpan(spanOptions, async () => {
         // Update database
         const actual = await prisma.repository.upsert({
           where: {
