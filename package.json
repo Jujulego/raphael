@@ -52,8 +52,8 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "5.5.1",
-    "@commitlint/cli": "21.2.3",
-    "@commitlint/config-conventional": "21.2.3",
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-conventional": "21.2.4",
     "@graphql-codegen/cli": "7.4.6",
     "@graphql-codegen/typescript": "6.1.2",
     "@graphql-codegen/typescript-operations": "6.1.10",
