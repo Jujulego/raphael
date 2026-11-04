@@ -415,17 +415,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chromatic-com/storybook@npm:5.5.1":
-  version: 5.5.1
-  resolution: "@chromatic-com/storybook@npm:5.5.1"
+"@chromatic-com/storybook@npm:5.6.0":
+  version: 5.6.0
+  resolution: "@chromatic-com/storybook@npm:5.6.0"
   dependencies:
     "@neoconfetti/react": "npm:^1.0.0"
-    chromatic: "npm:^18.0.1"
+    chromatic: "npm:^18.12.1"
     jsonfile: "npm:^6.1.0"
     strip-ansi: "npm:^7.1.0"
   peerDependencies:
     storybook: ^0.0.0-0 || ^10.1.0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0 || ^10.5.0-0 || ^10.6.0-0 || ^11.0.0-0
-  checksum: 10c0/aedf057a761357b680d81f2af12336b221aad218fba43db5ab68fa0ae1305570af85212a15045f30489b37dcf1d57c9fb49851c499619aeb11b25b9ad7cf1821
+  checksum: 10c0/abeb82b552aad64dba4cf915c3b3f2404e8e0246e14f74075193a35aa669e88fd96658fab39baca68d103952a3a6409e378986715a336a24f62084c75041b085
   languageName: node
   linkType: hard
 
@@ -7157,9 +7157,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:^18.0.1":
-  version: 18.9.0
-  resolution: "chromatic@npm:18.9.0"
+"chromatic@npm:^18.12.1":
+  version: 18.13.3
+  resolution: "chromatic@npm:18.13.3"
   dependencies:
     semver: "npm:^7.3.5"
   peerDependencies:
@@ -7182,7 +7182,7 @@ __metadata:
     chroma: dist/bin.cjs
     chromatic: dist/bin.cjs
     chromatic-cli: dist/bin.cjs
-  checksum: 10c0/701f96eff510dbed2bc09804f27dca088c7d5f9a7bccb3b5fe2b8aa0ee4181a8f9f70fa7b220f3670c88e8a0d68758d82e19051bb726aaae6c7263e080373131
+  checksum: 10c0/f46349bf1ca00f00590f26b05ddd464623276dfd3dd4cf87973bb15008e69e7e62d6209e2a7cc88fb1013af43140641d341bf5a28dcd86255d3bb30f21654bbd
   languageName: node
   linkType: hard
 
@@ -11894,7 +11894,7 @@ __metadata:
   resolution: "raphael@workspace:."
   dependencies:
     "@better-auth/prisma-adapter": "npm:1.7.10"
-    "@chromatic-com/storybook": "npm:5.5.1"
+    "@chromatic-com/storybook": "npm:5.6.0"
     "@commitlint/cli": "npm:21.2.4"
     "@commitlint/config-conventional": "npm:21.2.4"
     "@emotion/cache": "npm:11.14.0"
