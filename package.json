@@ -56,7 +56,7 @@
     "@commitlint/config-conventional": "21.2.4",
     "@graphql-codegen/cli": "7.4.6",
     "@graphql-codegen/typescript": "6.1.2",
-    "@graphql-codegen/typescript-operations": "6.1.10",
+    "@graphql-codegen/typescript-operations": "6.2.0",
     "@graphql-eslint/eslint-plugin": "4.4.2",
     "@jujulego/jill": "3.1.0",
     "@microsoft/eslint-formatter-sarif": "3.1.0",
