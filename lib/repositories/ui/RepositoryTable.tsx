@@ -2,7 +2,7 @@
 
 import { usePaginatedData } from '@/lib/hooks/usePaginatedData';
 import type { RepositoryStats } from '@/lib/prisma/client';
-import { useSearchParam } from '@/lib/utils/useSearchParam';
+import { useSearchParam } from '@/lib/hooks/useSearchParam';
 import VirtualRow from '@/lib/virtual/VirtualRow';
 import VirtualSortableCell from '@/lib/virtual/VirtualSortableCell';
 import VirtualTable, { type RowFn } from '@/lib/virtual/VirtualTable';
